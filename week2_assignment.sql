@@ -23,7 +23,7 @@ AS
 BEGIN 
 	CREATE TABLE Department (
 		dept_id INT IDENTITY(1, 1) PRIMARY KEY,
-		dept_name VARCHAR(50) NOT NULL
+		dept_name VARCHAR(50) NOT NULL DEFAULT ''
 	);
 END
 
@@ -34,11 +34,11 @@ AS
 BEGIN 
 	CREATE TABLE Employee (
 		emp_id INT IDENTITY(1, 1) PRIMARY KEY,
-		first_name VARCHAR(50) NOT NULL,
+		first_name VARCHAR(50) NOT NULL DEFAULT '',
 		last_name VARCHAR(50),
 		dept_id INT FOREIGN KEY REFERENCES Department(dept_id) ON DELETE CASCADE,
-		salary DECIMAL(10, 2) NOT NULL CHECK (salary >= 10000),
-		email VARCHAR(70) NOT NULL UNIQUE,
+		salary DECIMAL(10, 2) NOT NULL CHECK (salary >= 10000) DEFAULT 10000,
+		email VARCHAR(70) NOT NULL UNIQUE DEFAULT '',
 		hire_date DATE DEFAULT CAST (GETDATE() AS DATE)
 	);
 END
@@ -50,7 +50,7 @@ AS
 BEGIN
 	CREATE TABLE Project (
 		project_id INT IDENTITY(101, 1) PRIMARY KEY,
-		project_name VARCHAR(50) NOT NULL,
+		project_name VARCHAR(50) NOT NULL DEFAULT '',
 		start_date DATE DEFAULT CAST (GETDATE() AS DATE),
 		end_date DATE DEFAULT NULL,
 	);
@@ -97,26 +97,26 @@ CREATE PROCEDURE spInsertIntoEmployee
 AS
 BEGIN
 	INSERT INTO Employee VALUES
-	('Wade', 'Allen', 2, 60000, 'wade@gmail.com', '2018/04/20'),
-	('Isabel', 'Lopez', 1, 55000, 'isabel@gmail.com', '2014/12/21'),
-	('Seth', 'Green', 4, 40000, 'seth@gmail.com', '2021/07/11'),
-	('Ivan', 'Terry', 3, 75000, 'ivan@gmail.com', '2023/02/12'),
-	('Lucy', 'Shaw', 2, 60000, 'lucy@gmail.com', '2021/01/06'),
-	('Glen', 'Hamittor', 3, 65000, 'glen@gmail.com', '2023/02/05'),
-	('Vicki', 'Erick', 3, 70000, 'vicky@gmail.com', '2023/02/05'),
-	('Molly', 'Duardo', 3, 25000, 'molly@gmail.com', '2021/07/15'),
-	('Blake', 'Graham', 1, 30000, 'blake@gmail.com', '2020/11/30'),
-	('Jose', 'White', 2, 25000, 'jose@gmai.com', '2019/04/20'),
-	('Adam', 'Clark', 3, 90000, 'adam@gmail.com', '2023/02/05'),
-	('Mila', 'Dean', 1, 40000, 'mila@gmail.com', '2015/08/20'),
-	('Lisa', 'David', 4, 35000, 'lisa@gmail.com', '2021/12/25'),
-	('Noah', 'Smith', 4, 15000, 'noah@gmail.com','2026/01/15'),
-	('Lory', 'Gross', 2, 35000, 'lory@gmail.com', '2020/12/25'),
-	('Joseph', 'Harris', 3, 30000, 'jose[h@gmail.com', '2023/01/26'),
-	('Luis', 'Cooper', 3, 40000, 'luis@gmail.com', '2023/01/26'),
-	('Dora', 'Perry', 1, 30000, 'dora@gmail.com', '2016/02/28'),
-	('Pedro', 'Norris', 2, 50000, 'pedro@gmail.com', '2018/04/21'),
-	('Emma', 'Stanely', 3, 50000, 'emma@gmail.com', '2023/02/14');
+	('Wade', 'Allen', 2, 60000, 'wade@gmail.com', CAST('2018-04-20' AS DATE)),
+	('Isabel', 'Lopez', 1, 55000, 'isabel@gmail.com', CAST('2014-12-21' AS DATE)),
+	('Seth', 'Green', 4, 40000, 'seth@gmail.com', CAST('2021-07-11' AS DATE)),
+	('Ivan', 'Terry', 3, 75000, 'ivan@gmail.com', CAST('2023-02-12' AS DATE)),
+	('Lucy', 'Shaw', 2, 60000, 'lucy@gmail.com', CAST('2021-01-06' AS DATE)),
+	('Glen', 'Hamittor', 3, 65000, 'glen@gmail.com', CAST('2023-02-05' AS DATE)),
+	('Vicki', 'Erick', 3, 70000, 'vicky@gmail.com', CAST('2023-02-05' AS DATE)),
+	('Molly', 'Duardo', 3, 25000, 'molly@gmail.com', CAST('2021-07-15' AS DATE)),
+	('Blake', 'Graham', 1, 30000, 'blake@gmail.com', CAST('2020-11-30' AS DATE)),
+	('Jose', 'White', 2, 25000, 'jose@gmai.com', CAST('2019-04-20' AS DATE)),
+	('Adam', 'Clark', 3, 90000, 'adam@gmail.com', CAST('2023-02-05' AS DATE)),
+	('Mila', 'Dean', 1, 40000, 'mila@gmail.com', CAST('2015-08-20' AS DATE)),
+	('Lisa', 'David', 4, 35000, 'lisa@gmail.com', CAST('2021-12-25' AS DATE)),
+	('Noah', 'Smith', 4, 15000, 'noah@gmail.com', CAST('2026-01-15' AS DATE)),
+	('Lory', 'Gross', 2, 35000, 'lory@gmail.com', CAST('2020-12-25' AS DATE)),
+	('Joseph', 'Harris', 3, 30000, 'jose[h@gmail.com', CAST('2023-01-26' AS DATE)),
+	('Luis', 'Cooper', 3, 40000, 'luis@gmail.com', CAST('2023-01-26' AS DATE)),
+	('Dora', 'Perry', 1, 30000, 'dora@gmail.com', CAST('2016-02-28' AS DATE)),
+	('Pedro', 'Norris', 2, 50000, 'pedro@gmail.com', CAST('2018-04-21' AS DATE)),
+	('Emma', 'Stanely', 3, 50000, 'emma@gmail.com', CAST('2023-02-14' AS DATE));
 END
 
 
@@ -125,18 +125,18 @@ CREATE PROCEDURE spInsertIntoProject
 AS
 BEGIN
 	INSERT INTO Project VALUES
-	('IT Asset And Management System', '2016/03/11', '2022/07/20'),
-	('Network Monitoring Tool', '2021/01/22', NULL),
-	('Server Maintaince And Automation', '2015/09/11', NULL),
-	('CI/CD Pipeline Automation', '2019/05/03', '2020/02/23'),
-	('Cloud Infrastructure Automation', '2021/03/17', '2021/11/12'),
-	('Monitoring And Logging System', '2018/06/03', '2019/09/15'),
-	('Employee Management System', '2023/02/17', '2024/05/02'),
-	('E-Commerce Web Application', '2024/03/11', NULL),
-	('LMS', '2023/05/06', '2025/01/11'),
-	('Mobile Banking Application', '2024/07/10', NULL),
-	('Intrusion Detection System', '2021/08/15', '2023/09/14'),
-	('Vulnerablity Assessment Tool', '2024/03/22', NULL);
+	('IT Asset And Management System', CAST('2016-03-11' AS DATE), CAST('2022-07-20' AS DATE)),
+	('Network Monitoring Tool', CAST('2021-01-22' AS DATE), NULL),
+	('Server Maintaince And Automation', CAST('2015-09-11' AS DATE), NULL),
+	('CI/CD Pipeline Automation', CAST('2019-05-03' AS DATE), CAST('2020-02-23' AS DATE)),
+	('Cloud Infrastructure Automation', CAST('2021-03-17' AS DATE), CAST('2021-11-12' AS DATE)),
+	('Monitoring And Logging System', CAST('2018-06-03' AS DATE), CAST('2019-09-15' AS DATE)),
+	('Employee Management System', CAST('2023-02-17' AS DATE), CAST('2024-05-02' AS DATE)),
+	('E-Commerce Web Application', CAST('2024-03-11' AS DATE), NULL),
+	('LMS', CAST('2023-05-06' AS DATE), CAST('2025-01-11' AS DATE)),
+	('Mobile Banking Application', CAST('2024-07-10' AS DATE), NULL),
+	('Intrusion Detection System', CAST('2021-08-15' AS DATE), CAST('2023-09-14' AS DATE)),
+	('Vulnerablity Assessment Tool', CAST('2024-03-22' AS DATE), NULL);
 END
 
 
@@ -246,24 +246,24 @@ USE DBCompany;
 
 CREATE TABLE Department (
 	dept_id INT IDENTITY(1, 1) PRIMARY KEY,
-	dept_name VARCHAR(50) NOT NULL
+	dept_name VARCHAR(50) NOT NULL DEFAULT ''
 );
 
 CREATE TABLE Employee (
 	emp_id INT IDENTITY(1, 1) PRIMARY KEY,
-	first_name VARCHAR(50) NOT NULL,
+	first_name VARCHAR(50) NOT NULL DEFAULT '',
 	last_name VARCHAR(50),
 	dept_id INT FOREIGN KEY REFERENCES Department(dept_id) ON DELETE CASCADE,
-	salary DECIMAL(10, 2) NOT NULL CHECK (salary >= 10000),
-	email VARCHAR(70) NOT NULL UNIQUE,
-	hire_date DATE DEFAULT CAST (GETDATE() AS DATE),
+	salary DECIMAL(10, 2) NOT NULL CHECK (salary >= 10000) DEFAULT 10000,
+	email VARCHAR(70) NOT NULL UNIQUE DEFAULT '',
+	hire_date DATE DEFAULT CAST (GETDATE() AS DATE)
 );
 
 CREATE TABLE Project (
 	project_id INT IDENTITY(101, 1) PRIMARY KEY,
-	project_name VARCHAR(50) NOT NULL,
+	project_name VARCHAR(50) NOT NULL DEFAULT '',
 	start_date DATE DEFAULT CAST (GETDATE() AS DATE),
-	end_date DATE DEFAULT NULL,
+	end_date DATE DEFAULT NULL
 );
 
 CREATE TABLE EmployeeProject (
@@ -285,40 +285,41 @@ INSERT INTO Department VALUES
 ('Cyber Security');
 
 INSERT INTO Employee VALUES
-('Wade', 'Allen', 2, 60000, 'wade@gmail.com', '2018/04/20'),
-('Isabel', 'Lopez', 1, 55000, 'isabel@gmail.com', '2014/12/21'),
-('Seth', 'Green', 4, 40000, 'seth@gmail.com', '2021/07/11'),
-('Ivan', 'Terry', 3, 75000, 'ivan@gmail.com', '2023/02/12'),
-('Lucy', 'Shaw', 2, 60000, 'lucy@gmail.com', '2021/01/06'),
-('Glen', 'Hamittor', 3, 65000, 'glen@gmail.com', '2023/02/05'),
-('Vicki', 'Erick', 3, 70000, 'vicky@gmail.com', '2023/02/05'),
-('Molly', 'Duardo', 3, 25000, 'molly@gmail.com', '2021/07/15'),
-('Blake', 'Graham', 1, 30000, 'blake@gmail.com', '2020/11/30'),
-('Jose', 'White', 2, 25000, 'jose@gmai.com', '2019/04/20'),
-('Adam', 'Clark', 3, 90000, 'adam@gmail.com', '2023/02/05'),
-('Mila', 'Dean', 1, 40000, 'mila@gmail.com', '2015/08/20'),
-('Lisa', 'David', 4, 35000, 'lisa@gmail.com', '2021/12/25'),
-('Noah', 'Smith', 4, 15000, 'noah@gmail.com','2026/01/15'),
-('Lory', 'Gross', 2, 35000, 'lory@gmail.com', '2020/12/25'),
-('Joseph', 'Harris', 3, 30000, 'jose[h@gmail.com', '2023/01/26'),
-('Luis', 'Cooper', 3, 40000, 'luis@gmail.com', '2023/01/26'),
-('Dora', 'Perry', 1, 30000, 'dora@gmail.com', '2016/02/28'),
-('Pedro', 'Norris', 2, 50000, 'pedro@gmail.com', '2018/04/21'),
-('Emma', 'Stanely', 3, 50000, 'emma@gmail.com', '2023/02/14');
+('Wade', 'Allen', 2, 60000, 'wade@gmail.com', CAST('2018-04-20' AS DATE)),
+('Isabel', 'Lopez', 1, 55000, 'isabel@gmail.com', CAST('2014-12-21' AS DATE)),
+('Seth', 'Green', 4, 40000, 'seth@gmail.com', CAST('2021-07-11' AS DATE)),
+('Ivan', 'Terry', 3, 75000, 'ivan@gmail.com', CAST('2023-02-12' AS DATE)),
+('Lucy', 'Shaw', 2, 60000, 'lucy@gmail.com', CAST('2021-01-06' AS DATE)),
+('Glen', 'Hamittor', 3, 65000, 'glen@gmail.com', CAST('2023-02-05' AS DATE)),
+('Vicki', 'Erick', 3, 70000, 'vicky@gmail.com', CAST('2023-02-05' AS DATE)),
+('Molly', 'Duardo', 3, 25000, 'molly@gmail.com', CAST('2021-07-15' AS DATE)),
+('Blake', 'Graham', 1, 30000, 'blake@gmail.com', CAST('2020-11-30' AS DATE)),
+('Jose', 'White', 2, 25000, 'jose@gmai.com', CAST('2019-04-20' AS DATE)),
+('Adam', 'Clark', 3, 90000, 'adam@gmail.com', CAST('2023-02-05' AS DATE)),
+('Mila', 'Dean', 1, 40000, 'mila@gmail.com', CAST('2015-08-20' AS DATE)),
+('Lisa', 'David', 4, 35000, 'lisa@gmail.com', CAST('2021-12-25' AS DATE)),
+('Noah', 'Smith', 4, 15000, 'noah@gmail.com', CAST('2026-01-15' AS DATE)),
+('Lory', 'Gross', 2, 35000, 'lory@gmail.com', CAST('2020-12-25' AS DATE)),
+('Joseph', 'Harris', 3, 30000, 'jose[h@gmail.com', CAST('2023-01-26' AS DATE)),
+('Luis', 'Cooper', 3, 40000, 'luis@gmail.com', CAST('2023-01-26' AS DATE)),
+('Dora', 'Perry', 1, 30000, 'dora@gmail.com', CAST('2016-02-28' AS DATE)),
+('Pedro', 'Norris', 2, 50000, 'pedro@gmail.com', CAST('2018-04-21' AS DATE)),
+('Emma', 'Stanely', 3, 50000, 'emma@gmail.com', CAST('2023-02-14' AS DATE));
+
 
 INSERT INTO Project VALUES
-('IT Asset And Management System', '2016/03/11', '2022/07/20'),
-('Network Monitoring Tool', '2021/01/22', NULL),
-('Server Maintaince And Automation', '2015/09/11', NULL),
-('CI/CD Pipeline Automation', '2019/05/03', '2020/02/23'),
-('Cloud Infrastructure Automation', '2021/03/17', '2021/11/12'),
-('Monitoring And Logging System', '2018/06/03', '2019/09/15'),
-('Employee Management System', '2023/02/17', '2024/05/02'),
-('E-Commerce Web Application', '2024/03/11', NULL),
-('LMS', '2023/05/06', '2025/01/11'),
-('Mobile Banking Application', '2024/07/10', NULL),
-('Intrusion Detection System', '2021/08/15', '2023/09/14'),
-('Vulnerablity Assessment Tool', '2024/03/22', NULL);
+('IT Asset And Management System', CAST('2016-03-11' AS DATE), CAST('2022-07-20' AS DATE)),
+('Network Monitoring Tool', CAST('2021-01-22' AS DATE), NULL),
+('Server Maintaince And Automation', CAST('2015-09-11' AS DATE), NULL),
+('CI/CD Pipeline Automation', CAST('2019-05-03' AS DATE), CAST('2020-02-23' AS DATE)),
+('Cloud Infrastructure Automation', CAST('2021-03-17' AS DATE), CAST('2021-11-12' AS DATE)),
+('Monitoring And Logging System', CAST('2018-06-03' AS DATE), CAST('2019-09-15' AS DATE)),
+('Employee Management System', CAST('2023-02-17' AS DATE), CAST('2024-05-02' AS DATE)),
+('E-Commerce Web Application', CAST('2024-03-11' AS DATE), NULL),
+('LMS', CAST('2023-05-06' AS DATE), CAST('2025-01-11' AS DATE)),
+('Mobile Banking Application', CAST('2024-07-10' AS DATE), NULL),
+('Intrusion Detection System', CAST('2021-08-15' AS DATE), CAST('2023-09-14' AS DATE)),
+('Vulnerablity Assessment Tool', CAST('2024-03-22' AS DATE), NULL);
 
 INSERT INTO EmployeeProject VALUES
 (2, 101),
