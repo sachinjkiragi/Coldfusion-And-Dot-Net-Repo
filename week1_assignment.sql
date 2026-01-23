@@ -4,23 +4,23 @@ USE LibraryDB;
 
 CREATE TABLE Books (
 	book_id INT IDENTITY(1, 1) PRIMARY KEY,
-	book_name VARCHAR(100) NOT NULL,
-	genre VARCHAR(100) NOT NULL,
-	is_available BIT NOT NULL
+	book_name VARCHAR(100) NOT NULL DEFAULT '',
+	genre VARCHAR(100) NOT NULL DEFAULT '',
+	is_available BIT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Members (
 	member_id INT IDENTITY(101, 1) PRIMARY KEY,
-	first_name VARCHAR(100) NOT NULL,
+	first_name VARCHAR(100) NOT NULL DEFAULT '',
 	last_name VARCHAR(100),
 	joined_date DATE NOT NULL,
-	gender CHAR(1) NOT NULL
+	gender CHAR(1) NOT NULL DEFAULT ''
 );
 
 CREATE TABLE BorrowingRecords (
 	borrowing_id INT IDENTITY(1,1) PRIMARY KEY,
-	book_id INT FOREIGN KEY REFERENCES Books(book_id) NOT NULL,
-	member_id INT FOREIGN KEY REFERENCES Members(member_id) NOT NULL,
+	book_id INT FOREIGN KEY REFERENCES Books(book_id),
+	member_id INT FOREIGN KEY REFERENCES Members(member_id),
 	issued_date DATE NOT NULL,
 	due_date DATE NOT NULL,
 	returned_date DATE 
@@ -47,37 +47,36 @@ VALUES
 
 INSERT INTO Members (first_name, last_name, joined_date, gender)
 VALUES
-('Johan', 'Oliver', '2024/07/27', 'M'),
-('Emily', 'Hart', '2024/09/11', 'F'),
-('Zaria', 'Leal', '2024/11/30', 'F'),
-('Richard', 'Noah', '2025/02/03', 'M'),
-('Ford', 'Lin', '2025/05/17', 'M'),
-('Erin', 'Lemon', '2026/01/02', 'M'),
-('Elisa', 'Doe', '2026/01/10', 'F');
-
+('Johan', 'Oliver', CAST('2024-07-27' AS DATE), 'M'),
+('Emily', 'Hart', CAST('2024-09-11' AS DATE), 'F'),
+('Zaria', 'Leal', CAST('2024-11-30' AS DATE), 'F'),
+('Richard', 'Noah', CAST('2025-02-03' AS DATE), 'M'),
+('Ford', 'Lin', CAST('2025-05-17' AS DATE), 'M'),
+('Erin', 'Lemon', CAST('2026-01-02' AS DATE), 'M'),
+('Elisa', 'Doe', CAST('2026-01-10' AS DATE), 'F');
 
 INSERT INTO BorrowingRecords(book_id, member_id, issued_date, due_date, returned_date)
 VALUES
-(4, 102, '2024/06/11', '2024/07/11', '2024/06/25'),
-(11, 101, '2024/06/20', '2024/06/29', '2024/06/28'),
-(1, 101, '2024/07/02', '2024/07/15', '2024/07/13'),
-(1, 102, '2024/09/15', '2024/10/25', '2024/10/20'),
-(5, 103, '2024/11/23', '2024/12/20', '2024/12/18'),
-(12, 107, '2024/12/03', '2024/12/10', '2024/12/11'),
-(2, 107, '2024/12/07', '2025/01/07', '2025/01/20'),
-(9, 101, '2025/01/03', '2025/02/03', '2025/02/02'),
-(5, 102, '2025/05/13', '2025/05/25', '2025/05/21'),
-(6, 106, '2025/05/19', '2025/05/21', '2025/05/25'),
-(8, 101, '2025/05/27', '2025/06/07', '2025/06/09'),
-(7, 101, '2025/05/28', '2025/05/29', '2025/05/29'),
-(9, 106, '2025/06/05', '2025/06/23', NULL),
-(12, 106, '2025/06/11', '2025/06/15', '2025/06/21'),
-(3, 106, '2025/06/21', '2025/07/03', '2025/07/05'),
-(2, 103, '2025/11/25', '2025/12/02', '2025/12/01'),
-(1, 103, '2025/12/09', '2026/01/05', '2026/01/02'),
-(4, 105, '2026/01/10', '2026/01/15', NULL),
-(3, 107, '2026/01/10', '2026/01/30', NULL),
-(6, 105, '2026/01/10', '2026/01/15', NULL);
+(4, 102, CAST('2024-06-11' AS DATE), CAST('2024-07-11' AS DATE), CAST('2024-06-25' AS DATE)),
+(11, 101, CAST('2024-06-20' AS DATE), CAST('2024-06-29' AS DATE), CAST('2024-06-28' AS DATE)),
+(1, 101, CAST('2024-07-02' AS DATE), CAST('2024-07-15' AS DATE), CAST('2024-07-13' AS DATE)),
+(1, 102, CAST('2024-09-15' AS DATE), CAST('2024-10-25' AS DATE), CAST('2024-10-20' AS DATE)),
+(5, 103, CAST('2024-11-23' AS DATE), CAST('2024-12-20' AS DATE), CAST('2024-12-18' AS DATE)),
+(12, 107, CAST('2024-12-03' AS DATE), CAST('2024-12-10' AS DATE), CAST('2024-12-11' AS DATE)),
+(2, 107, CAST('2024-12-07' AS DATE), CAST('2025-01-07' AS DATE), CAST('2025-01-20' AS DATE)),
+(9, 101, CAST('2025-01-03' AS DATE), CAST('2025-02-03' AS DATE), CAST('2025-02-02' AS DATE)),
+(5, 102, CAST('2025-05-13' AS DATE), CAST('2025-05-25' AS DATE), CAST('2025-05-21' AS DATE)),
+(6, 106, CAST('2025-05-19' AS DATE), CAST('2025-05-21' AS DATE), CAST('2025-05-25' AS DATE)),
+(8, 101, CAST('2025-05-27' AS DATE), CAST('2025-06-07' AS DATE), CAST('2025-06-09' AS DATE)),
+(7, 101, CAST('2025-05-28' AS DATE), CAST('2025-05-29' AS DATE), CAST('2025-05-29' AS DATE)),
+(9, 106, CAST('2025-06-05' AS DATE), CAST('2025-06-23' AS DATE), NULL),
+(12, 106, CAST('2025-06-11' AS DATE), CAST('2025-06-15' AS DATE), CAST('2025-06-21' AS DATE)),
+(3, 106, CAST('2025-06-21' AS DATE), CAST('2025-07-03' AS DATE), CAST('2025-07-05' AS DATE)),
+(2, 103, CAST('2025-11-25' AS DATE), CAST('2025-12-02' AS DATE), CAST('2025-12-01' AS DATE)),
+(1, 103, CAST('2025-12-09' AS DATE), CAST('2026-01-05' AS DATE), CAST('2026-01-02' AS DATE)),
+(4, 105, CAST('2026-01-10' AS DATE), CAST('2026-01-15' AS DATE), NULL),
+(3, 107, CAST('2026-01-10' AS DATE), CAST('2026-01-30' AS DATE), NULL),
+(6, 105, CAST('2026-01-10' AS DATE), CAST('2026-01-15' AS DATE), NULL);
 
 
 
@@ -98,6 +97,13 @@ WHERE genre = 'Action';
 
 -- List Members Who Recently Joined
 -- Fetch Details Of Members Who Joined In Last 9 Months
+SELECT 
+	*,
+	DATEDIFF(Month, joined_date, CAST(GETDATE() AS Date)) AS [diff(Months)]
+FROM Members
+WHERE joined_date >= DATEADD(MONTH, -9, GETDATE());
+
+-- Alternative Solution
 SELECT 
 	*,
 	DATEDIFF(Month, joined_date, CAST(GETDATE() AS Date)) AS [diff(Months)]
