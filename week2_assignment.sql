@@ -52,7 +52,7 @@ BEGIN
 		project_id INT IDENTITY(101, 1) PRIMARY KEY,
 		project_name VARCHAR(50) NOT NULL DEFAULT NULL,
 		start_date DATE DEFAULT CAST (GETDATE() AS DATE),
-		end_date DATE DEFAULT NULL,
+		end_date DATE DEFAULT NULL
 	);
 END
 
