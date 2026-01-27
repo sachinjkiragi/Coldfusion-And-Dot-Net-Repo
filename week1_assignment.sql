@@ -4,25 +4,25 @@ USE LibraryDB;
 
 CREATE TABLE Books (
 	book_id INT IDENTITY(1, 1) PRIMARY KEY,
-	book_name VARCHAR(100) NOT NULL DEFAULT '',
-	genre VARCHAR(100) NOT NULL DEFAULT '',
+	book_name VARCHAR(100) NOT NULL DEFAULT NULL,
+	genre VARCHAR(100) NOT NULL DEFAULT NULL,
 	is_available BIT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Members (
 	member_id INT IDENTITY(101, 1) PRIMARY KEY,
-	first_name VARCHAR(100) NOT NULL DEFAULT '',
+	first_name VARCHAR(100) NOT NULL DEFAULT NULL,
 	last_name VARCHAR(100),
-	joined_date DATE NOT NULL,
-	gender CHAR(1) NOT NULL DEFAULT ''
+	joined_date DATE NOT NULL DEFAULT NULL,
+	gender CHAR(1) NOT NULL DEFAULT NULL
 );
 
 CREATE TABLE BorrowingRecords (
 	borrowing_id INT IDENTITY(1,1) PRIMARY KEY,
 	book_id INT FOREIGN KEY REFERENCES Books(book_id),
 	member_id INT FOREIGN KEY REFERENCES Members(member_id),
-	issued_date DATE NOT NULL,
-	due_date DATE NOT NULL,
+	issued_date DATE NOT NULL DEFAULT NULL,
+	due_date DATE NOT NULL DEFAULT NULL,
 	returned_date DATE 
 );
 
