@@ -367,9 +367,16 @@ INSERT INTO EmployeeProject VALUES
 -- Update Salary Of Employee From 'IT' Department By 20% 
 UPDATE Employee
 SET salary = salary * 1.2
+WHERE dept_id = (SELECT dept_id FROM Department WHERE dept_name = 'IT');
+
+
+-- Alternative Query
+UPDATE Employee
+SET salary = salary * 1.2
 WHERE dept_id = (SELECT dept_id
 				 FROM Department
 				 WHERE dept_name = 'IT' AND Department.dept_id = Employee.dept_id);
+
 
 
 
@@ -512,25 +519,42 @@ ON Employee
 FOR INSERT
 AS
 BEGIN
+	SELECT * FROM inserted;
 	DECLARE @emp_id INT
 	SELECT @emp_id = emp_id FROM inserted;
 	INSERT INTO AuditLog VALUES
-	('A New Employee Record With Employee Id = ' + CAST(@emp_id AS VARCHAR(5)) + ' Is Inserted Into Employee Table On ' + CAST(GETDATE() AS VARCHAR(20))); 
+	('A New Employee Record With Employee Id = ' + CAST(@emp_id AS VARCHAR(5))  + ' Is Inserted Into Employee Table On ' + CAST(GETDATE() AS VARCHAR(20))); 
+END
+
+
+-- Trigger For Insert When Multiple Rows Are Inserted
+CREATE TRIGGER tr_Employee_InsertMultipleRows
+ON Employee
+FOR INSERT
+AS
+BEGIN
+	SELECT * INTO #tempTable FROM inserted;
+	DECLARE @emp_id INT
+	WHILE(EXISTS(SELECT emp_id FROM #tempTable))
+	BEGIN
+		SELECT @emp_id = emp_id FROM #tempTable;
+		INSERT INTO AuditLog VALUES
+		('A New Employee Record With Employee Id = ' + CAST(@emp_id AS VARCHAR(5))  + ' Is Inserted Into Employee Table On ' + CAST(GETDATE() AS VARCHAR(20))); 
+		DELETE FROM #tempTable WHERE emp_id = @emp_id;
+	END
 END
 
 INSERT INTO Employee VALUES
-('Mike', 'Paul', 2, 16000, 'mike@gmail.com', '2021/04/20');
+('Mike', 'Paul', 2, 16000, 'mike@gmail.com', '2021/04/20'),
+('raj', 'Paul', 2, 16000, 'raj@gmail.com', '2021/04/20'),
+('riha', 'Paul', 2, 16000, 'riha@gmail.com', '2021/04/20'),
+
 
 SELECT * FROM AuditLog;
-
-
-
 
 -- Resetting DB To Original Values
 EXEC spResetTables;
 EXEC spShowTables;
-
-
 
 
 -- Objective 4.2: Implement an INSTEAD OF DELETE trigger to prevent accidental deletion of records.
