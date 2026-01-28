@@ -514,19 +514,6 @@ CREATE TABLE AuditLog (
 	auditData VARCHAR(300)
 );
 
-CREATE TRIGGER tr_Employee_Insert
-ON Employee
-FOR INSERT
-AS
-BEGIN
-	SELECT * FROM inserted;
-	DECLARE @emp_id INT
-	SELECT @emp_id = emp_id FROM inserted;
-	INSERT INTO AuditLog VALUES
-	('A New Employee Record With Employee Id = ' + CAST(@emp_id AS VARCHAR(5))  + ' Is Inserted Into Employee Table On ' + CAST(GETDATE() AS VARCHAR(20))); 
-END
-
-
 -- Trigger For Insert When Multiple Rows Are Inserted
 CREATE TRIGGER tr_Employee_InsertMultipleRows
 ON Employee
