@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Prime or Not</title>
+        <title>Reverse String</title>
         <link rel="stylesheet" type="text/css" href="../../styles/style.css"/>
     </head>
     <body>

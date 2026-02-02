@@ -5,7 +5,7 @@
     </head>
     <body>
         <main class="main-container">
-            <h1>Program to check whether a number is prime or not</h1>
+            <h1>Simple Calculator</h1>
             <br/>
             <br/>
             <form method="POST" action="calculate.cfm">

@@ -9,7 +9,6 @@
 
 <cfswitch expression="#operator#">
     <cfcase value="+">
-        <cfset result = "#num1# + #num2# =  #num1 + num2#"/>
         <cfset result = num1 & " + " & num2 & " = " & (num1 + num2)/>
     </cfcase>
     <cfcase value="-">
@@ -30,4 +29,4 @@
     </cfdefaultcase>
 </cfswitch>
 
-<cflocation url = "success.cfm?result=#result#"/>
+<cflocation url = "success.cfm?result=#urlEncodedFormat(result)#"/>
