@@ -3,9 +3,6 @@
 <cfset val1 = -1/>
 <cfset val2 = -1/>
 
-<cfset arr = [5, 7, 3, 2, 4]/>
-<cfset temp = 0/>
-
 <html>
     <head>
         <title>List Sorting</title>
@@ -53,3 +50,4 @@
         <a href="index.cfm">Go Back</a>
     </main> 
 </body>
+
