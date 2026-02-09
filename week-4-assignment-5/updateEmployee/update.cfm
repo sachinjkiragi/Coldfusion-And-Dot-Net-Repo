@@ -1,4 +1,3 @@
-<cfdump var="#form#"/>
 <cfset error = false/>
 
 <cfif structKeyExists(form, "updateUsingcfquery")>
@@ -38,5 +37,6 @@
     </cfcatch>   
     </cftry>
 </cfif>
+
 
 <cflocation url="success.cfm?error=#error#"/>
