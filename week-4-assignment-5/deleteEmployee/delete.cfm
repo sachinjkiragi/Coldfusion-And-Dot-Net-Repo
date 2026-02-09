@@ -1,4 +1,3 @@
-<cfdump var="#url#"/>
 <cfset error = false/>
 <cfif structKeyExists(url, "deletUsingcfquery")>
     <cftry>
@@ -35,5 +34,6 @@
         <cfprocparam value="#4#" cfsqltype="CF_SQL_INTEGER"/>
     </cfstoredproc>
 </cfif>
+
 
 <cflocation url="success.cfm?error=#error#"/>
