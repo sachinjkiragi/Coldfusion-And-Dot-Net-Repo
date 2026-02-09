@@ -73,8 +73,9 @@
                     </form>
                 </cfoutput>
             </table>
+            <h4>Record Count: <cfoutput>#employeesByDept.recordCount#</cfoutput> </h4>
         </cfif>
-    <h4>Record Count: <cfoutput>#employeesByDept.recordCount#</cfoutput> </h4>
     <a href="../index.cfm">Go Back</a>
 </body>
+
 
