@@ -492,7 +492,7 @@ CREATE VIEW vWDeptEmployeeDeatils AS (
 	SELECT
 		Department.dept_id,
 		Department.dept_name,
-		COUNT(Department.dept_id) AS no_of_employees,
+		COUNT(Employee.dept_id) AS no_of_employees,
 		CAST(AVG(Employee.salary) AS DECIMAL(10, 2)) AS average_salary
 	FROM Department LEFT JOIN Employee
 	ON Department.dept_id = Employee.dept_id
@@ -612,4 +612,5 @@ FROM Employee;
 
 -- Resetting DB To Original Values
 EXEC spResetTables;
+
 EXEC spShowTables;
