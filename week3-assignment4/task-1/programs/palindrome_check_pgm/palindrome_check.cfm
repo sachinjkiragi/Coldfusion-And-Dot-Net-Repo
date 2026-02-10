@@ -1,6 +1,6 @@
 <cfparam name = "form.inputString" default="0" type="string"/>
 
-<cfset inputString = #form.inputString#/>
+<cfset inputString = form.inputString/>
 <cfset isPalindrome = true/>
 <cfset i = 1/>
 <cfset j = len(inputString)/>
