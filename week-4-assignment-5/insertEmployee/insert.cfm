@@ -1,8 +1,5 @@
 <cfset error = false/>
 
-<cfif form.salary EQ "" OR form.salary LTE 10000>
-    <cflocation url="success.cfm?error=#true#&salaryError=#true#"/>
-</cfif>
 
 <cfif structKeyExists(form, "insertUsingcfquery")>
     <cftry>

@@ -31,7 +31,7 @@
             </div>
             <div>
                 <label for="salary">Salary(min-10,001): </label>
-                <input name="salary" type="number"/>
+                <input id="salary" name="salary" type="number"/>
             </div>
             <div>
                 <label for="email">Email: </label>
@@ -42,11 +42,24 @@
                 <input name="hire_date" type="date"/>
             </div>
             <div>
-                <button type="submit" name="insertUsingcfquery">Add(Uses cfquery)</button>
-                <button type="submit" name="insertUsingproc">Add(Uses stored procesure)</button>
+                <button class="btn" type="submit" name="insertUsingcfquery">Add(Uses cfquery)</button>
+                <button class="btn" type="submit" name="insertUsingproc">Add(Uses stored procesure)</button>
             </div>
             <a href="../index.cfm">Go Back</a>
         </form>
     </main>
     
+    <script>
+        var btns = document.getElementsByClassName('btn');
+        var salary = document.getElementById('salary');
+        Array.from(btns).forEach(function(btn){
+            btn.addEventListener('click', (e)=>{
+                if(salary.value <= 10000){
+                    alert('salary must be greater than 10,000');
+                    e.preventDefault();
+                }
+            });
+        })
+    </script>
+
 </body>
