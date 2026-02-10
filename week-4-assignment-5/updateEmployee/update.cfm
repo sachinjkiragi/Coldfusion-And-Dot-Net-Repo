@@ -20,7 +20,6 @@
 </cfif>
 
 <cfif structKeyExists(form, "updateUsingProc")>
-    <h3>Hello</h3>
     <cftry>
         <cfstoredproc datasource="DSEms" procedure="spEmployeeCrud">
             <cfprocparam value="#form.emp_id#" cfsqltype="CF_SQL_INTEGER"/>
@@ -40,3 +39,4 @@
 
 
 <cflocation url="success.cfm?error=#error#"/>
+
