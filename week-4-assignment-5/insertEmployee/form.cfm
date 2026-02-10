@@ -30,7 +30,7 @@
             </select>
             </div>
             <div>
-                <label for="salary">Salary: </label>
+                <label for="salary">Salary(min-10,001): </label>
                 <input name="salary" type="number"/>
             </div>
             <div>
