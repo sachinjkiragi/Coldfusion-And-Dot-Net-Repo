@@ -44,7 +44,7 @@
             </cfoutput>
         </table>
         <div>
-            <button type="submit" name="updateUsingcfquery">Update(Uses cfquery)</button>
+            <button type="submit" name="updateUsingQuery">Update(Uses cfquery)</button>
             <button type="submit" name="updateUsingProc">Update(Uses procedure)</button>
         </div>
     </form>

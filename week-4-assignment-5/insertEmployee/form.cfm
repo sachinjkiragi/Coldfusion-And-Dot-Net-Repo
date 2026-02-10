@@ -42,7 +42,7 @@
                 <input name="hire_date" type="date"/>
             </div>
             <div>
-                <button class="btn" type="submit" name="insertUsingcfquery">Add(Uses cfquery)</button>
+                <button class="btn" type="submit" name="insertUsingQuery">Add(Uses cfquery)</button>
                 <button class="btn" type="submit" name="insertUsingproc">Add(Uses stored procesure)</button>
             </div>
             <a href="../index.cfm">Go Back</a>

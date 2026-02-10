@@ -1,6 +1,6 @@
 <cfset error = false/>
 
-<cfif structKeyExists(form, "updateUsingcfquery")>
+<cfif structKeyExists(form, "updateUsingQuery")>
     <cftry>
         <cfquery name="updateEmp" datasource="DSEms">
             UPDATE Employee

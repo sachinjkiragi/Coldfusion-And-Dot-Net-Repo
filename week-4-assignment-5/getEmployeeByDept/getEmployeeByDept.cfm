@@ -2,7 +2,7 @@
     SELECT * FROM Department;
 </cfquery>
 
-<cfif structKeyExists(form, "getByDeptIdUsingcfquery")>
+<cfif structKeyExists(form, "getByDeptIdUsingQuery")>
     <cfquery name="employeesByDept" datasource="DSEms">
         SELECT 
             emp_id,
@@ -44,7 +44,7 @@
                 </cfloop>
             </select>
             <div>
-                <button name="getByDeptIdUsingcfquery">Get Employees (Uses cfquery)</button>
+                <button name="getByDeptIdUsingQuery">Get Employees (Uses cfquery)</button>
                 <button name="getByDeptIdUsingProc">Get Employees (Uses Procedures)</button>
             </div>
         </form>

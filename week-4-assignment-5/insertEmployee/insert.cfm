@@ -1,7 +1,7 @@
 <cfset error = false/>
 
 
-<cfif structKeyExists(form, "insertUsingcfquery")>
+<cfif structKeyExists(form, "insertUsingQuery")>
     <cftry>
         <cfquery name="inserted" datasource="DSEms">
             INSERT INTO Employee

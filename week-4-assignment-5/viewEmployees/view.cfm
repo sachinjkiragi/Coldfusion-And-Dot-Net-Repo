@@ -61,8 +61,8 @@
                     <td>#employees.email#</td>
                     <td>#dateFormat(employees.hire_date, 'DD-MM-YYYY')#</td>
                     <td><a href="../updateEmployee/form.cfm?emp_id=#employees.emp_id#">Update</a></td>
-                    <td><a href="../deleteEmployee/delete.cfm?emp_id=#employees.emp_id#&deletUsingcfquery=1">Delete(Uses cfquery)</a></td>
-                    <td><a href="../deleteEmployee/delete.cfm?emp_id=#employees.emp_id#&deletUsingProc=1">Delete(Uses procedures)</a></td>
+                    <td><a href="../deleteEmployee/delete.cfm?emp_id=#employees.emp_id#&deleteUsingQuery=1">Delete(Uses cfquery)</a></td>
+                    <td><a href="../deleteEmployee/delete.cfm?emp_id=#employees.emp_id#&deleteUsingProc=1">Delete(Uses procedures)</a></td>
                 </tr>
             </form>
         </cfoutput>
