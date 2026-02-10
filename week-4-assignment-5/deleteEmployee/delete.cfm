@@ -12,17 +12,23 @@
 </cfif>
 
 <cfif structKeyExists(url, "deleteUsingProc")>
-    <cfstoredproc datasource="DSEms" procedure="spEmployeeCrud">
-        <cfprocparam value="#url.emp_id#" cfsqltype="CF_SQL_INTEGER"/>
-        <cfprocparam value="" cfsqltype="CF_SQL_VARCHAR"/>
-        <cfprocparam value="" cfsqltype="CF_SQL_VARCHAR"/>
-        <cfprocparam value="" cfsqltype="CF_SQL_INTEGER"/>
-        <cfprocparam value="" cfsqltype="CF_SQL_DECIMAL"/>
-        <cfprocparam value="" cfsqltype="CF_SQL_VARCHAR"/>
-        <cfprocparam value="" cfsqltype="CF_SQL_DATE"/>
-        <cfprocparam value="#4#" cfsqltype="CF_SQL_INTEGER"/>
-    </cfstoredproc>
+    <cftry>
+        <cfstoredproc datasource="DSEms" procedure="spEmployeeCrud">
+            <cfprocparam value="#url.emp_id#" cfsqltype="CF_SQL_INTEGER"/>
+            <cfprocparam value="" cfsqltype="CF_SQL_VARCHAR"/>
+            <cfprocparam value="" cfsqltype="CF_SQL_VARCHAR"/>
+            <cfprocparam value="" cfsqltype="CF_SQL_INTEGER"/>
+            <cfprocparam value="" cfsqltype="CF_SQL_DECIMAL"/>
+            <cfprocparam value="" cfsqltype="CF_SQL_VARCHAR"/>
+            <cfprocparam value="" cfsqltype="CF_SQL_DATE"/>
+            <cfprocparam value="#4#" cfsqltype="CF_SQL_INTEGER"/>
+        </cfstoredproc>
+    <cfcatch>
+        <cfset error = true/>
+    </cfcatch>
+    </cftry>
 </cfif>
 
 
 <cflocation url="success.cfm?error=#error#"/>
+
