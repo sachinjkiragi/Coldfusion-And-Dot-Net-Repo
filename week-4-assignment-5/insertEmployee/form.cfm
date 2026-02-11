@@ -1,6 +1,16 @@
 <cfquery name="getDeptInfo" datasource="DSEms">
     SELECT * FROM Department;
 </cfquery>
+<cfquery name="getEmails" datasource="DSEms">
+    SELECT email FROM Employee;
+</cfquery>
+
+<cfscript>
+    existingEmails = [];
+    for (i = 1; i <= getEmails.recordCount; i++) {
+        arrayAppend(existingEmails, getEmails.email[i]);
+    }
+</cfscript>
 
 <head>
     <title>Assignment-5</title>
@@ -13,7 +23,7 @@
             <h4>Add New Employee</h4>
             <div>
                 <label for="first_name">First Name: </label>
-                <input name="first_name" type="text"/>
+                <input name="first_name" type="text" required/>
             </div>
             <div>
                 <label for="last_name">Last Name: </label>
@@ -35,11 +45,11 @@
             </div>
             <div>
                 <label for="email">Email: </label>
-                <input name="email" type="email"/>
+                <input id='email' name="email" type="email" required/>
             </div>
             <div>
                 <label for="hire_date">Hire Date: </label>
-                <input name="hire_date" type="date"/>
+                <input name="hire_date" type="date" required/>
             </div>
             <div>
                 <button class="btn" type="submit" name="insertUsingQuery">Add(Uses cfquery)</button>
@@ -49,17 +59,25 @@
         </form>
     </main>
     
-    <script>
-        var btns = document.getElementsByClassName('btn');
-        var salary = document.getElementById('salary');
-        Array.from(btns).forEach(function(btn){
-            btn.addEventListener('click', (e)=>{
-                if(salary.value <= 10000){
-                    alert('salary must be greater than 10,000');
-                    e.preventDefault();
-                }
-            });
-        })
-    </script>
-
+    <cfoutput>
+        <script>
+            var btns = document.getElementsByClassName('btn');
+            var salary = document.getElementById('salary');
+            var email = document.getElementById('email');
+            Array.from(btns).forEach(function(btn){
+                btn.addEventListener('click', (e)=>{
+                    if(salary.value <= 10000){
+                        alert('salary must be greater than 10,000');
+                        e.preventDefault();
+                        return;
+                    }
+                    const jsonMails = #serializeJSON(existingEmails)#;
+                    if(jsonMails.includes(email.value) == true){
+                        alert('Email Exists Aleready! Enter different Email');
+                        e.preventDefault();
+                    }
+                });
+            })
+        </script>
+    </cfoutput>
 </body>
