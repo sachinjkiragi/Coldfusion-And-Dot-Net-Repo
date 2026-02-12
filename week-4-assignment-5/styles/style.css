@@ -1,0 +1,48 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.main-container{
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    gap: 2rem;
+}
+
+form{
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+
+button, a{
+    width: fit-content;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-weight: 600;
+    background-color: rgb(31, 190, 183);
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    text-decoration: none;
+}
+
+table td{
+    padding: 0.1rem 0.4rem;
+}
