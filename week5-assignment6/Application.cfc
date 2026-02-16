@@ -11,10 +11,10 @@
         <cflog file=#this.name# text="Application Started"/>
 
         <cfset dbTestError = true/>
-        <cfquery name="dbTest">
+        <cftry>
+            <cfquery name="dbTest">
                 SELECT TOP 2 id FROM Person;
             </cfquery>
-        <cftry>
         <cfcatch>
             <cfset dbTestError = false/>
         </cfcatch>
@@ -78,4 +78,5 @@
             <cflog type="error" file="#session.sessionId#" text="Request for a page (#targetPage#) which does not exists"/>
             <cfreturn true/>
         </cffunction>
+
 </cfcomponent>
