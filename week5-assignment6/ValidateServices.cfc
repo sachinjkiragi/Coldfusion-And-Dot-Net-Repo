@@ -2,7 +2,7 @@
 
     <cffunction name="isNameValid" returntype="boolean" access="private">
         <cfargument name="name" required="true" type="string"/>
-        <cfif len(name) EQ 0>
+        <cfif len(arguments.name) EQ 0>
             <cfreturn false/>
         <cfelse>
             <cfreturn true/>
@@ -11,7 +11,7 @@
 
     <cffunction name = "isEmailValid" returntype="boolean" access="private">
         <cfargument name="email" required="true" type="string">
-        <cfif len(email) EQ 0>
+        <cfif len(arguments.email) EQ 0>
             <cfreturn false/>
         <cfelse>
             <cfreturn true/>
@@ -20,7 +20,7 @@
 
     <cffunction name = "isPhoneValid" returntype="boolean" access="private">
         <cfargument name="phone" required="true" type="string">
-        <cfif len(phone) NEQ 10>
+        <cfif len(arguments.phone) NEQ 10>
             <cfreturn false/>
         <cfelse>
             <cfreturn true/>
@@ -28,8 +28,8 @@
     </cffunction>
 
     <cffunction name = "isAgeValid" returntype="boolean" access="private">
-        <cfargument name="pagehone" required="true" type="string">
-        <cfif age LTE 18>
+        <cfargument name="age" required="true" type="string">
+        <cfif arguments.age LTE 18>
             <cfreturn false/>
         <cfelse>
             <cfreturn true/>
@@ -40,19 +40,19 @@
         <cfargument name="formData" required="true" type="struct"/>
         <cfset errors = {}/>
         
-        <cfif isNameValid(formData.name) EQ false>
+        <cfif isNameValid(arguments.formData.name) EQ false>
             <cfset errors.name = "Invalid Name"/>
         </cfif>
 
-        <cfif isEmailValid(formData.name) EQ false>
+        <cfif isEmailValid(arguments.formData.name) EQ false>
             <cfset errors.email = "Invalid Email"/>
         </cfif>
         
-        <cfif isPhoneValid(formData.phone) EQ false>
+        <cfif isPhoneValid(arguments.formData.phone) EQ false>
             <cfset errors.phone = "Invalid Phone"/>
         </cfif>
         
-        <cfif isAgeValid(formData.age) EQ false>
+        <cfif isAgeValid(arguments.formData.age) EQ false>
             <cfset errors.age = "Invalid Age (must be greater than 18)"/>
         </cfif>
 
