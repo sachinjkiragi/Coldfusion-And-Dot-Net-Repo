@@ -31,9 +31,9 @@
                         <cflocation url="pages/home.cfm" addtoken="false"/>
                     <cfelse>
                         <cfoutput>
-                            <div>
+                            <div class="d-flex flex-column align-items-center">
                                 <cfloop collection = #error# index="key">        
-                                    <p class="text-danger">#error[key]#</p>
+                                    <p class="text-danger fw-semibold">#error[key]#</p>
                                 </cfloop>
                             </div>
                             </cfoutput>
@@ -44,3 +44,4 @@
     </body>
 
 </html>
+
