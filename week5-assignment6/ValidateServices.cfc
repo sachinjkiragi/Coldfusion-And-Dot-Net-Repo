@@ -38,7 +38,7 @@
 
     <cffunction name = "isUserDetailsValid" returntype="struct" access="public">
         <cfargument name="formData" required="true" type="struct"/>
-        <cfset errors = {}/>
+        <cfset var errors = {}/>
         
         <cfif isNameValid(arguments.formData.name) EQ false>
             <cfset errors.name = "Invalid Name"/>
@@ -59,3 +59,4 @@
         <cfreturn errors/>
     </cffunction>
 </cfcomponent>
+
