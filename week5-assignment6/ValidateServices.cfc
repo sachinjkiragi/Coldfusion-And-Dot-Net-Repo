@@ -19,8 +19,6 @@
         <cfargument name="formData" required="true" type="struct"/>
         <cfset var errors = {}/>
 
-        <cfdump var=#formData#/>
-
         <cfif isNameValid(arguments.formData.name) EQ false>
             <cfset var errors.name = true/>
         </cfif>
@@ -35,4 +33,5 @@
 
         <cfreturn errors/>
     </cffunction>
+
 </cfcomponent>
