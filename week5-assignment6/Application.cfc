@@ -1,4 +1,5 @@
 <cfcomponent>
+    
     <cfset this.name = "MyApp"/>
     <cfset this.customTagPaths = "customtags">
     <cfset this.sessionManagement = true/>
@@ -10,20 +11,20 @@
         <cfset application.sessions = 0/>
         <cflog file=#this.name# text="Application Started"/>
 
-        <cfset dbTestError = true/>
+        <cfset var dbTestSuccess = true/>
         <cftry>
             <cfquery name="dbTest">
                 SELECT TOP 2 id FROM Person;
             </cfquery>
         <cfcatch>
-            <cfset dbTestError = false/>
+            <cfset var dbTestSuccess = false/>
         </cfcatch>
         </cftry>
 
-        <cfif dbTestError EQ true>
-            <cflog file=#this.name# text="Database connected succesfully"/>
+        <cfif dbTestSuccess EQ true>
+            <cflog file=#this.name# text="Database connected succesfully."/>
         <cfelse>
-            <cflog file=#this.name# text="Error happened when trying to connect DB"/>
+            <cflog file=#this.name# text="Error happened when trying to connect DB."/>
         </cfif>
 
         <cfreturn true/>
@@ -71,12 +72,17 @@
 
     <cffunction name="onMissingTemplate" returntype="boolean">
         <cfargument type="string" name="targetPage" required="true"/>
-            <cfoutput>
-                <h1>#listLast(targetPage, '/')# Not Found! <br/> The page you are trying to access does not exists </h1>
-                <a href="/coldfusion-tutorial/week5-assignment6/index.cfm">Go Back To Initial Page</a>
-            </cfoutput>
-            <cflog type="error" file="#session.sessionId#" text="Request for a page (#targetPage#) which does not exists"/>
-            <cfreturn true/>
-        </cffunction>
+        <cflog type="error" file="#session.sessionId#" text="Request for a page (#targetPage#) which does not exists"/>
+        <cfinclude template="pages/notFound.cfm"/>
+        <cfreturn true/>
+    </cffunction>
 
+    <cffunction name="onError">
+        <cfargument name="Exception" required="true"/>
+        <cfargument type="String" name="EventName" required="true"/>
+        <cflog file="#session.sessionId#" type="error" text="Event Name: #Arguments.Eventname#" >
+        <cflog file="#session.sessionId#" type="error" text="Message: #Arguments.Exception.message#">
+        <cfinclude template="pages/error.cfm"/>
+    </cffunction>
+        
 </cfcomponent>

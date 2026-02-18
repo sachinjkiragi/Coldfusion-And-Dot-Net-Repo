@@ -8,5 +8,7 @@
         <a class="navbar-brand" href="../pages/contact.cfm">Contact</a>
         <a class="navbar-brand" href="../pages/about.cfm">About</a>
         <a class="navbar-brand" href="../index.cfm">Go Back To Index</a>
+        <a class="navbar-brand" href="../restartApp.cfm">Restart application</a>
+        <a class="navbar-brand" href="../endApp.cfm">End application</a>
     </div>
 </nav>
