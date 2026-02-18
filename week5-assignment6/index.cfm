@@ -35,7 +35,6 @@
         <cfif isEmpty(error)>
              <cflocation url="pages/home.cfm" addtoken="false"/>
         <cfelse>
-            <cfdump var=#error#/>
             <script>
                 var nameDiv = document.getElementById('name-div');
                 var phoneDiv = document.getElementById('phone-div');
@@ -62,3 +61,4 @@
         </cfif>
     </cfif>
 </html>
+
