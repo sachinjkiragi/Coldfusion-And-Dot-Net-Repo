@@ -3,7 +3,7 @@
     <cfset this.name = "MyApp"/>
     <cfset this.customTagPaths = "customtags">
     <cfset this.sessionManagement = true/>
-    <cfset this.applicationTimeout = createTimespan(0, 1, 0, 0)/>
+    <cfset this.applicationTimeOut = createTimespan(0, 1, 0, 0)/>
     <cfset this.sessionTimeOut = createTimespan(0, 0, 20, 0)/>
     <cfset this.datasource = "dstemp"/>
 
@@ -85,4 +85,5 @@
         <cfinclude template="pages/error.cfm"/>
     </cffunction>
         
+
 </cfcomponent>
