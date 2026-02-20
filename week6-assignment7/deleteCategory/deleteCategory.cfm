@@ -22,9 +22,9 @@
             <div class=" d-flex flex-column justify-content-center align-items-center">
                 <cfoutput>
                     <cfif success EQ true>
-                        <h2>Blog Deleted Successufully</h2>
+                        <h2>Category #url.category# Deleted Successufully</h2>
                     <cfelse>
-                        <h2>Error occurred while deleting a blog #url.blog# from #url.category#, Please choose anothe name</h2>
+                        <h2>Error occurred while deleting a #url.category#</h2>
                     </cfif>
                     <a class="btn btn-primary" href="../index.cfm">Go Back</a>
                 </cfoutput>

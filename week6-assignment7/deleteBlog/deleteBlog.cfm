@@ -24,7 +24,7 @@
                     <cfif success EQ true>
                         <h2>Blog Deleted Successufully</h2>
                     <cfelse>
-                        <h2>Error occurred while deleting a blog #url.blog# from #url.category#, Please choose anothe name</h2>
+                        <h2>Error occurred while deleting a blog #url.blog# from #url.category#</h2>
                     </cfif>
                     <a class="btn btn-primary" href="../viewCategory.cfm?category=#url.category#">Go Back</a>
                 </cfoutput>
