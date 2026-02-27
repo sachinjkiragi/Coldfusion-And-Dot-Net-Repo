@@ -1,12 +1,21 @@
 <cfset success = true/>
 <cftry>
-    <cfset destPath = expandPath('../categories') & "/" & url.category/>
-    <cfdirectory action="delete" recurse="true" directory=#destPath#/>
+    <cfset sourceDirectoryPath = expandPath('../categories') & "/" & url.category/>
+    <cfdirectory action="list" directory=#sourceDirectoryPath# name="blogs"/>
+    <cfloop query=#blogs#>
+        <cfset sourcePath = sourceDirectoryPath & "/" & blogs.name/>
+        <cfset binPath = expandPath('../bin')/>
+        <cfset destPath = #expandPath(binPath) & "/" & blogs.name#/>
+        <cfdirectory action="create" directory=#destPath# />
+        <cffile action="move" source=#sourcePath & "/content.txt"# destination=#destPath#/>
+        <cffile action="move" source=#sourcePath & "/image.jpg"# destination=#destPath#/>
+        <cfdirectory action="delete" recurse="true" directory=#sourcePath#/>
+    </cfloop>
+    <cfdirectory action="delete" recurse="true" directory=#sourceDirectoryPath#/>
 <cfcatch>
-    <cfoutput>
-        <cfset success = false/>
-        <cflog file="local blog" text=#cfcatch.message# type="error"/>
-    </cfoutput>
+    <cfoutput>#cfcatch#</cfoutput>
+    <cfset success = false/>
+    <cflog file="local blog" text=#cfcatch.message# type="error"/>
 </cfcatch>
 </cftry>
 

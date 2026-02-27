@@ -2,16 +2,13 @@
 
 <cftry>
     <cfset destPath = expandPath("../categories") & "/" & form.category & "/" & form.blogName>
-
     <cfdirectory action="create" directory=#destPath#/>
     <cffile action="upload" filefield="blogImage" destination=#destPath# result="res"/>
     <cffile action="rename" source=#destPath & "/" & res.serverFile# destination=#destPath & "/image.jpg"#/>
     <cffile action="write" file=#destPath & "/content.txt"# nameconflict="error" output=#form.content#/>
 <cfcatch>
-    <cfoutput>
-        <cfset success = false/>
-        <cflog file="local blog" text=#cfcatch.message# type="error"/>
-    </cfoutput>
+    <cfset success = false/>
+    <cflog file="local blog" text=#cfcatch.message# type="error"/>
 </cfcatch>
 </cftry>
 

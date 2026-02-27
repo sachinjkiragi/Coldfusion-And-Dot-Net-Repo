@@ -19,7 +19,7 @@
                             <input type="text" class="form-control" name="category" id="categoryblogName" required pattern="^{a-zA-Z0-9}$"/>    
                         </div>
                         <button type="submit" class="btn btn-primary" name="submit-btn">Create</button>
-                        <a class="mx-auto btn btn-primary" href="../index.cfm?category">Go Back</a>
+                        <a class="btn btn-primary" href="../index.cfm?category">Go Back</a>
                     </form>
                 </div>
             </div>

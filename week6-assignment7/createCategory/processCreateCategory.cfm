@@ -4,10 +4,8 @@
     <cfset destPath = expandPath("../categories") & "/" & form.category>
     <cfdirectory action="create" directory=#destPath#/>
 <cfcatch>
-    <cfoutput>
-        <cfset success = false/>
-        <cflog file="local blog" text=#cfcatch.message# type="error"/>
-    </cfoutput>
+    <cfset success = false/>
+    <cflog file="local blog" text=#cfcatch.message# type="error"/>
 </cfcatch>
 </cftry>
 

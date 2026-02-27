@@ -28,7 +28,7 @@
                             <textarea name="content" id="content" class="form-control" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary" name="submit-btn">Create</button>
-                        <a class="mx-auto btn btn-primary" href="../viewCategory.cfm?category=#url.category#">Go Back</a>
+                        <a class="btn btn-primary" href="../viewCategory.cfm?category=#url.category#">Go Back</a>
                     </form>
                 </div>
             </div>

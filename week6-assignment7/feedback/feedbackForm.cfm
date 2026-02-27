@@ -23,7 +23,7 @@
                             <textarea name="feedback" id="feedback" class="form-control" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary" name="submit-btn">Submit</button>
-                        <a class="mx-auto btn btn-primary" href="../index.cfm">Go Back</a>
+                        <a class="btn btn-primary" href="../index.cfm">Go Back</a>
                     </form>
                 </div>
             </div>
