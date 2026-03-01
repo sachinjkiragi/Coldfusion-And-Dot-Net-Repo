@@ -12,7 +12,7 @@
             <div class="border border-black">
                 <p class="text-center fw-normal display-6 mt-4">Welcome Receptionist</p>
             </div>
-            <div class="border border-black h-75 align-items-center d-flex">
+            <div class="border border-black d-flex">
                 <div class="text-white p-3" style="width: 20%">
                     <ul class="nav flex-column border border-black rounded overflow-hidden">
                         <li class="border-bottom border-black">

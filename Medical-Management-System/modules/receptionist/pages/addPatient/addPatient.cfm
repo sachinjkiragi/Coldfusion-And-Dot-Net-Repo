@@ -74,5 +74,19 @@
             alert('Given Email Already Exists!')
         </script>
     <cfelse>
+        <cfset form.password = randRange(100000, 999999)/>
+        <cfinvoke component="../../../../services/receptionistServices/receptionistQueries" method="insertPatientData" returnvariable="success">
+            <cfinvokeargument name="patientData" value=#form#/>
+        </cfinvoke>
+        
+        <cfif success EQ true>
+            <cfmail from="noreply@mms.com" to=#form.email# subject="temporary Passowrd for MMS Login">
+                Your temporary Passowrd for MMS Login #form.password#
+            </cfmail>
+            <script>alert('Registeration Done Successfully');</script>
+        <cfelse>
+            <script>alert('Registration failed. Please try again.');</script>
+        </cfif>
+
     </cfif>
 </cfif>

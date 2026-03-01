@@ -64,7 +64,7 @@
     </cfif>
 
     <cfif structKeyExists(form, "submit-btn") AND structKeyExists(session, "otp") AND structKeyExists(form, 'otp')>
-        <cfif  session.otp EQ form.otp>
+        <cfif session.otp EQ form.otp>
             <cfinvoke method="insertUserData" component="../services/userServices/userQueries" returnvariable="success">
                 <cfinvokeargument name="userData" value=#session.userData#/>
             </cfinvoke>

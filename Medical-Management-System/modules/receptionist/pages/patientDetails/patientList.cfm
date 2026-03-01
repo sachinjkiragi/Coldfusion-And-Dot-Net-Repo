@@ -8,7 +8,10 @@
             width: 100%;
             table-layout: fixed;
         }
-
+        #patientList td {
+    white-space: normal;
+    word-break: break-word;
+}
     </style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css"/>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -33,18 +36,10 @@
                         <td data-order=#first_name#>
                             <input readonly style="all: unset;" name="firstName" value=#patientList.first_name#>
                         </td>
-                        <td data-order=#last_name#>
-                            <input readonly style="all: unset;" name="lastName" value=#patientList.last_name#>
-                        </td>
-                        <td data-order=#patientList.email#>
-                            <input readonly style="all: unset;" name="email" value=#patientList.email#>
-                        </td>
-                        <td data-order=#patientList.phone#>
-                            <input readonly style="all: unset;" name="phone" value=#patientList.phone#>
-                        </td>
-                        <td data-order=#patientList.gender#>
-                            <input readonly style="all: unset;" name="gender" value=#patientList.gender#>
-                        </td>
+                        <td>#patientList.last_name#</td>
+                        <td> #patientList.email#</td>
+                        <td>#patientList.phone#</td>
+                        <td>#patientList.gender#</td>
                         <td>
                             <button class="btn btn-primary" name="update-userid" value=#patientList.user_id# type="submit">Update</button>
                         </td>
@@ -64,7 +59,11 @@
 
 <script>
     $(document).ready(function(){
-        $('table#patientList').DataTable();
+        $('table#patientList').DataTable({
+            pageLength: 5,
+            lengthMenu: [5, 10, 25],
+            autoWidth: false,
+        });
     })
 </script>
 
