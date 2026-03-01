@@ -3,19 +3,19 @@
     <cfif structKeyExists(session, "otp") EQ false>
         <cfset session.otp = randRange(100000, 999999)>
         <cfset session.otpTime = now()/>
-        <cfmail from="noreply@mms.com" to=#session.userData.email# subject="OTP Verification">
+        <!--- <cfmail from="noreply@mms.com" to=#session.userData.email# subject="OTP Verification">
             Your Otp Is #session.otp#
-        </cfmail>
+        </cfmail> --->
     </cfif>
 <cfcatch>
     <cfset success = false/>
-    <cfdump var=#cfcatch#/>
+    <!---<cfdump var=#cfcatch#/> --->
 </cfcatch>
 </cftry>
 
 <cfif success EQ true>
     <html>
-        <!---<cfdump var=#session#/>--->
+        <cfdump var=#session#/>
         <cfinclude template = "../includes/header.cfm"/>
         <div class="h-100 w-100 border border-black d-flex justify-content-center align-items-center">
             <form style="width: fit-content;" class="card shadow  p-5" method="POST">
@@ -56,18 +56,30 @@
         </cfif>
     </cffunction>
 
-    <cfif dateDiff("s", session.otpTime, now()) GT 30>
+    <cfif dateDiff("s", session.otpTime, now()) GT 120>
         <cfinvoke method="clearOtp"/>
         <script>
             alert('OTP Expired');
         </script>
     </cfif>
 
-    <cfif structKeyExists(form, "submit-btn") AND structKeyExists(session, "otp")>
-        <cfif session.otp EQ form.otp>
-            <cfinvoke method="clearOtp"/>
-            <cfinvoke method="clearUserData"/>
-            <cflocation url="../login/login.cfm"/>
+    <cfif structKeyExists(form, "submit-btn") AND structKeyExists(session, "otp") AND structKeyExists(form, 'otp')>
+        <cfif  session.otp EQ form.otp>
+            <cfinvoke method="insertUserData" component="../services/userServices/userQueries" returnvariable="success">
+                <cfinvokeargument name="userData" value=#session.userData#/>
+            </cfinvoke>
+            <cfif success EQ true>
+                <cfinvoke method="clearOtp"/>
+                <cfinvoke method="clearUserData"/>
+                <script>
+                    alert('Registration done successfully');
+                    window.location.href = '../login/login.cfm';
+                </script>
+            <cfelse>
+                <script>
+                    alert('Registration failed. Please try again.');
+                </script>
+            </cfif>
         <cfelse>
             <script>
                 alert('Invalid Otp');

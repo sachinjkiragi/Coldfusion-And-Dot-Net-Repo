@@ -1,4 +1,5 @@
 <cfinvoke method="getDepartments" component="../services/UserServices/userQueries" returnvariable="departments"/>
+<cfinvoke method="getRoles" component="../services/UserServices/userQueries" returnvariable="roles"/>
 
 <html>
     <cfinclude template = "../includes/header.cfm"/>
@@ -9,15 +10,14 @@
                     <h2 class="text-primary">Register Yourself As</h2>
                 </div>
                 <div class="p-2 d-flex gap-4 justify-content-center align-items-center">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="role" value="Receptionist" id="Receptionist" required>
-                        <label class="form-check-label" for="Receptionist">Receptionist</label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="role" value="doctor" id="doctor">
-                        <label class="form-check-label" for="doctor">Doctor</label>
-                    </div>
+                    <cfoutput query=#roles#>
+                        <cfif roles.role_name EQ "Doctor" OR roles.role_name EQ "Receptionist">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role_id" value=#roles.role_id# id=#roles.role_id# required>
+                                <label class="form-check-label" for=#roles.role_id#>#roles.role_name#</label>
+                            </div>
+                        </cfif>
+                    </cfoutput>
                 </div>
 
                 <div class="d-flex gap-4">
@@ -41,11 +41,11 @@
                             <span id="emailError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
-                            <input class="form-control" type="phone" id="phone" required placeholder="Your Phone *"/>
+                            <input name="phone" class="form-control" type="phone" id="phone" required placeholder="Your Phone *"/>
                             <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
-                            <select name="department" class="form-select" id="department" required>
+                            <select name="department_id" class="form-select" id="department" required>
                                 <option value="">Select Department *</option>
                                 <cfoutput query=#departments#>
                                     <option value=#departments.department_id#>#departments.department_name#</option>
@@ -94,6 +94,6 @@
     <cfelse>
         <cfset session.userData = duplicate(form)>
         <cfdump var=#session.userData#/>
-        <cflocation url="../utils/userValidator.cfm"/>
+        <cflocation url="utils/userValidator.cfm"/>
     </cfif>
 </cfif>
