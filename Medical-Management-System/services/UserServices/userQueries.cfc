@@ -13,6 +13,7 @@
         <cfreturn roles/>
     </cffunction>
 
+
     <cffunction name="doesMailExists" returntype="boolean">
         <cfargument name="email" required="true" type="string"/>
         <cfquery result="query">
@@ -47,6 +48,19 @@
         </cfcatch>
         </cftry>
         <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="isUserValid" returntype="query">
+        <cfargument name="credentials" type="struct"/>
+        <cfquery name="qryValidUser">
+            SELECT *
+            FROM Users 
+            WHERE
+            email = <cfqueryparam value=#credentials.email# cfsqltype="cf_sql_varchar"/>
+            AND
+            password = <cfqueryparam value=#credentials.password# cfsqltype="cf_sql_varchar"/>
+        </cfquery>
+        <cfreturn qryValidUser/>
     </cffunction>
 
 </cfcomponent>

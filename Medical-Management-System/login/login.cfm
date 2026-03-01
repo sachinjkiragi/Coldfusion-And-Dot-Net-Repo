@@ -16,8 +16,36 @@
                 <span title="Please complete all required fields">
                     <button class="btn btn-primary" type="submit" name="submit-btn"> Log In </button>
                 </span>
+                <span id="logInErrorMsg" class="text-danger d-none"></span>
                 <a href="../register/register.cfm" class="text-primary text-decoration-none">Register</a>
             </div>
         </form>
     </div>
 </html>
+
+<cfif structKeyExists(form, "submit-btn")>
+    <cfinvoke component="../services/UserServices/userQueries" method="isUserValid" returnvariable="qryCurrUser">
+        <cfinvokeargument name="credentials" value=#form#/>
+    </cfinvoke>
+    <cfif qryCurrUser.recordCount EQ 0>
+        <script>
+            var logInErrorEle = document.getElementById('logInErrorMsg');
+            logInErrorEle.classList.remove('d-none');
+            logInErrorEle.textContent = "Invalid email or password";
+        </script>
+    <cfelse>
+        <cfdump var=#qryCurrUser# label="qryCurrUser"/>
+        <cfset session.currUser = qryCurrUser/>
+        <cfdump var=#session# label="session"/>
+        <script>
+            alert('User Logged In Successfully');
+            <cfif session.currUser.role_id EQ 2>
+                window.location.href = "../modules/doctor/home.cfm";
+            <cfelseif session.currUser.role_id EQ 3>
+                window.location.href = "../modules/receptionist/home.cfm";
+            <cfelseif session.currUser.role_id EQ 4>
+                window.location.href = "../modules/patient/home.cfm";
+            </cfif>
+        </script>
+    </cfif>
+</cfif>
