@@ -39,7 +39,7 @@
                             <button class="btn btn-primary" name="updatePatientId" value=#patientList.user_id# type="submit">Update</button>
                         </td>
                         <td data-order=#patientList.gender#>
-                            <button class="btn btn-danger" name="delete-patientid" value=#patientList.user_id# type="submit">Delete</button>
+                            <button class="btn btn-danger" name="deletePatientId" value=#patientList.user_id# type="submit">Delete</button>
                         </td>
                     </tr>
                 </cfoutput>
@@ -68,5 +68,15 @@
     <cflocation url="home.cfm?reqPage=updatePatient&patientId=#form.updatePatientId#"/>
 </cfif>
 
-<cfif structKeyExists(form, "delete-patientid")>
+<cfif structKeyExists(form, "deletePatientId")>
+     <cfinvoke component="../../../../services/receptionistServices/receptionistQueries.cfc" method="deletePatient" returnvariable="success">
+        <cfinvokeargument name="patient_id" value=#form.deletePatientId#/>
+    </cfinvoke> 
+
+   <cfif success EQ true>
+        <script>alert("Patient record deleted successfully.");</script>
+    <cfelse>
+        <script>alert("Failed to delete patient record. Please try again.");</script>
+    </cfif>
+
 </cfif>
