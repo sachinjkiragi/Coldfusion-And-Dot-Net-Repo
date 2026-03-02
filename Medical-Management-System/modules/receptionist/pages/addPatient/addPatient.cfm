@@ -80,10 +80,13 @@
         </cfinvoke>
         
         <cfif success EQ true>
-            <cfmail from="noreply@mms.com" to=#form.email# subject="temporary Passowrd for MMS Login">
+            <!--- <cfmail from="noreply@mms.com" to=#form.email# subject="temporary Passowrd for MMS Login">
                 Your temporary Passowrd for MMS Login #form.password#
-            </cfmail>
+            </cfmail> --->
             <script>alert('Registeration Done Successfully');</script>
+            <cfif structKeyExists(session, "patientData")>
+                <cfset structDelete(session, "patientData")/>
+            </cfif>
         <cfelse>
             <script>alert('Registration failed. Please try again.');</script>
         </cfif>

@@ -15,7 +15,7 @@
 
 <cfif success EQ true>
     <html>
-        <cfdump var=#session#/>
+        <cfdump var=#session.otp#/>
         <cfinclude template = "../includes/header.cfm"/>
         <div class="h-100 w-100 border border-black d-flex justify-content-center align-items-center">
             <form style="width: fit-content;" class="card shadow  p-5" method="POST">
