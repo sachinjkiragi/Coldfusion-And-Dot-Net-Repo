@@ -95,4 +95,26 @@
         <cfreturn success/>
     </cffunction>
 
+    <cffunction name="isDoctorAvailable" returntype="boolean">
+        <cfargument name="appointmentDetails" type="struct"/>
+        <cfset success = true/>
+
+        <cftry>
+            <cfquery name="qryDoctorAvailable">
+                SELECT 1 
+                FROM Appointments 
+                WHERE doctor_id = <cfqueryparam value=#arguments.appointmentDetails.doctor_id#/>
+                AND slot_date = <cfqueryparam value=#arguments.appointmentDetails.slot_date#/>
+                AND timeslot_id = <cfqueryparam value=#arguments.appointmentDetails.timeslot_id#/> 
+            </cfquery>
+            <cfreturn qryDoctorAvailable.recordCount EQ 0/>
+        <cfcatch>
+            <cfset success = false/>
+            <cfdump var=#cfcatch# label="qryDoctorAvailable"/>
+        </cfcatch>
+        </cftry>
+
+        <cfreturn success/>
+    </cffunction>
+
 </cfcomponent>

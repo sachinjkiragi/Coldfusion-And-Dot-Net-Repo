@@ -83,9 +83,20 @@
 
 <cfif structKeyExists(form, "book-btn")>
     <cfset form.status = "Booked"/>
+
+    <cfinvoke component=#queryServicesPath# method="isDoctorAvailable" returnvariable="isAvailable">
+        <cfinvokeargument name="appointmentDetails" value=#form#/>
+    </cfinvoke>
+
+    <cfif isAvailable EQ false>
+        <script>alert('The selected date and time slot are not available for this doctor. Please choose another slot.');</script>
+        <cfabort/>
+    </cfif>
+
     <cfinvoke component=#queryServicesPath# method="insertAppointment" returnvariable="success">
         <cfinvokeargument name="appointmentDetails" value=#form#/>
     </cfinvoke>
+
 
     <cfif success EQ true>
         <script>
