@@ -1,5 +1,4 @@
-<cfinvoke method="getRoles" component="../../../../services/UserServices/userQueries" returnvariable="roles"/>
-
+<cfinvoke method="getRoles" component="../../../../services/UserServices/userQueries.cfc" returnvariable="roles"/>
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
     <div class="h-100 w-100 border border-black d-flex justify-content-center align-items-center">
@@ -84,9 +83,6 @@
                 Your temporary Passowrd for MMS Login #form.password#
             </cfmail> --->
             <script>alert('Registeration Done Successfully');</script>
-            <cfif structKeyExists(session, "patientData")>
-                <cfset structDelete(session, "patientData")/>
-            </cfif>
         <cfelse>
             <script>alert('Registration failed. Please try again.');</script>
         </cfif>

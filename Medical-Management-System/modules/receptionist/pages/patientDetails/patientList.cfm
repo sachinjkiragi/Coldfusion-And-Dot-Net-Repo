@@ -30,18 +30,16 @@
             <tbody>
                 <cfoutput query=#patientList#>
                     <tr style="width: 10rem;">
-                        <td data-order=#first_name#>
-                            <input readonly style="all: unset;" name="firstName" value=#patientList.first_name#>
-                        </td>
+                        <td>#patientList.first_name#</td>
                         <td>#patientList.last_name#</td>
                         <td> #patientList.email#</td>
                         <td>#patientList.phone#</td>
                         <td>#patientList.gender#</td>
                         <td>
-                            <button class="btn btn-primary" name="update-userid" value=#patientList.user_id# type="submit">Update</button>
+                            <button class="btn btn-primary" name="updatePatientId" value=#patientList.user_id# type="submit">Update</button>
                         </td>
                         <td data-order=#patientList.gender#>
-                            <button class="btn btn-danger" name="delete-userid" value=#patientList.user_id# type="submit">Delete</button>
+                            <button class="btn btn-danger" name="delete-patientid" value=#patientList.user_id# type="submit">Delete</button>
                         </td>
                     </tr>
                 </cfoutput>
@@ -64,8 +62,11 @@
     })
 </script>
 
-<cfif structKeyExists(form, "update-userid")>
+<cfif structKeyExists(form, "updatePatientId")>
+    <cfdump var=#form#/>
+    <cfdump var=#form.updatePatientId#/>
+    <cflocation url="home.cfm?reqPage=updatePatient&patientId=#form.updatePatientId#"/>
 </cfif>
 
-<cfif structKeyExists(form, "delete-userid")>
+<cfif structKeyExists(form, "delete-patientid")>
 </cfif>

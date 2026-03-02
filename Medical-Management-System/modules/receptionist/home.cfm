@@ -79,6 +79,10 @@
                         <cfcase value="addPatient">
                             <cfinclude template="pages/addPatient/addPatient.cfm"/>
                         </cfcase>
+                        <cfcase value="updatePatient">
+                            <cfset patientIdToUpdate = url.patientId/>
+                            <cfinclude template="pages/updatePatient/updatePatient.cfm"/>
+                        </cfcase>
                     </cfswitch>
                 </div>
             </div>

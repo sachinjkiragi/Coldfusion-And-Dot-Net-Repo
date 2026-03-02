@@ -23,8 +23,9 @@
 
     <cffunction name="doesMailExists" returntype="boolean">
         <cfargument name="email" required="true" type="string"/>
+        
         <cfquery result="query">
-            SELECT 1 
+            SELECT * 
             FROM Users 
             WHERE email = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">
         </cfquery>
@@ -50,6 +51,27 @@
             </cfquery>
         <cfcatch>
             <cfdump var=#cfcatch#/>
+            <cfset success = false/>
+        </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="updatePatientData" returntype="boolean">
+        <cfargument name="patientData" type="struct"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryUpdate">
+                UPDATE Users
+                 SET 
+                    first_name = <cfqueryparam value="#arguments.patientData.firstName#" cfsqltype="cf_sql_varchar"/>,
+                    last_name  = <cfqueryparam value="#arguments.patientData.lastName#" cfsqltype="cf_sql_varchar"/>,
+                    email = <cfqueryparam value="#arguments.patientData.email#" cfsqltype="cf_sql_varchar"/>,
+                    phone = <cfqueryparam value="#arguments.patientData.phone#" cfsqltype="cf_sql_varchar"/>,
+                    gender = <cfqueryparam value="#arguments.patientData.gender#" cfsqltype="cf_sql_char"/>
+                WHERE user_id = <cfqueryparam value="#arguments.patientData.patient_id#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+        <cfcatch>
             <cfset success = false/>
         </cfcatch>
         </cftry>
@@ -115,6 +137,21 @@
         </cftry>
 
         <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="getPatientData" returntype="query">
+        <cfargument name="patient_id" type="numeric"/>
+        <cftry>
+            <cfquery name="qryPatientData">
+                SELECT first_name, last_name, email, phone, gender
+                FROM Users 
+                WHERE user_id = <cfqueryparam value=#arguments.patient_id# cfsqltype="cf_sql_integer"/> 
+            </cfquery>
+            <cfreturn qryPatientData/>
+            <cfcatch>
+                <cfdump var=#cfcatch#/>
+            </cfcatch>
+        </cftry> 
     </cffunction>
 
 </cfcomponent>
