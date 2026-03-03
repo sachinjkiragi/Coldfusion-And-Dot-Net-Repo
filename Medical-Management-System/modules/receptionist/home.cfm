@@ -83,6 +83,10 @@
                             <cfset patientIdToUpdate = url.patientId/>
                             <cfinclude template="pages/updatePatient/updatePatient.cfm"/>
                         </cfcase>
+                        <cfcase value="updateAppointment">
+                            <cfset appointmentIdToUpdate = url.appointmentId/>
+                            <cfinclude template="pages/updateAppointment/updateAppointment.cfm"/>
+                        </cfcase>
                     </cfswitch>
                 </div>
             </div>

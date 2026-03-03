@@ -29,7 +29,7 @@
                     <select id="patient" class="form-control form-select" name="patient_id" style="width: fit-content;" required>
                         <option value="">Select Patient</option>
                         <cfoutput query=#patientList#>
-                            <option value=#patientList.user_id#>#patientList.first_name#  #doctorList.last_name#</option>
+                            <option value=#patientList.user_id#>#patientList.first_name#  #patientList.last_name#</option>
                         </cfoutput>
                     </select>
                 </div>

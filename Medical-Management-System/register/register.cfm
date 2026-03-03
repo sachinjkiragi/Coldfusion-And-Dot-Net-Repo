@@ -94,6 +94,6 @@
     <cfelse>
         <cfset session.userData = duplicate(form)>
         <cfdump var=#session.userData#/>
-        <cflocation url="utils/userValidator.cfm"/>
+        <cflocation url="../utils/userValidator.cfm"/>
     </cfif>
 </cfif>
