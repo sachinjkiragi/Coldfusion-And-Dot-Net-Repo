@@ -234,4 +234,29 @@
     </cffunction>
 
 
+    <cffunction name="getDoctorsAvailability" returntype="query">
+        <cfargument name="doctor_id" type="string"/>
+        <cfargument name="slot_date" type="string"/>
+            <cftry>
+                <cfquery name="qryAvailabilityList">
+                    WITH cte AS(
+                        SELECT * 
+                        FROM Appointments
+                        WHERE Appointments.doctor_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_integer"/> AND Appointments.slot_date = <cfqueryparam value="#form.slot_date#" cfsqltype="date"/>
+                        ),
+                        res AS(
+                            SELECT Time_Slots.start_time, Time_Slots.end_time
+                            FROM Time_Slots LEFT JOIN cte
+                            ON Time_Slots.timeslot_id = cte.timeslot_id
+                            WHERE cte.appointment_id IS NULL
+                        ) SELECT * FROM res;
+                </cfquery>
+                <cfreturn qryAvailabilityList/>
+                <cfcatch>
+                    <cfdump var=#cfcatch#/>
+                </cfcatch>
+            </cftry>
+    </cffunction>
+
+
 </cfcomponent>

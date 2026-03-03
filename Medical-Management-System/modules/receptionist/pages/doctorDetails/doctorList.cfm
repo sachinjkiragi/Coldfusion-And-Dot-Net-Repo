@@ -23,6 +23,7 @@
                     <th>Phone</th>
                     <th>Department</th>
                     <th>Gender</th>
+                    <th>Check Availability</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,6 +35,9 @@
                         <td>#doctorList.phone#</td>
                         <td>#doctorList.department_name#</td>
                         <td>#doctorList.gender#</td>
+                        <td>
+                            <button class="btn btn-primary" name="checkDoctorId" value=#doctorList.user_id# type="submit">Check</button>
+                        </td>
                     </tr>
                 </cfoutput>
             </tbody>
@@ -54,3 +58,9 @@
         });
     })
 </script>
+
+
+<cfif structKeyExists(form, "checkDoctorId")>
+    <cfdump var=#form#/>
+    <cflocation url="home.cfm?reqPage=doctorAvailability&doctorId=#form.checkDoctorId#"/>
+</cfif>
