@@ -174,7 +174,6 @@
 
 
     <cffunction name="getAppointmentList" returntype="query">
-        <cfargument name="role" type="string"/>
         <cfquery name="qryAppointmentList">
             SELECT Appointments.*,
             (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.doctor_id) AS 'doctor_name',
