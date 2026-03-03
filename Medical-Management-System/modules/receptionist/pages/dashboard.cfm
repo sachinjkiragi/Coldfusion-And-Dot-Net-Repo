@@ -16,7 +16,7 @@
         </div>
         <div class="text-center">
             <h4 class="text-secondary">Schedule</h4>
-            <a class="text-decoration-none" href="home.cfm?reqPage=scheduleAppointments">Schedule Appointments</a>
+            <a class="text-decoration-none" href="home.cfm?reqPage=scheduleAppointment">Schedule Appointments</a>
         </div>
     </div>
 </div>
