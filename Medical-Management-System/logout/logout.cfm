@@ -1,2 +1,2 @@
 <structClear(session)/>
-<h2>Log Out</h2>
+<cflocation url="../login/login.cfm"/>

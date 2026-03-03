@@ -75,7 +75,7 @@
                 <span title="Please complete all required fields">
                     <button class="btn btn-primary" type="submit" name="register-btn"> Register </button>
                 </span>
-                <a href="login/login.cfm" class="text-primary text-decoration-none">Log In</a>
+                <a href="../login/login.cfm" class="text-primary text-decoration-none">Log In</a>
             </div>
         </form>
     </div>
