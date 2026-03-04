@@ -1,8 +1,10 @@
+<cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="getMedicines" returnvariable="medicineList"/>
+<cfset noOfMedicines = 0/>
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
-    <div class="h-100 w-100 border border-black d-flex">
+    <div class="h-100 w-100  d-flex justify-content-center">
         <form class="p-5" method="POST">
-            <div class="border border-black d-flex flex-column gap-3 align-items-center">
+            <div class="d-flex flex-column gap-3 align-items-center justify-content-center">
                 <div>
                     <h2 class="text-primary text-center">Add Prescription</h2>
                 </div>
@@ -13,14 +15,33 @@
                             <input name="diagnosis" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis *"/>
                         </div>
                         <div>
-                            <textarea rows="1" cols="80" name="diagnosis_notes" class="form-control" type="text" id="diagnosis_notes" placeholder="Diagnosis Notes"></textarea>
+                            <textarea rows="1" cols="40" name="diagnosis_notes" class="form-control" type="text" id="diagnosis_notes" placeholder="Diagnosis Notes"></textarea>
                         </div>
                     </div>
                 </div>
                 
+                <div id="availableMedicines" class="d-flex justify-content-between w-100 gap-4 p-0">
+                    <div>
+                        <select id="medicineList" class="form-control d-block form-select" name="medicine_id" style="width: fit-content;">
+                            <option value="">Select Medicine</option>
+                            <cfoutput query="#medicineList#">
+                                <option value="#medicineList.medicine_id#">#medicine_name#</option>
+                            </cfoutput>
+                        </select>
+                    </div>
+                    <div class="form-check">
+                        <input type="number" min="0" class="form-control" name="medicine_qty" placeholder="Quantity"/>
+                    </div>
+                </div>
+                <div>
+                    <textarea rows="1" cols="70" name="dosage_info" class="form-control" type="text" id="dosage_info" placeholder="Dosage Information"></textarea>
+                </div>
+                
                 <span title="Please complete all required fields">
-                    <button class="btn btn-primary" type="submit" name="add-btn">Create Prescription</button>
+                    <button class="btn btn-primary" type="submit" name="btn-create-prescription">Create Prescription</button>
                 </span>
+                
+                <a href="home.cfm?reqPage=appointments" class="text-primary text-decoration-none">Go Back</a>
 
             </div>
         </form>
@@ -29,28 +50,23 @@
     <script src="pages/addPatient/addPatient.js"></script>
 </html>
 
-<cfif structKeyExists(form, "register-btn")>
-    <cfinvoke method="doesMailExists" component="../../../../services/receptionistServices/receptionistQueries" returnvariable="flag">
-        <cfinvokeargument name="email" value=#form.email#/>
-    </cfinvoke>
-    <cfif flag EQ true>
-        <script>
-            alert('Given Email Already Exists!')
-        </script>
-    <cfelse>
-        <cfset form.password = randRange(100000, 999999)/>
-        <cfinvoke component="../../../../services/receptionistServices/receptionistQueries" method="insertPatientData" returnvariable="success">
-            <cfinvokeargument name="patientData" value=#form#/>
-        </cfinvoke>
-        
-        <cfif success EQ true>
-            <!--- <cfmail from="noreply@mms.com" to=#form.email# subject="temporary Passowrd for MMS Login">
-                Your temporary Passowrd for MMS Login #form.password#
-            </cfmail> --->
-            <script>alert('Registeration Done Successfully');</script>
-        <cfelse>
-            <script>alert('Registration failed. Please try again.');</script>
-        </cfif>
 
+<cfif structKeyExists(form, 'btn-create-prescription')>
+    <cfset form.appointment_id = url.appointment_id/>
+    <cfset form.digital_signature = '#session.currUser.email# #session.currUser.password#'/>
+    <cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="doesPrescriptionExists" returnvariable="doesExists">
+        <cfinvokeargument name="appointment_id" value="#form.appointment_id#"/>
+    </cfinvoke>
+
+    <cfif doesExists EQ true>
+        <script>
+            alert('Prescription Already Exists for this Appointment');
+        </script>
+        <cfabort/>
     </cfif>
+
+    <cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="addPrescription" returnvariable="success">
+        <cfinvokeargument name="prescription_data" value="#form#"/>
+    </cfinvoke>
+    <cfdump var=#form#/>
 </cfif>
