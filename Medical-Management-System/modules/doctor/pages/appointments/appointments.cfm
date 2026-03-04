@@ -70,3 +70,6 @@
 <cfif structKeyExists(form, "btnAdd")>
     <cflocation url="home.cfm?reqPage=addPrescription&appointment_id=#form.btnAdd#"/>
 </cfif>
+<cfif structKeyExists(form, "btnView")>
+    <cflocation url="home.cfm?reqPage=viewPrescription&appointment_id=#form.btnView#"/>
+</cfif>

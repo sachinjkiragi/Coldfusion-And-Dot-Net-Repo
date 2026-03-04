@@ -68,5 +68,7 @@
     <cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="addPrescription" returnvariable="success">
         <cfinvokeargument name="prescription_data" value="#form#"/>
     </cfinvoke>
-    <cfdump var=#form#/>
+    <cfif success EQ true>
+        <script>alert('Prescription added successfully')</script>
+    </cfif>
 </cfif>

@@ -53,6 +53,12 @@
                 );
             </cfquery>
 
+            <cfquery name="updateStatus">
+                UPDATE Appointments 
+                SET status = <cfqueryparam value="Completed" cfsqltype="cf_sql_varchar"/>
+                WHERE appointment_id =  <cfqueryparam value="#arguments.prescription_data.appointment_id#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+
             <cfif arguments.prescription_data.medicine_id NEQ "">
 
                 <cfset newPrescriptionId = res.generatedKey>
@@ -74,6 +80,28 @@
                 <cfdump var=#cfcatch#/>
             </cfcatch>
         </cftry>
+    </cffunction>
+
+    <cffunction name="getPrescriptionData" returntype="query">
+        <cfargument name="appointment_id" type="numeric"/>
+        <cftry>
+            <cfquery name="qryPrescription">
+                SELECT
+                 Prescriptions.prescription_id,
+                 Prescriptions.diagnosis, 
+                 Prescriptions.diagnosis_notes, 
+                 Medicine_Prescriptions.quantity, 
+                 Medicine_Prescriptions.medicine_id, 
+                 Medicine_Prescriptions.dosage_info
+                FROM Prescriptions JOIN Medicine_Prescriptions
+                ON Medicine_Prescriptions.prescription_id = Prescriptions.prescription_id
+                WHERE Prescriptions.appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer">
+            </cfquery>
+            <cfreturn qryPrescription/>
+            <cfcatch>
+                <cfdump var=#cfcatch#/>
+            </cfcatch>
+        </cftry> 
     </cffunction>
 
 </cfcomponent>
