@@ -1,1 +1,1 @@
-<h2>Dashboard</h2>
+<cflocation url="home.cfm?reqPage=appointments"/>

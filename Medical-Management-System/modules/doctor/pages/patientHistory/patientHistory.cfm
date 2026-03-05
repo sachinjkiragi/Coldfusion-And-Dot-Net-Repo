@@ -46,6 +46,9 @@
                 </cfoutput>
             </tbody>
         </table>
+        <div class="mx-auto" style="width: fit-content;">
+            <a href="home.cfm?reqPage=appointments">Go Back</a>
+        </div>
     </form>
 
 

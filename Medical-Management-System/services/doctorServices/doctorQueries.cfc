@@ -143,7 +143,8 @@
                 UPDATE Medicine_Prescriptions
                 SET 
                 medicine_id = <cfqueryparam value="#arguments.prescriptionData.medicine_id#" cfsqltype="cf_sql_integer"/>,
-                quantity = <cfqueryparam value="#arguments.prescriptionData.medicine_qty#" cfsqltype="cf_sql_integer"/>
+                quantity = <cfqueryparam value="#arguments.prescriptionData.medicine_qty#" cfsqltype="cf_sql_integer"/>,
+                dosage_info = <cfqueryparam value="#arguments.prescriptionData.dosage_info#" cfsqltype="cf_sql_varchar"/>
                 WHERE prescription_id = <cfqueryparam value="#arguments.prescriptionData.btn_update_prescriptionid#"/>
             </cfquery>
 

@@ -56,7 +56,7 @@
                         <button class="btn btn-primary" type="submit" name="btn_update_prescriptionid" value="#prescriptionData.prescription_id#">Update Prescription</button>
                     </span>
                     
-                    <a href="home.cfm?reqPage=viewPrescription?appointment_id=#prescriptionData.appointment_id#" class="text-primary text-decoration-none">Go Back</a>
+                    <a href="home.cfm?reqPage=viewPrescription&appointment_id=#prescriptionData.appointment_id#" class="text-primary text-decoration-none">Go Back</a>
                 </div>
             </form>
         </cfoutput>
