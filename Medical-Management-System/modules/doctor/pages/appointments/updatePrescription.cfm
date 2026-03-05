@@ -30,7 +30,7 @@
                     
                     <div id="availableMedicines" class="d-flex justify-content-between w-100 gap-4 p-0">
                         <div>
-                            <label class="form-label fw-semibold">Medicie:</label>
+                            <label class="form-label fw-semibold">Medicine:</label>
                             <select id="medicineList" class="form-control d-block form-select" name="medicine_id" style="width: fit-content;">
                                 <option value="">Select Medicine</option>
                                 <cfoutput query="#medicineList#">

@@ -1,9 +1,9 @@
 <cfset appointment_id = url.appointment_id/>
-<cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="getPrescriptionData" returnvariable="prescriptionData">
+<cfinvoke component="../../../../services/patientServices/patientQueries.cfc" method="getPrescriptionData" returnvariable="prescriptionData">
     <cfinvokeargument name="appointment_id" value="#appointment_id#"/>
 </cfinvoke>
 
-<cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="getMedicines" returnvariable="medicineList"/>
+<cfinvoke component="../../../../services/patientServices/patientQueries.cfc" method="getMedicines" returnvariable="medicineList"/>
 
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
@@ -14,16 +14,21 @@
                     <div>
                         <h2 class="text-primary text-center">Prescription Details</h2>
                     </div>
-                    
+                    <div class="form-check d-flex gap-4 p-0 w-100">
+                        <div class="w-100">
+                            <label class="form-label fw-semibold">Doctor:</label>
+                            <input readonly name="doctor_name" value="#prescriptionData.doctor_name#" class="form-control w-100" type="text" id="diagnosis" required placeholder="Diagnosis *"/>
+                        </div>
+                    </div>
                     <div class="d-flex gap-4">
                         <div class="form-check d-flex gap-4 p-0">
                             <div>
                                 <label class="form-label fw-semibold">Diagnosis:</label>
-                                <input readonly value="#prescriptionData.diagnosis#" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis *"/>
+                                <input readonly name="diagnosis" value="#prescriptionData.diagnosis#" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis *"/>
                             </div>
                             <div>
                                 <label class="form-label fw-semibold">Diagnosis Notes:</label>
-                                <textarea readonly rows="1" cols="40" class="form-control" type="text" id="diagnosis_notes" placeholder="Diagnosis Notes">#prescriptionData.diagnosis_notes#</textarea>
+                                <textarea name="diagnosis_notes" readonly rows="1" cols="40" class="form-control" type="text" id="diagnosis_notes" placeholder="Diagnosis Notes">#prescriptionData.diagnosis_notes#</textarea>
                             </div>
                         </div>
                     </div>
@@ -33,33 +38,44 @@
                             <cfoutput query="#medicineList#">
                                 <cfif medicineList.medicine_id EQ prescriptionData.medicine_id>
                                     <label class="form-label fw-semibold">Medicine:</label>
-                                    <input class="form-control" readonly value="#medicineList.medicine_name#"/>
+                                    <input name="medicine_name" class="form-control" readonly value="#medicineList.medicine_name#"/>
                                     <input type="hidden" value="#medicineList.medicine_id#"/>
                                 </cfif>
                             </cfoutput>
                         </div>
                         <div class="form-check">
                             <label class="form-label fw-semibold">Quantity:</label>
-                            <input readonly type="number" min="0" class="form-control"  placeholder="Quantity" value="#prescriptionData.quantity#"/>
+                            <input name="medicine_quantity" readonly type="number" min="0" class="form-control"  placeholder="Quantity" value="#prescriptionData.quantity#"/>
                         </div>
                     </div>
                     <div>
                         <label class="form-label fw-semibold">Dosage Info:</label>
-                        <textarea readonly rows="1" cols="70" class="form-control" type="text" id="dosage_info" placeholder="Dosage Information">#prescriptionData.dosage_info#</textarea>
+                        <textarea readonly rows="1" cols="70" class="form-control" type="text" id="dosage_info" name="dosage_info" placeholder="Dosage Information">#prescriptionData.dosage_info#</textarea>
                     </div>
                     
                     <span title="Please complete all required fields">
-                        <button class="btn btn-primary" type="submit" name="update_prescription_id" value="#prescriptionData.prescription_id#">Update Prescription</button>
+                        <button class="btn btn-primary" type="submit" name="btn_download_prescription" value="#prescriptionData.prescription_id#">Download Prescription</button>
                     </span>
                     
                     <a href="home.cfm?reqPage=appointments" class="text-primary text-decoration-none">Go Back</a>
-                    
                 </div>
             </form>
         </cfoutput>
     </div>
 </html>
 
-<cfif structKeyExists(form, "update_prescription_id")>
-    <cflocation url="home.cfm?reqPage=updatePrescription&prescription_id=#form.update_prescription_id#"/>
+<cfif structKeyExists(form, "btn_download_prescription")>
+<cfset fileContent = "
+Prescription Details
+Doctor: #form.doctor_name#
+Diagnosis: #form.diagnosis#
+Diagnosis Notes: #form.diagnosis_notes#
+Medicine: #form.medicine_name#
+Quantity: #form.medicine_quantity#
+Dosage Info: #form.dosage_info#">
+
+    <cfheader name="Content-Disposition" value="attachment; filename=prescription.txt">
+    <cfcontent type="text/plain" reset="true">
+    <cfoutput>#fileContent#</cfoutput>
+    <cfabort/>
 </cfif>

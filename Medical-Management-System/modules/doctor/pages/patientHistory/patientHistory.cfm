@@ -51,7 +51,6 @@
         </div>
     </form>
 
-
 <script>
     $(document).ready(function(){
         $('table#patientHistory').DataTable({
