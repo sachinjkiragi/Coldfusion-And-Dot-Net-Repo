@@ -2,7 +2,6 @@
     <cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="getAppointmentList" returnvariable="appointmentList">
         <cfinvokeargument name="doctor_id" value="#session.currUser.user_id#"/>
     </cfinvoke>
-
     <style>
         #appointmentList {
             width: 100%;
@@ -25,6 +24,7 @@
                     <th>End Time</th>
                     <th>Status</th>
                     <th>View/Add Prescription</th>
+                    <th>Patient History</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,6 +44,9 @@
                             <cfelse>
                                 <button name="btnView" value="#appointmentList.appointment_id#" class="btn btn-primary">View</button>
                             </cfif>
+                        </td>
+                        <td>
+                            <button name="btnViewPatientIdHistory" value="#appointmentList.patient_id#" class="btn btn-primary">View</button>
                         </td>
                     </tr>
                 </cfoutput>
@@ -69,7 +72,8 @@
 
 <cfif structKeyExists(form, "btnAdd")>
     <cflocation url="home.cfm?reqPage=addPrescription&appointment_id=#form.btnAdd#"/>
-</cfif>
-<cfif structKeyExists(form, "btnView")>
-    <cflocation url="home.cfm?reqPage=viewPrescription&appointment_id=#form.btnView#"/>
+    <cfelseif structKeyExists(form, "btnView")>
+        <cflocation url="home.cfm?reqPage=viewPrescription&appointment_id=#form.btnView#"/>
+    <cfelseif structKeyExists(form, "btnViewPatientIdHistory")>
+        <cflocation url="home.cfm?reqPage=patientHistory&patientId=#form.btnViewPatientIdHistory#"/>
 </cfif>

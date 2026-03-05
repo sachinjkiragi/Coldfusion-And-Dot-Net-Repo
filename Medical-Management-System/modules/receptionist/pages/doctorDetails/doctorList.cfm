@@ -8,9 +8,9 @@
             table-layout: fixed;
         }
         #doctorList td {
-    white-space: normal;
-    word-break: break-word;
-}
+            white-space: normal;
+            word-break: break-word;
+        }
     </style>
     
     <form method="POST" class="p-5">

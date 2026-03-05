@@ -29,13 +29,6 @@
                                 <a class="nav-link text-black" href="home.cfm?reqPage=appointments">Appointments</a>
                             </cfif>
                         </li>
-                        <li class="border-bottom border-black">
-                            <cfif url.reqPage EQ "patientHistory">
-                                <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=patientHistory">Patient History</a>
-                            <cfelse>
-                                <a class="nav-link text-black" href="home.cfm?reqPage=patientHistory">Patient History</a>
-                            </cfif>
-                        </li>
                     </ul>
                 </div>
                 <div class="border border-black" style="width: 80%">

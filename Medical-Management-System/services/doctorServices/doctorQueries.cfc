@@ -155,4 +155,57 @@
             <cfreturn success/>
     </cffunction>
 
+    <cffunction name="getPatientHistory">
+        <cfargument name="patientId" type="numeric"/>
+        <cftry>
+            <cfquery name="qryPatientHistory">
+                WITH cte1 AS
+                (
+                    SELECT 
+                        Appointments.doctor_id, Appointments.patient_id, Appointments.appointment_charges, Appointments.timeslot_id, Appointments.slot_date,
+                        Prescriptions.diagnosis, Prescriptions.diagnosis_notes,
+                        Medicine_Prescriptions.medicine_id, Medicine_Prescriptions.dosage_info, Medicine_Prescriptions.quantity
+                        FROM
+                        Appointments JOIN Prescriptions
+                        ON Appointments.appointment_id = Prescriptions.appointment_id
+                        JOIN Medicine_Prescriptions
+                        ON Prescriptions.prescription_id = Medicine_Prescriptions.prescription_id
+                        WHERE
+                        Appointments.patient_id = <cfqueryparam value="#arguments.patientId#" cfsqltype="cf_sql_integer"/>
+                        AND
+                        Appointments.status = <cfqueryparam value="Completed" cfsqltype="cf_sql_varchar"/>
+                ), cte2 AS (
+                    SELECT cte1.*,
+                        (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = cte1.doctor_id) AS doctor_name,
+                        (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = cte1.patient_id) AS patient_name
+                    FROM cte1
+                ), cte3 AS (
+                    SELECT cte2.*,
+                        Time_Slots.start_time, Time_Slots.end_time,
+                        Medicines.medicine_name
+                    FROM cte2 JOIN Time_Slots
+                    ON cte2.timeslot_id = Time_Slots.timeslot_id
+                    JOIN Medicines
+                    ON cte2.medicine_id = Medicines.medicine_id
+                ), patientHistory AS (
+                    SELECT cte3.patient_name,
+                    cte3.doctor_name,
+                    cte3.slot_date,
+                    cte3.start_time,
+                    cte3.end_time,
+                    cte3.medicine_name,
+                    cte3.diagnosis,
+                    cte3.diagnosis_notes,
+                    cte3.dosage_info,
+                    cte3.quantity
+                    FROM cte3
+                ) SELECT * FROM patientHistory;
+            </cfquery>
+            <cfreturn qryPatientHistory/>
+            <cfcatch>
+                <cfdump var=#cfcatch#/>
+            </cfcatch>
+        </cftry>
+    </cffunction>
+
 </cfcomponent>
