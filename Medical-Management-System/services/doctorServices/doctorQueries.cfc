@@ -104,4 +104,55 @@
         </cftry> 
     </cffunction>
 
+    <cffunction name="getPrescriptionDataByPrescriptionId" returntype="query">
+        <cfargument name="prescription_id" type="numeric"/>
+        <cftry>
+            <cfquery name="qryPrescription">
+                SELECT
+                 Prescriptions.prescription_id,
+                 Prescriptions.appointment_id,
+                 Prescriptions.diagnosis, 
+                 Prescriptions.diagnosis_notes, 
+                 Medicine_Prescriptions.quantity, 
+                 Medicine_Prescriptions.medicine_id, 
+                 Medicine_Prescriptions.dosage_info
+                FROM Prescriptions JOIN Medicine_Prescriptions
+                ON Medicine_Prescriptions.prescription_id = Prescriptions.prescription_id
+                WHERE Prescriptions.prescription_id = <cfqueryparam value="#arguments.prescription_id#" cfsqltype="cf_sql_integer">
+            </cfquery>
+            <cfreturn qryPrescription/>
+            <cfcatch>
+                <cfdump var=#cfcatch#/>
+            </cfcatch>
+        </cftry> 
+    </cffunction>
+
+    <cffunction name="updatePrescriptionData" returntype="boolean">
+        <cfargument name="prescriptionData" type="struct"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryUpdatePrescription">
+                UPDATE Prescriptions
+                SET 
+                diagnosis = <cfqueryparam value="#arguments.prescriptionData.diagnosis#" cfsqltype="cf_sql_varchar"/>,
+                diagnosis_notes = <cfqueryparam value="#arguments.prescriptionData.diagnosis_notes#" cfsqltype="cf_sql_varchar"/>
+                WHERE prescription_id = <cfqueryparam value="#arguments.prescriptionData.btn_update_prescriptionid#"/>
+            </cfquery>
+
+            <cfquery name="qerUpdateMedicinePrescription">
+                UPDATE Medicine_Prescriptions
+                SET 
+                medicine_id = <cfqueryparam value="#arguments.prescriptionData.medicine_id#" cfsqltype="cf_sql_integer"/>,
+                quantity = <cfqueryparam value="#arguments.prescriptionData.medicine_qty#" cfsqltype="cf_sql_integer"/>
+                WHERE prescription_id = <cfqueryparam value="#arguments.prescriptionData.btn_update_prescriptionid#"/>
+            </cfquery>
+
+            <cfcatch>
+                <cfset success = false/>
+                <cfdump var=#cfcatch#/>
+            </cfcatch>
+            </cftry>
+            <cfreturn success/>
+    </cffunction>
+
 </cfcomponent>

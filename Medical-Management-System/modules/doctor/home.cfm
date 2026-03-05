@@ -55,6 +55,9 @@
                         <cfcase value="viewPrescription">
                             <cfinclude template="pages/appointments/viewPrescription.cfm"/>
                         </cfcase>
+                        <cfcase value="updatePrescription">
+                            <cfinclude template="pages/appointments/updatePrescription.cfm"/>
+                        </cfcase>
                     </cfswitch>
                 </div>
             </div>

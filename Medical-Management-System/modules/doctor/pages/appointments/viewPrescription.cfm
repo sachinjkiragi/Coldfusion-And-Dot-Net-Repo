@@ -18,37 +18,38 @@
                     <div class="d-flex gap-4">
                         <div class="form-check d-flex gap-4 p-0">
                             <div>
-                                <input disabled value="#prescriptionData.diagnosis#" name="diagnosis" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis *"/>
+                                <label class="form-label fw-semibold">Diagnosis:</label>
+                                <input readonly value="#prescriptionData.diagnosis#" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis *"/>
                             </div>
                             <div>
-                                <textarea disabled readonly rows="1" cols="40" name="diagnosis_notes" class="form-control" type="text" id="diagnosis_notes" placeholder="Diagnosis Notes">#prescriptionData.diagnosis_notes#</textarea>
+                                <label class="form-label fw-semibold">Diagnosis Notes:</label>
+                                <textarea readonly rows="1" cols="40" class="form-control" type="text" id="diagnosis_notes" placeholder="Diagnosis Notes">#prescriptionData.diagnosis_notes#</textarea>
                             </div>
                         </div>
                     </div>
                     
                     <div id="availableMedicines" class="d-flex justify-content-between w-100 gap-4 p-0">
                         <div>
-                            <select disabled id="medicineList" class="form-control d-block form-select" name="medicine_id" style="width: fit-content;">
-                                <option value="">Select Medicine</option>
-                                <cfoutput query="#medicineList#">
-                                    <cfif medicineList.medicine_id EQ prescriptionData.medicine_id>
-                                        <option selected value="#medicineList.medicine_id#">#medicine_name#</option>
-                                    <cfelse>
-                                        <option value="#medicineList.medicine_id#">#medicine_name#</option>
-                                    </cfif>
-                                </cfoutput>
-                            </select>
+                            <cfoutput query="#medicineList#">
+                                <cfif medicineList.medicine_id EQ prescriptionData.medicine_id>
+                                    <label class="form-label fw-semibold">Diagnosis:</label>
+                                    <input class="form-control" readonly value="#medicineList.medicine_name#"/>
+                                    <input type="hidden" value="#medicineList.medicine_id#"/>
+                                </cfif>
+                            </cfoutput>
                         </div>
                         <div class="form-check">
-                            <input disabled type="number" min="0" class="form-control" name="medicine_qty" placeholder="Quantity" value="#prescriptionData.quantity#"/>
+                            <label class="form-label fw-semibold">Quantity:</label>
+                            <input readonly type="number" min="0" class="form-control"  placeholder="Quantity" value="#prescriptionData.quantity#"/>
                         </div>
                     </div>
                     <div>
-                        <textarea disabled rows="1" cols="70" name="dosage_info" class="form-control" type="text" id="dosage_info" placeholder="Dosage Information">#prescriptionData.dosage_info#</textarea>
+                        <label class="form-label fw-semibold">Dosage Info:</label>
+                        <textarea readonly rows="1" cols="70" class="form-control" type="text" id="dosage_info" placeholder="Dosage Information">#prescriptionData.dosage_info#</textarea>
                     </div>
                     
                     <span title="Please complete all required fields">
-                        <button class="btn btn-primary" type="submit" name="btn-create-prescription">Update Prescription</button>
+                        <button class="btn btn-primary" type="submit" name="update_prescription_id" value="#prescriptionData.prescription_id#">Update Prescription</button>
                     </span>
                     
                     <a href="home.cfm?reqPage=appointments" class="text-primary text-decoration-none">Go Back</a>
@@ -57,5 +58,8 @@
             </form>
         </cfoutput>
     </div>
-
 </html>
+
+<cfif structKeyExists(form, "update_prescription_id")>
+    <cflocation url="home.cfm?reqPage=updatePrescription&prescription_id=#form.update_prescription_id#"/>
+</cfif>
