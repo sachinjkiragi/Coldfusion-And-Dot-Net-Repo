@@ -1,7 +1,6 @@
 <cftry>
     <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="getAppointmentList" returnvariable="appointmentList">
     </cfinvoke>
-
     <style>
         #appointmentList {
             width: 100%;
@@ -26,6 +25,7 @@
                     <th>End Time</th>
                     <th>Status</th>
                     <th>Update</th>
+                    <th>View/Add Prescription</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +41,16 @@
                         <td>
                             <button class="btn btn-primary" name="updateAppointmentId" value=#appointmentList.appointment_id# type="submit">Update</button>
                         </td>
+                        <td>
+                            <cfif appointmentList.status EQ "Cancelled">
+                                <button disabled class="btn btn-primary">NA&nbsp;&nbsp;&nbsp;</button>
+                            <cfelseif appointmentList.status EQ "Booked">
+                                <button name="btnAdd" value="#appointmentList.appointment_id#" class="btn btn-primary">Add</button>
+                            <cfelse>
+                                <button name="btnView" value="#appointmentList.appointment_id#" class="btn btn-primary">View</button>
+                            </cfif>
+                        </td>
+
                     </tr>
                 </cfoutput>
             </tbody>
@@ -61,6 +71,15 @@
         });
     })
 </script>
+
+
+<cfif structKeyExists(form, "btnAdd")>
+    <cflocation url="home.cfm?reqPage=addPrescription&appointment_id=#form.btnAdd#"/>
+    <cfelseif structKeyExists(form, "btnView")>
+        <cflocation url="home.cfm?reqPage=viewPrescription&appointment_id=#form.btnView#"/>
+    <cfelseif structKeyExists(form, "btnViewPatientIdHistory")>
+        <cflocation url="home.cfm?reqPage=patientHistory&patientId=#form.btnViewPatientIdHistory#"/>
+</cfif>
 
 <cfif structKeyExists(form, "updateAppointmentId")>
     <cfdump var=#form#/>

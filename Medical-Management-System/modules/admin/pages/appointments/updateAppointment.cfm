@@ -1,4 +1,4 @@
-<cfset queryServicesPath = "../../../../services/receptionistServices/receptionistQueries.cfc"/>
+<cfset queryServicesPath = "../../../../services/adminServices/adminQueries.cfc"/>
 <cfset appointmentIdToUpdate = url.appointmentId/>
 
 <cfinvoke method="getAppointmentData" component="#queryServicesPath#" returnvariable="appointementData">
