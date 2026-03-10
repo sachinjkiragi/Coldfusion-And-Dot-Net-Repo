@@ -163,5 +163,65 @@
     </cffunction>
 
 
+    <cffunction name="getAppointmentList" returntype="query">
+        <cfquery name="qryAppointmentList">
+            SELECT Appointments.*,
+            (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.doctor_id) AS 'doctor_name',
+            (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.patient_id) AS 'patient_name',
+            (SELECT start_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'start_time',
+            (SELECT end_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'end_time'
+            FROM 
+            Appointments;
+        </cfquery>
+        <cfreturn qryAppointmentList/>
+    </cffunction>
+
+        <cffunction name="getAppointmentData" returntype="query">
+        <cfargument name="appointment_id" type="numeric"/>
+        <cftry>
+            <cfquery name="qryAppointment">
+                SELECT Appointments.*,
+                (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.doctor_id) AS 'doctor_name',
+                (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.patient_id) AS 'patient_name',
+                (SELECT start_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'start_time',
+                (SELECT end_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'end_time'
+                FROM 
+                Appointments
+                WHERE appointment_id = <cfqueryparam value="#appointment_id#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+            <cfreturn qryAppointment/>
+            <cfcatch>
+                <cfdump var=#cfcatch#/>
+            </cfcatch>
+        </cftry> 
+    </cffunction>
+    
+
+    <cffunction name="updateAppointmentData" returntype="boolean">
+        <cfargument name="appointmentDetails" type="struct"/>
+        
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryUpdate">
+                UPDATE Appointments
+                 SET 
+                    doctor_id = <cfqueryparam value="#arguments.appointmentDetails.doctor_id#" cfsqltype="cf_sql_int"/>,
+                    patient_id  = <cfqueryparam value="#arguments.appointmentDetails.patient_id#" cfsqltype="cf_sql_int"/>,
+                    status = <cfqueryparam value="#arguments.appointmentDetails.status#" cfsqltype="cf_sql_varchar"/>,
+                    appointment_charges = <cfqueryparam value="#arguments.appointmentDetails.appointment_charges#" cfsqltype="cf_sql_varchar"/>,
+                    timeslot_id = <cfqueryparam value="#arguments.appointmentDetails.timeslot_id#" cfsqltype="cf_sql_int"/>,
+                    slot_date = <cfqueryparam value="#arguments.appointmentDetails.slot_date#" cfsqltype="cf_sql_date"/>
+                WHERE appointment_id = <cfqueryparam value="#arguments.appointmentDetails.appointment_id#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+        <cfcatch>
+            <cfdump var=#cfcatch#/>
+            <cfabort/>
+            <cfset success = false/>
+        </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+
 </cfcomponent>
 

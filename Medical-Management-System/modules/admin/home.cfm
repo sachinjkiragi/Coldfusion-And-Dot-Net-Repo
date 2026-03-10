@@ -36,6 +36,13 @@
                                 <a class="nav-link text-black" href="home.cfm?reqPage=doctors">Doctors</a>
                             </cfif>
                         </li>
+                        <li class="border-bottom border-black">
+                            <cfif url.reqPage EQ "appointments">
+                                <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=appointments">Appointments</a>
+                            <cfelse>
+                                <a class="nav-link text-black" href="home.cfm?reqPage=appointments">Appointments</a>
+                            </cfif>
+                        </li>
                     </ul>
                 </div>
                 <div class="border border-black" style="width: 80%">
@@ -54,6 +61,12 @@
                         </cfcase>
                         <cfcase value="updateDoctor">
                             <cfinclude template="pages/doctors/updateDoctor.cfm"/>
+                        </cfcase>
+                        <cfcase value="appointments">
+                            <cfinclude template="pages/appointments/appointments.cfm"/>
+                        </cfcase>
+                        <cfcase value="updateAppointment">
+                            <cfinclude template="pages/appointments/updateAppointment.cfm"/>
                         </cfcase>
                     </cfswitch>
                 </div>
