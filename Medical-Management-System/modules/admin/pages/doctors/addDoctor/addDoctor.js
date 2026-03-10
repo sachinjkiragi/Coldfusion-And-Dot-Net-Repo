@@ -1,11 +1,9 @@
 var firstNameField = document.getElementById('firstName');
 var lastNameField = document.getElementById('lastName');
-var passwordField = document.getElementById('password');
 var emailField = document.getElementById('email');
 var phoneField = document.getElementById('phone');
 var firstNameError = document.getElementById('firstNameError');
 var lastNameError = document.getElementById('lastNameError');
-var passwordError = document.getElementById('passwordError');
 var emailError = document.getElementById('emailError');
 var phoneError = document.getElementById('phoneError');
 
@@ -42,27 +40,6 @@ lastNameField.addEventListener('input', (e)=>{
         lastNameError.textContent = 'Only letters are allowed';
     } else{
         lastNameError.classList.add('invisible');
-    }
-})
-
-function getPasswordStrength(password) {
-    if (/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{12,}$/.test(password)) {
-        return "Very Strong";
-    } else if (/^[a-zA-Z0-9]{8,50}$/.test(password)) {
-        return "Strong";
-    } else if (/^[a-zA-Z0-9]+$/.test(password)) {
-        return "Weak";
-    } else {
-        return "Invalid";
-    }
-}
-passwordField.addEventListener('input', (e)=>{
-    if (passwordField.value.length > 0) {
-       passwordError.classList.remove('invisible');
-       var passwordStrength = getPasswordStrength(passwordField.value);
-       passwordError.textContent = passwordStrength;
-    } else{
-        passwordError.classList.add('invisible');
     }
 })
 

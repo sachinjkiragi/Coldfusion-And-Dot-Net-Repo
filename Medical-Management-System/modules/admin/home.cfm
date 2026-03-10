@@ -62,11 +62,17 @@
                         <cfcase value="updateDoctor">
                             <cfinclude template="pages/doctors/updateDoctor.cfm"/>
                         </cfcase>
+                        <cfcase value="addDoctor">
+                            <cfinclude template="pages/doctors/addDoctor/addDoctor.cfm"/>
+                        </cfcase>
                         <cfcase value="appointments">
                             <cfinclude template="pages/appointments/appointments.cfm"/>
                         </cfcase>
                         <cfcase value="updateAppointment">
                             <cfinclude template="pages/appointments/updateAppointment.cfm"/>
+                        </cfcase>
+                        <cfcase value="addPatient">
+                            <cfinclude template="pages/patients/addPatient/addPatient.cfm"/>
                         </cfcase>
                     </cfswitch>
                 </div>
