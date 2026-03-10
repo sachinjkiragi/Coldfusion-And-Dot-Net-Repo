@@ -1,5 +1,5 @@
 <cftry>
-    <cfinvoke component="../../../services/adminServices/adminQueries.cfc" method="getUserList" returnvariable="doctorList">
+    <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="getUserList" returnvariable="doctorList">
         <cfinvokeargument name="role" value="Doctor"/>
     </cfinvoke>
     <style>
@@ -69,7 +69,7 @@
 <cfif structKeyExists(form, "updateDoctorId")>
     <cfdump var=#form#/>
     <cfdump var=#form.updateDoctorId#/>
-    <cflocation url="home.cfm?reqPage=updatePatient&patientId=#form.updateDoctorId#"/>
+    <cflocation url="home.cfm?reqPage=updateDoctor&doctorId=#form.updateDoctorId#"/>
 </cfif>
 
 <cfif structKeyExists(form, "deleteDoctorId")>

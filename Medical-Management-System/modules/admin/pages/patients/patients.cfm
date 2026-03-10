@@ -1,5 +1,5 @@
 <cftry>
-    <cfinvoke component="../../../services/adminServices/adminQueries.cfc" method="getUserList" returnvariable="patientList">
+    <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="getUserList" returnvariable="patientList">
         <cfinvokeargument name="role" value="Patient"/>
     </cfinvoke>
     <!--- <cfdump var=#patientList#/> --->
@@ -80,5 +80,4 @@
     <cfelse>
         <script>alert("Failed to delete patient record. Please try again.");</script>
     </cfif>
-
 </cfif>

@@ -159,7 +159,11 @@
         <cfargument name="patient_id" type="numeric"/>
         <cfset success = true/>
         <cftry>
-            <cfquery name="qryPatientData">
+            <cfquery name="qryDeletePatient">
+                DELETE FROM
+                Appointments
+                WHERE patient_id = <cfqueryparam value="#patient_id#" cfsqltype="cf_sql_varchar"/> ;
+
                 DELETE FROM
                 Users
                 WHERE user_id = <cfqueryparam value="#patient_id#" cfsqltype="cf_sql_varchar"/> 

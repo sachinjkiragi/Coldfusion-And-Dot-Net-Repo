@@ -44,10 +44,16 @@
                             <cfinclude template="pages/dashboard.cfm"/>
                         </cfcase>
                         <cfcase value="patients">
-                            <cfinclude template="pages/patients.cfm"/>
+                            <cfinclude template="pages/patients/patients.cfm"/>
+                        </cfcase>
+                        <cfcase value="updatePatient">
+                            <cfinclude template="pages/patients/updatePatient.cfm"/>
                         </cfcase>
                         <cfcase value="doctors">
-                            <cfinclude template="pages/doctors.cfm"/>
+                            <cfinclude template="pages/doctors/doctors.cfm"/>
+                        </cfcase>
+                        <cfcase value="updateDoctor">
+                            <cfinclude template="pages/doctors/updateDoctor.cfm"/>
                         </cfcase>
                     </cfswitch>
                 </div>
