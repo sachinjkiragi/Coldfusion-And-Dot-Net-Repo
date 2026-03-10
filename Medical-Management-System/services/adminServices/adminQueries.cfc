@@ -721,6 +721,88 @@
     </cffunction>
 
 
+    
+    <cffunction name="getRoles" returntype="query">
+        <cfquery name="qryRoles">
+            SELECT * FROM Roles;
+        </cfquery>
+        <cfreturn qryRoles/>
+    </cffunction>
+
+    <cffunction name="addRole" returntype="boolean">
+        <cfargument name="roleData" type="struct"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryInsertMedicine">
+                INSERT INTO Roles (role_name)
+                VALUES(
+                    <cfqueryparam value="#arguments.roleData.roleName#" cfsqltype="cf_sql_varchar"/>
+                )
+            </cfquery>
+            <cfcatch>
+                <cfset success = true/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="roleExists" returntype="boolean">
+        <cfargument name="roleName" type="string">
+        <cfquery name="qryRoleExists">
+            SELECT 1 FROM Roles
+            WHERE role_name = <cfqueryparam value="#arguments.roleName#" cfsqltype="cf_sql_varchar"/>
+        </cfquery>
+        <cfreturn qryRoleExists.recordCount GT 0/>
+    </cffunction>
+
+    <cffunction name="getRoleDataById" returntype="query">
+        <cfargument name="roleId" type="numeric">
+        <cfquery name="qryRoleData">
+            SELECT role_name FROM Roles
+            WHERE role_id = <cfqueryparam value="#arguments.roleId#" cfsqltype="cf_sql_integer"/>
+        </cfquery>
+        <cfreturn qryRoleData/>
+    </cffunction>
+
+    <cffunction name="updateRole" returntype="boolean">
+        <cfargument name="roletData" type="struct"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryUpdateRole">
+                UPDATE Roles
+                SET
+                role_name = <cfqueryparam value="#arguments.roleData.roleName#" cfsqltype="cf_sql_varchar"/>
+                WHERE role_id = <cfqueryparam value="#arguments.roleData.roleId#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+            <cfcatch>
+                <cfset success = true/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="deleteRole" returntype="boolean">
+        <cfargument name="roleId" type="numeric"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qeyDeleteRole">
+                DELETE FROM Roles
+                WHERE role_id = <cfqueryparam value="#arguments.roleId#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+            <cfcatch>
+                <cfset success = true/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+
 </cfcomponent>
 
 

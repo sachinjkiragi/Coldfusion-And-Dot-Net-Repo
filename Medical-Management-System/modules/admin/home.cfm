@@ -64,6 +64,13 @@
                                 <a class="nav-link text-black" href="home.cfm?reqPage=departments">Departments</a>
                             </cfif>
                         </li>
+                        <li class="border-bottom border-black">
+                            <cfif url.reqPage EQ "roles">
+                                <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=roles">Roles</a>
+                            <cfelse>
+                                <a class="nav-link text-black" href="home.cfm?reqPage=roles">roles</a>
+                            </cfif>
+                        </li>
                     </ul>
                 </div>
                 <div class="border border-black" style="width: 80%">
@@ -130,6 +137,15 @@
                         </cfcase>
                         <cfcase value="updateDepartment">
                             <cfinclude template="pages/departments/updateDepartment.cfm"/>
+                        </cfcase>
+                        <cfcase value="roles">
+                            <cfinclude template="pages/roles/roles.cfm"/>
+                        </cfcase>
+                        <cfcase value="addRole">
+                            <cfinclude template="pages/roles/addRole.cfm"/>
+                        </cfcase>
+                        <cfcase value="updateRole">
+                            <cfinclude template="pages/roles/updateRole.cfm"/>
                         </cfcase>
                     </cfswitch>
                 </div>
