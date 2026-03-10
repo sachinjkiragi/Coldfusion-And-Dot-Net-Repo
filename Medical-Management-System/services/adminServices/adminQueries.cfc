@@ -585,6 +585,60 @@
         <cfreturn success/>
     </cffunction>
 
+
+    <cffunction name="getTimeSlots">
+        <cfquery name="qryTimeSlots">
+            SELECT * FROM Time_Slots;
+        </cfquery>
+        <cfreturn qryTimeSlots/>
+    </cffunction>
+
+    
+    <cffunction name="getAvailableTimeSlots">
+        <cfquery name="qryAvailableTimeSlots">
+            SELECT * FROM ALL_Slots
+            WHERE start_time NOT IN (SELECT start_time FROM Time_Slots);
+        </cfquery>
+        <cfreturn qryAvailableTimeSlots/>
+    </cffunction>
+
+    <cffunction name="addTimeSlot" returntype="boolean">
+        <cfargument name="availableTimeSlotId" type="numeric"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryInsertTimeSlot">
+                INSERT INTO Time_Slots (start_time, end_time)
+                VALUES(
+                    (SELECT start_time FROM All_Slots WHERE slot_id = <cfqueryparam value="#arguments.availableTimeSlotId#" cfsqltype="cf_sql_integer"/>),
+                    (SELECT end_time FROM All_Slots WHERE slot_id = <cfqueryparam value="#arguments.availableTimeSlotId#" cfsqltype="cf_sql_integer"/>)
+                )
+            </cfquery>
+            <cfcatch>
+                <cfset success = false/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="deleteTimeSlot" returntype="boolean">
+        <cfargument name="timeSlotId" type="numeric">
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryDeleteTimeSlot">
+                DELETE FROM Time_Slots
+                WHERE timeslot_id = <cfqueryparam value="#timeSlotId#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+            <cfcatch>
+                <cfset success = false/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
 </cfcomponent>
 
 

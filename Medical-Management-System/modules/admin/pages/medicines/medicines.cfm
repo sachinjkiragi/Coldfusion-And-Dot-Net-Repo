@@ -40,9 +40,9 @@
         </table>
     </form>
         
-        <cfcatch>
-            <cfoutput>#cfcatch#</cfoutput>
-        </cfcatch>
+    <cfcatch>
+        <cfoutput>#cfcatch#</cfoutput>
+    </cfcatch>
 </cftry>
 
 <script>

@@ -50,6 +50,13 @@
                                 <a class="nav-link text-black" href="home.cfm?reqPage=medicines">Medicines</a>
                             </cfif>
                         </li>
+                        <li class="border-bottom border-black">
+                            <cfif url.reqPage EQ "timeSlots">
+                                <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=timeSlots">Time Slots</a>
+                            <cfelse>
+                                <a class="nav-link text-black" href="home.cfm?reqPage=timeSlots">Time Slots</a>
+                            </cfif>
+                        </li>
                     </ul>
                 </div>
                 <div class="border border-black" style="width: 80%">
@@ -101,6 +108,12 @@
                         </cfcase>
                         <cfcase value="updateMedicine">
                             <cfinclude template="pages/medicines/updateMedicine.cfm"/>
+                        </cfcase>
+                        <cfcase value="timeSlots">
+                            <cfinclude template="pages/timeSlots/TimeSlots.cfm"/>
+                        </cfcase>
+                        <cfcase value="addTimeSlot">
+                            <cfinclude template="pages/timeSlots/addTimeSlot.cfm"/>
                         </cfcase>
                     </cfswitch>
                 </div>
