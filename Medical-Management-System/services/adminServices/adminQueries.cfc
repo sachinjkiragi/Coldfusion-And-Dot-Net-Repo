@@ -639,6 +639,88 @@
         <cfreturn success/>
     </cffunction>
 
+
+    <cffunction name="getDepartments" returntype="query">
+        <cfquery name="qryDepartmens">
+            SELECT * FROM Departments;
+        </cfquery>
+        <cfreturn qryDepartmens/>
+    </cffunction>
+
+    <cffunction name="addDepartment" returntype="boolean">
+        <cfargument name="departmentData" type="struct"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryInsertMedicine">
+                INSERT INTO Departments (department_name)
+                VALUES(
+                    <cfqueryparam value="#arguments.departmentData.departmentName#" cfsqltype="cf_sql_varchar"/>
+                )
+            </cfquery>
+            <cfcatch>
+                <cfset success = true/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="departmentExists" returntype="boolean">
+        <cfargument name="departmentName" type="string">
+        <cfquery name="qryDepartmentExists">
+            SELECT 1 FROM Departments
+            WHERE department_name = <cfqueryparam value="#arguments.departmentName#" cfsqltype="cf_sql_varchar"/>
+        </cfquery>
+        <cfreturn qryDepartmentExists.recordCount GT 0/>
+    </cffunction>
+
+    <cffunction name="getDepartmentDataById" returntype="query">
+        <cfargument name="departmentId" type="numeric">
+        <cfquery name="qryDepartmentData">
+            SELECT department_name FROM Departments
+            WHERE department_id = <cfqueryparam value="#arguments.departmentId#" cfsqltype="cf_sql_integer"/>
+        </cfquery>
+        <cfreturn qryDepartmentData/>
+    </cffunction>
+
+    <cffunction name="updateDepartment" returntype="boolean">
+        <cfargument name="departmentData" type="struct"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryUpdateDepartment">
+                UPDATE  Departments 
+                SET
+                department_name = <cfqueryparam value="#arguments.departmentData.departmentName#" cfsqltype="cf_sql_varchar"/>
+                WHERE department_id = <cfqueryparam value="#arguments.departmentData.departmentId#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+            <cfcatch>
+                <cfset success = true/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="deleteDepartment" returntype="boolean">
+        <cfargument name="departmentId" type="numeric"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qeyDeleteDepartment">
+                DELETE FROM Departments
+                WHERE department_id = <cfqueryparam value="#arguments.departmentId#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+            <cfcatch>
+                <cfset success = true/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+
 </cfcomponent>
 
 
