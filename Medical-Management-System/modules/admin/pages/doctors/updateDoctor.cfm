@@ -89,17 +89,17 @@
 </html>
 
 <cfif structKeyExists(form, "update-btn")>
-    <cfset mailFlag = false/>
+    <cfset mailExists = false/>
     <cfif doctorData.email NEQ form.email>
         <cfinvoke method="doesMailExists" component="../../../../services/adminServices/adminQueries" returnvariable="flag">
             <cfinvokeargument name="email" value=#form.email#/>
         </cfinvoke>
         <cfif flag EQ true>
-            <cfset mailFlag = true/>
+            <cfset mailExists = true/>
         </cfif>
     </cfif>
     
-    <cfif mailFlag EQ false>
+    <cfif mailExists EQ false>
         <cfset form.doctor_id = doctorIdToUpdate/>
         <cfinvoke component="../../../../services/adminServices/adminQueries" method="updatedoctorData" returnvariable="success">
             <cfinvokeargument name="doctorData" value=#form#/>

@@ -503,6 +503,92 @@
         <cfreturn success/>
     </cffunction>
 
+    <cffunction name="getMedicines" returntype="query">
+        <cfquery name="qryMedicines">
+            SELECT * FROM Medicines;
+        </cfquery>
+        <cfreturn qryMedicines/>
+    </cffunction>
+
+    <cffunction name="addMedicine" returntype="boolean">
+        <cfargument name="medicineData" type="struct"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryInsertMedicine">
+                INSERT INTO Medicines (medicine_name, unit_price)
+                VALUES(
+                    <cfqueryparam value="#arguments.medicineData.medicineName#" cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value="#arguments.medicineData.unitPrice#" cfsqltype="cf_sql_integer"/>
+                )
+            </cfquery>
+            <cfcatch>
+                <cfset success = true/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="medicineExists" returntype="boolean">
+        <cfargument name="medicineName" type="string">
+        <cfquery name="qryMedicineExists">
+            SELECT 1 FROM Medicines
+            WHERE medicine_name = <cfqueryparam value="#arguments.medicineName#" cfsqltype="cf_sql_varchar"/>
+        </cfquery>
+        <cfreturn qryMedicineExists.recordCount GT 0/>
+    </cffunction>
+
+    <cffunction name="getMedicineDataById" returntype="query">
+        <cfargument name="medicineId" type="numeric">
+        <cfquery name="qeyMedicineData">
+            SELECT medicine_name, unit_price FROM Medicines
+            WHERE medicine_id = <cfqueryparam value="#arguments.medicineId#" cfsqltype="cf_sql_integer"/>
+        </cfquery>
+        <cfreturn qeyMedicineData/>
+    </cffunction>
+
+    <cffunction name="updateMedicine" returntype="boolean">
+        <cfargument name="medicineData" type="struct"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryUpdateMedicine">
+                UPDATE  Medicines 
+                SET
+                medicine_name = <cfqueryparam value="#arguments.medicineData.medicineName#" cfsqltype="cf_sql_varchar"/>,
+                unit_price =   <cfqueryparam value="#arguments.medicineData.unitPrice#" cfsqltype="cf_sql_integer"/>
+                WHERE medicine_id = <cfqueryparam value="#arguments.medicineData.medicineId#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+            <cfcatch>
+                <cfset success = true/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="deleteMedicine" returntype="boolean">
+        <cfargument name="medicineId" type="numeric"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryUpdateMedicine">
+                DELETE FROM Medicines
+                WHERE medicine_id = <cfqueryparam value="#arguments.medicineId#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+            <cfcatch>
+                <cfset success = true/>
+                <cfdump var=#cfcatch#/>
+                <cfabort/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
 </cfcomponent>
+
+
+
+
 
 
