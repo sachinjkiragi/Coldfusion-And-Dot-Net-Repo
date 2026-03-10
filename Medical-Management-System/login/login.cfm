@@ -39,7 +39,9 @@
         <cfdump var=#session# label="session"/>
         <script>
             alert('User Logged In Successfully');
-            <cfif session.currUser.role_id EQ 2>
+            <cfif session.currUser.role_id EQ 1>
+                window.location.href = "../modules/admin/home.cfm";
+            <cfelseif session.currUser.role_id EQ 2>
                 window.location.href = "../modules/doctor/home.cfm";
             <cfelseif session.currUser.role_id EQ 3>
                 window.location.href = "../modules/receptionist/home.cfm";
