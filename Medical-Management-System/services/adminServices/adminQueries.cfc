@@ -480,6 +480,29 @@
             <cfreturn success/>
     </cffunction>
 
+
+    <cffunction name="deletePrescription">
+        <cfargument name="prescription_id" type="numeric"/>
+        <cfargument name="appointment_id" type="numeric"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryDeletePrescription">
+                DELETE FROM Prescriptions 
+                WHERE prescription_id = <cfqueryparam value="#arguments.prescription_id#" cfsqltype="cf_sql_integer"/>
+
+                UPDATE Appointments 
+                SET status = 'Booked' 
+                WHERE appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+        <cfcatch>
+            <cfdump var=#cfcatch#/>
+            <cfset success = false/>
+            <cfabort/>
+        </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
 </cfcomponent>
 
 

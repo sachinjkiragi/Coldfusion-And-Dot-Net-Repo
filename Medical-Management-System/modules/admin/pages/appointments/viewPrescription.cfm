@@ -4,7 +4,7 @@
 </cfinvoke>
 
 <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="getMedicines" returnvariable="medicineList"/>
-    
+
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
     <div class="h-100 w-100  d-flex justify-content-center">
@@ -50,6 +50,7 @@
                     
                     <span title="Please complete all required fields">
                         <button class="btn btn-primary" type="submit" name="update_prescription_id" value="#prescriptionData.prescription_id#">Update Prescription</button>
+                        <button class="btn btn-primary" type="submit" name="delete_prescription_id" value="#prescriptionData.prescription_id#">Delete Prescription</button>
                     </span>
                     
                     <a href="home.cfm?reqPage=appointments" class="text-primary text-decoration-none">Go Back</a>
@@ -62,4 +63,24 @@
 
 <cfif structKeyExists(form, "update_prescription_id")>
     <cflocation url="home.cfm?reqPage=updatePrescription&prescription_id=#form.update_prescription_id#"/>
+</cfif>
+
+<cfif structKeyExists(form, "delete_prescription_id")>
+    <cfdump var=#form#/>
+    
+    <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deletePrescription" returnvariable="success">
+        <cfinvokeargument name="prescription_id" value="#form.delete_prescription_id#"/>
+        <cfinvokeargument name="appointment_id" value="#appointment_id#"/>
+    </cfinvoke>
+
+    <cfif success EQ true>
+        <script>
+            alert('Prescription record deleted successfully');
+        </script>
+    <cfelse>
+        <script>
+            alert('Deleting prescription failed. Try again.');
+        </script>
+    </cfif>
+
 </cfif>
