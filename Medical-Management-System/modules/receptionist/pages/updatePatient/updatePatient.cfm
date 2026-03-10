@@ -64,21 +64,22 @@
 </html>
 
 <cfif structKeyExists(form, "update-btn")>
-    <cfif patientData.email NEQ form.email>
+    <cfset mailFlag = false/>
+    <cfif doctorData.email NEQ form.email>
         <cfinvoke method="doesMailExists" component="../../../../services/receptionistServices/receptionistQueries" returnvariable="flag">
             <cfinvokeargument name="email" value=#form.email#/>
         </cfinvoke>
         <cfif flag EQ true>
-            <script>
-                alert('Given Email Already Exists!')
-            </script>
+            <cfset mailFlag = true/>
         </cfif>
-    <cfelse>
-        <cfset form.patient_id = patientIdToUpdate/>
+    </cfif>
+    
+    <cfif mailFlag EQ false>
+        <cfset form.doctor_id = doctorIdToUpdate/>
         <cfinvoke component="../../../../services/receptionistServices/receptionistQueries" method="updatePatientData" returnvariable="success">
             <cfinvokeargument name="patientData" value=#form#/>
         </cfinvoke>
-
+        
         <cfif success EQ true>
             <!--- <cfmail from="noreply@mms.com" to=#form.email# subject="temporary Passowrd for MMS Login">
                 Your temporary Passowrd for MMS Login #form.password#
@@ -87,5 +88,9 @@
         <cfelse>
             <script>alert('Update failed. Please try again.');</script>
         </cfif>
+    <cfelse>
+        <script>
+            alert('Given Email Already Exists!')
+        </script>
     </cfif>
 </cfif>

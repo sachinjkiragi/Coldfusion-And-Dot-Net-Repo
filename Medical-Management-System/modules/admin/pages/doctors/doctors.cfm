@@ -73,14 +73,14 @@
 </cfif>
 
 <cfif structKeyExists(form, "deleteDoctorId")>
-     <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deletePatient" returnvariable="success">
-        <cfinvokeargument name="doctorId" value=#form.deleteDoctorId#/>
+     <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deleteDoctor" returnvariable="success">
+        <cfinvokeargument name="doctor_id" value=#form.deleteDoctorId#/>
     </cfinvoke> 
 
    <cfif success EQ true>
-        <script>alert("Patient record deleted successfully.");</script>
+        <script>alert("doctor record deleted successfully.");</script>
     <cfelse>
-        <script>alert("Failed to delete patient record. Please try again.");</script>
+        <script>alert("Failed to delete doctor record. Please try again.");</script>
     </cfif>
 
 </cfif>

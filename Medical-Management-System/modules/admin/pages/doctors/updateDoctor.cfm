@@ -1,8 +1,10 @@
 <cfset doctorIdToUpdate = url.doctorId/>
+<cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="getDepartments" returnvariable="departmentList"/>
 
-<cfinvoke method="getDoctorData" component="../../../../services/adminServices/adminQueries.cfc" returnvariable="patientData">
+<cfinvoke method="getDoctorData" component="../../../../services/adminServices/adminQueries.cfc" returnvariable="doctorData">
     <cfinvokeargument name="doctorId" value=#doctorIdToUpdate#/>
 </cfinvoke>
+
 
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
@@ -17,48 +19,61 @@
                         <div class="form-check d-flex flex-column gap-2">
                             <div>
                                 <label class="form-label fw-semibold">First Name:</label>
-                                <input name="firstName" class="form-control" value=#patientData.first_name# type="text" id="firstName" required placeholder="First Name *"/>
+                                <input name="firstName" class="form-control" value="#doctorData.first_name#" type="text" id="firstName" required placeholder="First Name *"/>
                                 <span id="firstNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
-                                <label class="form-label fw-semibold">Lat Name:</label>
-                                <input name="lastName" class="form-control" value=#patientData.last_name# type="text" id="lastName" placeholder="Last Name"/>
+                                <label class="form-label fw-semibold">Last Name:</label>
+                                <input name="lastName" class="form-control" value=#doctorData.last_name# type="text" id="lastName" placeholder="Last Name"/>
                                 <span id="lastNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
+                            </div>
+                            <div>
+                                <label class="form-label fw-semibold">Password:</label>
+                                <input name="password" class="form-control" value=#doctorData.password# type="text" id="password" required placeholder="Password *"/>
+                                <span id="passwordError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                         </div>
                         <div class="form-check d-flex flex-column gap-2">
                             <div>
                                 <label class="form-label fw-semibold">Email:</label>
-                                <input name="email" class="form-control" value=#patientData.email# type="email" id="email" required placeholder="Email *"/>
+                                <input name="email" class="form-control" value=#doctorData.email# type="email" id="email" required placeholder="Email *"/>
                                 <span id="emailError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
                                 <label class="form-label fw-semibold">Phone:</label>
-                                <input name="phone" class="form-control" value=#patientData.phone# type="phone" id="phone" required placeholder="Phone *"/>
+                                <input name="phone" class="form-control" value=#doctorData.phone# type="phone" id="phone" required placeholder="Phone *"/>
                                 <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-check d-flex flex-column gap-2">
-                        <div>
-                            <label class="form-label fw-semibold">Password:</label>
-                            <input name="password" class="form-control" value=#patientData.password# type="text" id="password" required placeholder="Password *"/>
-                            <span id="passwordError" class="invalid-feedback d-block invisible">&nbsp;</span>
+                            <div>
+                                <label class="form-label fw-semibold">Department:</label>
+                                <div>
+                                    <select id="departmentList" class="form-control d-block form-select" name="department_id" style="width: fit-content;">
+                                        <option value="">Select Medicine</option>
+                                        <cfoutput query="#departmentList#">
+                                            <cfif departmentList.department_id EQ doctorData.department_id>
+                                                <option selected value="#departmentList.department_id#">#department_name#</option>
+                                            <cfelse>
+                                                <option value="#departmentList.department_id#">#department_name#</option>
+                                            </cfif>
+                                        </cfoutput>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex gap-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" value="m" id="male" required <cfif patientData.gender EQ 'M'>checked</cfif> >
+                            <input class="form-check-input" type="radio" name="gender" value="m" id="male" required <cfif doctorData.gender EQ 'M'>checked</cfif> >
                             <label class="form-check-label" for="male">Male</label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" value="f" id="female" required <cfif patientData.gender EQ 'F'>checked</cfif>>
+                            <input class="form-check-input" type="radio" name="gender" value="f" id="female" required <cfif doctorData.gender EQ 'F'>checked</cfif>>
                             <label class="form-check-label" for="female">Female</label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" value="o" id="other" required <cfif patientData.gender EQ 'O'>checked</cfif>>
+                            <input class="form-check-input" type="radio" name="gender" value="o" id="other" required <cfif doctorData.gender EQ 'O'>checked</cfif>>
                             <label class="form-check-label" for="other">Other</label>
                         </div>
                     </div>
@@ -74,21 +89,22 @@
 </html>
 
 <cfif structKeyExists(form, "update-btn")>
-    <cfif patientData.email NEQ form.email>
+    <cfset mailFlag = false/>
+    <cfif doctorData.email NEQ form.email>
         <cfinvoke method="doesMailExists" component="../../../../services/adminServices/adminQueries" returnvariable="flag">
             <cfinvokeargument name="email" value=#form.email#/>
         </cfinvoke>
         <cfif flag EQ true>
-            <script>
-                alert('Given Email Already Exists!')
-            </script>
+            <cfset mailFlag = true/>
         </cfif>
-    <cfelse>
-        <cfset form.patient_id = doctorIdToUpdate/>
-        <cfinvoke component="../../../../services/adminServices/adminQueries" method="updatePatientData" returnvariable="success">
-            <cfinvokeargument name="patientData" value=#form#/>
+    </cfif>
+    
+    <cfif mailFlag EQ false>
+        <cfset form.doctor_id = doctorIdToUpdate/>
+        <cfinvoke component="../../../../services/adminServices/adminQueries" method="updatedoctorData" returnvariable="success">
+            <cfinvokeargument name="doctorData" value=#form#/>
         </cfinvoke>
-
+        
         <cfif success EQ true>
             <!--- <cfmail from="noreply@mms.com" to=#form.email# subject="temporary Passowrd for MMS Login">
                 Your temporary Passowrd for MMS Login #form.password#
@@ -97,5 +113,9 @@
         <cfelse>
             <script>alert('Update failed. Please try again.');</script>
         </cfif>
+    <cfelse>
+        <script>
+            alert('Given Email Already Exists!')
+        </script>
     </cfif>
 </cfif>

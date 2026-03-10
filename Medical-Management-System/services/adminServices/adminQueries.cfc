@@ -21,7 +21,7 @@
         <cfreturn qryUserList/>
     </cffunction>
 
-        <cffunction name="getPatientData" returntype="query">
+    <cffunction name="getPatientData" returntype="query">
         <cfargument name="patient_id" type="numeric"/>
         <cftry>
             <cfquery name="qryPatientData">
@@ -78,6 +78,90 @@
         </cftry> 
         <cfreturn success/>
     </cffunction>
+
+
+    <cffunction name="getDoctorData" returntype="query">
+        <cfargument name="doctorId" type="numeric"/>
+        <cfquery name="qryUserList">
+            SELECT
+                user_id, first_name, last_name, email, phone, department_id, password, gender
+                FROM
+                Users
+                WHERE user_id = <cfqueryparam value=#arguments.doctorId# cfsqltype="cf_sql_varchar"/>
+        </cfquery>
+        <cfreturn qryUserList/>
+    </cffunction>
+
+    <cffunction name="getDepartments" returntype="query">
+        <cftry>
+            <cfquery name="qryDepartments">
+                SELECT * FROM Departments
+            </cfquery>
+            <cfreturn qryDepartments>
+            <cfcatch>
+                <cfdump var=#cfcatch#/>
+            </cfcatch>
+        </cftry>
+    </cffunction>
+
+
+    
+    <cffunction name="updateDoctorData" returntype="boolean">
+        <cfargument name="doctorData" type="struct"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryUpdate">
+                UPDATE Users
+                 SET 
+                    first_name = <cfqueryparam value="#arguments.doctorData.firstName#" cfsqltype="cf_sql_varchar"/>,
+                    last_name  = <cfqueryparam value="#arguments.doctorData.lastName#" cfsqltype="cf_sql_varchar"/>,
+                    email = <cfqueryparam value="#arguments.doctorData.email#" cfsqltype="cf_sql_varchar"/>,
+                    phone = <cfqueryparam value="#arguments.doctorData.phone#" cfsqltype="cf_sql_varchar"/>,
+                    gender = <cfqueryparam value="#arguments.doctorData.gender#" cfsqltype="cf_sql_char"/>,
+                    password = <cfqueryparam value="#arguments.doctorData.password#" cfsqltype="cf_sql_char"/>,
+                    department_id = <cfqueryparam value="#arguments.doctorData.department_id#" cfsqltype="cf_sql_char"/>
+                WHERE user_id = <cfqueryparam value="#arguments.doctorData.doctor_id#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+        <cfcatch>
+            <cfset success = false/>
+            <cfdump var=#cfcatch#/>
+            <cfabort/>
+        </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="deleteDoctor" returntype="boolean">
+        <cfargument name="doctor_id" type="numeric"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryDeleteDoctor">
+                DELETE FROM
+                Appointments
+                WHERE doctor_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_varchar"/> ;
+                DELETE FROM
+                Users
+                WHERE user_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_varchar"/> 
+            </cfquery>
+            <cfcatch>
+                <cfdump var=#cfcatch#/>
+                <cfset success = false/>
+            </cfcatch>
+        </cftry> 
+        <cfreturn success/>
+    </cffunction>
+
+        <cffunction name="doesMailExists" returntype="boolean">
+        <cfargument name="email" required="true" type="string"/>
+        
+        <cfquery result="query">
+            SELECT * 
+            FROM Users 
+            WHERE email = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">
+        </cfquery>
+        <cfreturn query.recordCount GT 0/>
+    </cffunction>
+
 
 </cfcomponent>
 
