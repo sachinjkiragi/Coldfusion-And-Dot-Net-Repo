@@ -13,7 +13,8 @@
 }
     </style>
     
-    <form method="POST" class="p-5">
+    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
+        <a href="home.cfm?reqPage=addAppointment" class="btn btn-primary" style="width: 10rem;">Add Appointment</a>
         <table id="appointmentList"  class="display">
             <thead>
                 <tr>

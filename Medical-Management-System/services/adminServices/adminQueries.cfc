@@ -274,6 +274,67 @@
         <cfreturn success/>
     </cffunction>
 
+    <cffunction name="insertAppointment" returntype="boolean">
+        <cfargument name="appointmentDetails" type="struct"/>
+        <cfset success = true/>
+
+        <cftry>
+            <cfquery name="qryInsertAppointment">
+                INSERT INTO Appointments
+                (doctor_id, patient_id, status, appointment_charges, timeslot_id, slot_date)
+                VALUES
+                (
+                    <cfqueryparam value=#arguments.appointmentDetails.doctor_id# cfsqltype="cf_sql_integer"/>,
+                    <cfqueryparam value=#arguments.appointmentDetails.patient_id# cfsqltype="cf_sql_integer"/>,
+                    <cfqueryparam value=#arguments.appointmentDetails.status# cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value=#arguments.appointmentDetails.appointment_charges# cfsqltype="cf_sql_decimal"/>,
+                    <cfqueryparam value=#arguments.appointmentDetails.timeslot_id# cfsqltype="cf_sql_integer"/>,
+                    <cfqueryparam value=#arguments.appointmentDetails.slot_date# cfsqltype="cf_sql_date"/>
+                )
+            </cfquery>
+        <cfcatch>
+            <cfset success = false/>
+            <cfdump var=#cfcatch# label="inserting appointment"/>
+        </cfcatch>
+        </cftry>
+
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="isDoctorAvailable" returntype="boolean">
+        <cfargument name="appointmentDetails" type="struct"/>
+        <cfset success = true/>
+
+        <cftry>
+            <cfquery name="qryDoctorAvailable">
+                SELECT 1 
+                FROM Appointments 
+                WHERE doctor_id = <cfqueryparam value=#arguments.appointmentDetails.doctor_id#/>
+                AND slot_date = <cfqueryparam value=#arguments.appointmentDetails.slot_date#/>
+                AND timeslot_id = <cfqueryparam value=#arguments.appointmentDetails.timeslot_id#/> 
+                AND status = <cfqueryparam value="Booked" cfsqltype="cf_sql_varchar"/>
+            </cfquery>
+            <cfreturn qryDoctorAvailable.recordCount EQ 0/>
+        <cfcatch>
+            <cfset success = false/>
+            <cfdump var=#cfcatch# label="qryDoctorAvailable"/>
+        </cfcatch>
+        </cftry>
+
+        <cfreturn success/>
+    </cffunction>
+
+    <cffunction name="getTimeSlots" returntype="query">
+        <cftry>
+            <cfquery name="qryTimeSlots">
+                SELECT * FROM Time_Slots;
+            </cfquery>
+            <cfreturn qryTimeSlots/>
+        <cfcatch>
+            <cfdump var=#cfcatch#/>
+        </cfcatch>
+        </cftry>
+    </cffunction>
 
 </cfcomponent>
 
