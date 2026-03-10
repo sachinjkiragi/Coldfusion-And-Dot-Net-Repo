@@ -1,0 +1,37 @@
+<cfset success = true/>
+<cftry>
+    <cfset sourcePath = expandPath('../categories') & "/" & url.category & "/" & url.blog/>
+    <cfset binPath = expandPath('../bin')/>
+    <cfset destPath = #expandPath(binPath) & "/" & url.blog#/>
+    <cfdirectory action="create" directory=#destPath# />
+    <cffile action="move" source=#sourcePath & "/content.txt"# destination=#destPath#/>
+    <cffile action="move" source=#sourcePath & "/image.jpg"# destination=#destPath#/>
+    <cfdirectory action="delete" directory=#sourcePath#/>
+<cfcatch>
+    <cfset success = false/>
+    <cflog file="local blog" text=#cfcatch.message# type="error"/>
+</cfcatch>
+</cftry>
+
+<html>
+    <head>
+        <title>Local Blog</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <div class="h-100 d-flex justify-content-center align-items-center ">
+            <div class=" d-flex flex-column justify-content-center align-items-center">
+                <cfoutput>
+                    <cfif success EQ true>
+                        <h2>Blog Deleted Successufully</h2>
+                    <cfelse>
+                        <h2>Error occurred while deleting a blog #url.blog# from #url.category#</h2>
+                    </cfif>
+                    <a class="btn btn-primary" href="../viewCategory.cfm?category=#url.category#">Go Back</a>
+                </cfoutput>
+            </div>
+        </div>
+    </body>
+ </html>

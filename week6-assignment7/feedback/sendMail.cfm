@@ -1,0 +1,36 @@
+<cfset success = true/>
+<cftry>
+    <cfmail to="grofafroinneitro-5835@yopmail.com" 
+            from=#form.email# 
+            subject="User Feedback" 
+            type="text"> #form.feedback#
+    </cfmail> 
+<cfcatch>
+    <cfset success = false/>
+    <cflog file="local blog" text=#cfcatch.message#/>
+</cfcatch>
+</cftry>
+
+
+<html>
+    <head>
+        <title>Local Blog</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <div class="h-100 d-flex justify-content-center align-items-center ">
+            <div class=" d-flex flex-column justify-content-center align-items-center">
+                <cfoutput>
+                    <cfif success EQ true>
+                        <h2>Thank You For Your Feedback.</h2>
+                    <cfelse>
+                        <h2>Error occurred while Submitting The Feedback.</h2>
+                    </cfif>
+                    <a class="btn btn-primary" href="feedbackForm.cfm">Go Back</a>
+                </cfoutput>
+            </div>
+        </div>
+    </body>
+ </html>
