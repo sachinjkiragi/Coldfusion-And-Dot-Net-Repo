@@ -36,6 +36,14 @@
                                 <a class="nav-link text-black" href="home.cfm?reqPage=doctors">Doctors</a>
                             </cfif>
                         </li>
+                        
+                        <li class="border-bottom border-black">
+                            <cfif url.reqPage EQ "receptionists">
+                                <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=receptionists">Receptionists</a>
+                            <cfelse>
+                                <a class="nav-link text-black" href="home.cfm?reqPage=receptionists">Receptionists</a>
+                            </cfif>
+                        </li>
                         <li class="border-bottom border-black">
                             <cfif url.reqPage EQ "appointments">
                                 <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=appointments">Appointments</a>
@@ -146,6 +154,15 @@
                         </cfcase>
                         <cfcase value="updateRole">
                             <cfinclude template="pages/roles/updateRole.cfm"/>
+                        </cfcase>
+                        <cfcase value="receptionists">
+                            <cfinclude template="pages/receptionists/receptionists.cfm"/>
+                        </cfcase>
+                        <cfcase value="updateReceptionist">
+                            <cfinclude template="pages/receptionists/updateReceptionist.cfm"/>
+                        </cfcase>
+                        <cfcase value="addReceptionist">
+                            <cfinclude template="pages/receptionists/addReceptionist/addReceptionist.cfm"/>
                         </cfcase>
                     </cfswitch>
                 </div>

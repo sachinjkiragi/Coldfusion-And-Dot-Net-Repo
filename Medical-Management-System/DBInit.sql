@@ -1,7 +1,20 @@
 CREATE DATABASE DBMedicalManagementSystem;
 USE DBMedicalManagementSystem;
 
-
+ALTER PROCEDURE spInit
+AS
+BEGIN
+DROP TABLE IF EXISTS Medicine_Prescriptions;
+DROP TABLE IF EXISTS Prescriptions;
+DROP TABLE IF EXISTS Medicines;
+DROP TABLE IF EXISTS Appointments;
+DROP TABLE IF EXISTS Role_Permissions;
+DROP TABLE IF EXISTS Permissions;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Roles;
+DROP TABLE IF EXISTS Departments;
+DROP TABLE IF EXISTS Doctor_Timeslots;
+DROP TABLE IF EXISTS Time_Slots;
 CREATE TABLE Departments (
 	department_id INT PRIMARY KEY IDENTITY(1,1),
 	department_name VARCHAR(100) NOT NULL
@@ -86,18 +99,6 @@ CREATE TABLE Medicine_Prescriptions (
 	FOREIGN KEY (prescription_id) REFERENCES Prescriptions(prescription_id) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS Medicines;
-DROP TABLE IF EXISTS Medicine_Prescriptions;
-DROP TABLE IF EXISTS Prescriptions;
-DROP TABLE IF EXISTS Appointments;
-DROP TABLE IF EXISTS Role_Permissions;
-DROP TABLE IF EXISTS Permissions;
-DROP TABLE IF EXISTS Users;
-DROP TABLE IF EXISTS Roles;
-DROP TABLE IF EXISTS Departments;
-DROP TABLE IF EXISTS Doctor_Timeslots;
-DROP TABLE IF EXISTS Time_Slots;
-
 
 INSERT INTO Roles (role_name) VALUES 
 ('Admin'),
@@ -156,6 +157,28 @@ INSERT INTO Medicines (medicine_name, unit_price) VALUES
 ('Ibuprofen 400mg', 8.75),
 ('Cough Syrup 100ml', 45.00);
 
+CREATE TABLE All_Slots (
+    slot_id INT PRIMARY KEY IDENTITY(1,1),
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL
+);
+
+INSERT INTO All_Slots (start_time, end_time) VALUES
+('09:00:00','09:30:00'),
+('09:30:00','10:00:00'),
+('10:00:00','10:30:00'),
+('10:30:00','11:00:00'),
+('11:00:00','11:30:00'),
+('11:30:00','12:00:00'),
+('12:00:00','12:30:00'),
+('12:30:00','13:00:00'),
+('13:00:00','13:30:00'),
+('13:30:00','14:00:00'),
+('14:00:00','14:30:00'),
+('14:30:00','15:00:00'),
+('15:00:00','15:30:00'),
+('15:30:00','16:00:00');
+
 INSERT INTO Time_Slots (start_time, end_time) VALUES
 ('09:00:00', '09:30:00'),
 ('09:30:00', '10:00:00'),
@@ -172,8 +195,6 @@ INSERT INTO Users
 (first_name, last_name, email, password, role_id, gender, phone, department_id)
 VALUES
 ('Neha', 'Kapoor', 'neha.reception@hospital.com', 'Neha@123', 3, 'F', '9001112222', 1);
-
-SELECT * FROM Users;
 
 INSERT INTO Users 
 (first_name, last_name, email, password, role_id, gender, phone, department_id)
@@ -201,6 +222,42 @@ VALUES
 (5, 9, 'Booked', 700.00, 4, '2026-03-11'),
 (2, 10, 'Cancelled', 500.00, 7, '2026-03-12'),
 (3, 6, 'Booked', 600.00, 8, '2026-03-12');
+
+
+INSERT INTO Prescriptions 
+(appointment_id, diagnosis, diagnosis_notes, digital_signature)
+VALUES
+(3, 'Headache', 'Stress related headache. Maintain hydration.', 'Dr. Rohan Singh'),
+(5, 'Viral Fever', 'Body pain and fever for 3 days.', 'Dr. Arjun Mehta'),
+(6, 'Cold & Cough', 'Mild cough with throat irritation.', 'Dr. Priya Nair'),
+(1, 'Migraine', 'Recurring migraine episodes.', 'Dr. Arjun Mehta'),
+(2, 'Gastric Issue', 'Acidity and bloating.', 'Dr. Priya Nair'),
+(4, 'Knee Pain', 'Inflammation in knee joint.', 'Dr. Rohan Singh'),
+(6, 'Allergy', 'Seasonal allergy symptoms.', 'Dr. Priya Nair'),
+(5, 'Muscle Pain', 'Post-exercise muscle soreness.', 'Dr. Arjun Mehta');
+
+INSERT INTO Medicine_Prescriptions (medicine_id, prescription_id, dosage_info, quantity) VALUES
+(3,5,'1 tablet twice daily after food',6),
+(1,1,'1 tablet three times daily',9),
+(1,6,'1 tablet twice daily',6),
+(3,2,'1 tablet during migraine attack',5),
+(2,3,'1 capsule before food twice daily',10),
+(3,4,'1 tablet twice daily',8),
+(2,8,'1 capsule once daily',5),
+(1,7,'1 tablet if fever occurs',4);
+
+
+END
+
+EXEC spInit;
+
+
+
+
+
+SELECT first_name FROM Users;
+
+SELECT * FROM Users;
 
 
 SELECT Appointments.*,
@@ -245,30 +302,6 @@ SELECT * FROM Users;
 SELECT * FROM Appointments;
 
 DELETE  FROM Prescriptions;
-
-INSERT INTO Prescriptions 
-(appointment_id, diagnosis, diagnosis_notes, digital_signature)
-VALUES
-(3, 'Headache', 'Stress related headache. Maintain hydration.', 'Dr. Rohan Singh'),
-(5, 'Viral Fever', 'Body pain and fever for 3 days.', 'Dr. Arjun Mehta'),
-(6, 'Cold & Cough', 'Mild cough with throat irritation.', 'Dr. Priya Nair'),
-(1, 'Migraine', 'Recurring migraine episodes.', 'Dr. Arjun Mehta'),
-(2, 'Gastric Issue', 'Acidity and bloating.', 'Dr. Priya Nair'),
-(4, 'Knee Pain', 'Inflammation in knee joint.', 'Dr. Rohan Singh'),
-(6, 'Allergy', 'Seasonal allergy symptoms.', 'Dr. Priya Nair'),
-(5, 'Muscle Pain', 'Post-exercise muscle soreness.', 'Dr. Arjun Mehta');
-SELECT * FROM Prescriptions;
-
-
-INSERT INTO Medicine_Prescriptions (medicine_id, prescription_id, dosage_info, quantity) VALUES
-(3,49,'1 tablet twice daily after food',6),
-(1,50,'1 tablet three times daily',9),
-(1,51,'1 tablet twice daily',6),
-(3,52,'1 tablet during migraine attack',5),
-(2,53,'1 capsule before food twice daily',10),
-(3,54,'1 tablet twice daily',8),
-(2,48,'1 capsule once daily',5),
-(1,47,'1 tablet if fever occurs',4);
 
 
 SELECT Prescriptions.prescription_id, Prescriptions.diagnosis, Prescriptions.diagnosis_notes, 
@@ -325,7 +358,6 @@ WITH cte1 AS
 		ON Appointments.appointment_id = Prescriptions.appointment_id
 		JOIN Medicine_Prescriptions
 		ON Prescriptions.prescription_id = Medicine_Prescriptions.prescription_id
-		WHERE Appointments.patient_id = 10
 ),
 cte2 AS (
 	SELECT cte1.*,
@@ -373,3 +405,19 @@ INSERT INTO Users
 (first_name, last_name, email, password, role_id, gender, phone, department_id)
 VALUES
 ('Admin', 'User', 'admin@hospital.com', 'Admin@123', 1, 'M', '9999999999', NULL);
+
+
+DELETE FROM Appointments WHERE patient_id = 7;
+DELETE FROM Users WHERE user_id = 7;
+SELECT * FROM Users;
+
+EXEC spinit;
+
+SELECT * FROM All_Slots;
+INSERT INTO Time_Slots (start_time, end_time)
+VALUES(
+    (SELECT start_time FROM All_Slots WHERE slot_id = 7),
+    (SELECT end_time FROM All_Slots WHERE slot_id = 7)
+);
+
+SELECT * FROM Departments;

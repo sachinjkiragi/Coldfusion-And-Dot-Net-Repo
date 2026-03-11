@@ -130,6 +130,7 @@
         </cftry>
         <cfreturn success/>
     </cffunction>
+    
 
     <cffunction name="deleteDoctor" returntype="boolean">
         <cfargument name="doctor_id" type="numeric"/>
@@ -160,6 +161,50 @@
             WHERE email = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">
         </cfquery>
         <cfreturn query.recordCount GT 0/>
+    </cffunction>
+
+
+    <cffunction name="updateReceptionistData" returntype="boolean">
+        <cfargument name="receptionistData" type="struct"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryUpdate">
+                UPDATE Users
+                 SET 
+                    first_name = <cfqueryparam value="#arguments.receptionistData.firstName#" cfsqltype="cf_sql_varchar"/>,
+                    last_name  = <cfqueryparam value="#arguments.receptionistData.lastName#" cfsqltype="cf_sql_varchar"/>,
+                    email = <cfqueryparam value="#arguments.receptionistData.email#" cfsqltype="cf_sql_varchar"/>,
+                    phone = <cfqueryparam value="#arguments.receptionistData.phone#" cfsqltype="cf_sql_varchar"/>,
+                    gender = <cfqueryparam value="#arguments.receptionistData.gender#" cfsqltype="cf_sql_char"/>,
+                    password = <cfqueryparam value="#arguments.receptionistData.password#" cfsqltype="cf_sql_char"/>,
+                    department_id = <cfqueryparam value="#arguments.receptionistData.department_id#" cfsqltype="cf_sql_char"/>
+                WHERE user_id = <cfqueryparam value="#arguments.receptionistData.receptionist_id#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+        <cfcatch>
+            <cfset success = false/>
+            <cfdump var=#cfcatch#/>
+            <cfabort/>
+        </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
+
+        <cffunction name="deleteReceptionist" returntype="boolean">
+        <cfargument name="receptionist_id" type="numeric"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryDeleteReceptionist">
+                DELETE FROM
+                Users
+                WHERE user_id = <cfqueryparam value="#receptionist_id#" cfsqltype="cf_sql_varchar"/> 
+            </cfquery>
+            <cfcatch>
+                <cfdump var=#cfcatch#/>
+                <cfset success = false/>
+            </cfcatch>
+        </cftry> 
+        <cfreturn success/>
     </cffunction>
 
 
@@ -802,6 +847,17 @@
         <cfreturn success/>
     </cffunction>
 
+    <cffunction name="getReceptionistData" returntype="query">
+        <cfargument name="receptionistId" type="numeric"/>
+        <cfquery name="qryReceptionistData">
+            SELECT
+                user_id, first_name, last_name, email, phone, department_id, password, gender
+                FROM
+                Users
+                WHERE user_id = <cfqueryparam value=#arguments.receptionistId# cfsqltype="cf_sql_varchar"/>
+        </cfquery>
+        <cfreturn qryReceptionistData/>
+    </cffunction>
 
 </cfcomponent>
 
