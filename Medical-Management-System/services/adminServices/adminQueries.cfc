@@ -685,13 +685,6 @@
     </cffunction>
 
 
-    <cffunction name="getDepartments" returntype="query">
-        <cfquery name="qryDepartmens">
-            SELECT * FROM Departments;
-        </cfquery>
-        <cfreturn qryDepartmens/>
-    </cffunction>
-
     <cffunction name="addDepartment" returntype="boolean">
         <cfargument name="departmentData" type="struct"/>
         <cfset success = true/>
