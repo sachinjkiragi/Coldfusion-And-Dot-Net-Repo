@@ -2,7 +2,6 @@
     <cfinvokeargument name="patientId" value="#session.currUser.user_id#"/>
 </cfinvoke>
 
-
 <style>
         #billingHistory {
             width: 100%;
@@ -15,7 +14,7 @@
     </style>
     
     <form method="POST" class="p-5">
-        <h4 class="text-primary mb-4">Billing History - <cfoutput>#billingHistory.patient_name#</cfoutput></h4>
+        <h4 class="text-primary mb-4">Billing History - <cfoutput>#session.currUser.first_name#</cfoutput></h4>
         <table id="billingHistory"  class="display">
             <thead>
                 <tr>

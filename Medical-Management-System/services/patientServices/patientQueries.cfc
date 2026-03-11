@@ -91,7 +91,8 @@
                         ON Appointments.appointment_id = Prescriptions.appointment_id
                         LEFT JOIN Medicine_Prescriptions
                         ON Prescriptions.prescription_id = Medicine_Prescriptions.prescription_id
-                        WHERE Appointments.status = 'Completed'
+                        WHERE Appointments.status = 'Completed' AND
+                        patient_id = <cfqueryparam value="#arguments.patientId#" cfsqltype="cf_sql_int"/>
                 ),
                 cte2 AS (
                     SELECT cte1.*,

@@ -10,7 +10,9 @@
                 <strong><a href="../../logout/logout.cfm" class="text-white text-decoration-none">Logout</a></strong>
             </nav>
             <div>
-                <p class="text-center fw-normal display-6 mt-4">Welcome Doctor</p>
+                <cfoutput>
+                    <p class="text-center fw-normal display-6 mt-4">Welcome #session.currUser.first_name#</p>
+                </cfoutput>
             </div>
             <div class="border border-black d-flex m-3 rounded">
                 <div class="text-white p-3" style="width: 20%">
