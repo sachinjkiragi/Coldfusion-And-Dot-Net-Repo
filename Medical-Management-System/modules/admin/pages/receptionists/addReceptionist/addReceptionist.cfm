@@ -9,7 +9,7 @@
             <form class="py-1" method="POST">
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
-                        <h2 class="text-primary">Update Receptionist</h2>
+                        <h2 class="text-primary">Add Receptionist</h2>
                     </div>
                     <div class="d-flex gap-4">
                     <div class="p-2 d-flex gap-4 justify-content-center align-items-center">
@@ -75,7 +75,7 @@
                     <span title="Please complete all required fields">
                         <button class="btn btn-primary" type="submit" name="register-btn"> Register </button>
                     </span>
-                    <a href="home.cfm?reqPage=patients" class="text-decoration-none">Go Back</a>
+                    <a href="home.cfm?reqPage=receptionists" class="text-decoration-none">Go Back</a>
                 </div>
             </form>
         </div>

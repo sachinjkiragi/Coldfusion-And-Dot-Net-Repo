@@ -3,12 +3,12 @@
 
 <html>
     <cfinclude template = "../includes/header.cfm"/>
-    <nav class="d-flex align-items-center justify-content-between px-4 py-3 text-white" 
+    <nav class="d-flex m-0 align-items-center justify-content-between px-4 py-3 text-white" 
      style="background: linear-gradient(90deg, #0d6efd, #0dcaf0);">
         <h3 class="m-0">Hospital Here</h3>
     </nav>
     <div class="h-100 w-100 d-flex justify-content-center align-items-center">
-        <form style="width: fit-content;" class="card shadow  p-5" method="POST">
+        <form style="width: fit-content;" class="card shadow  px-5 py-4" method="POST">
             <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                 <div>
                     <h2 class="text-primary">Register Yourself As</h2>

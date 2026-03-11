@@ -13,7 +13,7 @@
             <form class="py-1" method="POST">
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
-                        <h2 class="text-primary">Update Patient</h2>
+                        <h2 class="text-primary">Update Doctor</h2>
                     </div>
                     <div class="d-flex gap-4">
                         <div class="form-check d-flex flex-column gap-2">
@@ -81,7 +81,7 @@
                     <span title="Please complete all required fields">
                         <button class="btn btn-primary" type="submit" name="update-btn"> Update </button>
                     </span>
-                    <a href="home.cfm?reqPage=patients" class="text-decoration-none">Go Back</a>
+                    <a href="home.cfm?reqPage=doctors" class="text-decoration-none">Go Back</a>
                 </div>
             </form>
         </div>

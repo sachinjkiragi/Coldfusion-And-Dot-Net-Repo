@@ -8,7 +8,7 @@
         <form style="width: fit-content;" class="card shadow  p-5" method="POST" action="verifyOtp.cfm">
             <div class="d-flex flex-column gap-3 align-items-center">
                 <div>
-                    <h2 class="text-primary">Log In</h2>
+                    <h2 class="text-primary">Reset Password</h2>
                 </div>
                 <div class="form-check">
                     <input name="email" class="form-control" type="email" id="email" required placeholder="Your Email *"/>

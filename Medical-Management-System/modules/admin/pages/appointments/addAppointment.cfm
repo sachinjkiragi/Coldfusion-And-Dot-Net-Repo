@@ -53,6 +53,8 @@
                 <input class="form-control w-25" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
             </div>
             <button name="book-btn" type="submit" class="btn btn-primary mx-auto" style="width: fit-content;">Book Appointment</button>
+            <a href="home.cfm?reqPage=appointments" class="text-primary text-decoration-none text-center">Go Back</a>
+
         </div>
     </form>
 </div>
