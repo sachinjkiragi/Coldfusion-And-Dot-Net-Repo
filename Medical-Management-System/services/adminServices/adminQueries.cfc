@@ -382,18 +382,6 @@
     </cffunction>
 
 
-        <cffunction name="getMedicines" returntype="query">
-        <cftry>
-            <cfquery name="qryMedicines">
-                SELECT * FROM Medicines
-            </cfquery>
-            <cfreturn qryMedicines>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry>
-    </cffunction>
-
         <cffunction name="doesPrescriptionExists" returntype="boolean">
         <cfargument name="appointment_id" type="numeric"/>
         <cftry>
@@ -628,14 +616,6 @@
             </cfcatch>
         </cftry>
         <cfreturn success/>
-    </cffunction>
-
-
-    <cffunction name="getTimeSlots">
-        <cfquery name="qryTimeSlots">
-            SELECT * FROM Time_Slots;
-        </cfquery>
-        <cfreturn qryTimeSlots/>
     </cffunction>
 
     
