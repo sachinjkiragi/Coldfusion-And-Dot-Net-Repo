@@ -8,7 +8,8 @@
             (SELECT start_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'start_time',
             (SELECT end_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'end_time'
             FROM Appointments 
-            WHERE Appointments.doctor_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_integer"/>;
+            WHERE 
+            Appointments.doctor_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_integer"/>
         </cfquery>
         <cfreturn qryAppointmentList/>
     </cffunction>
@@ -207,6 +208,21 @@
                 <cfdump var=#cfcatch#/>
             </cfcatch>
         </cftry>
+    </cffunction>
+
+    <cffunction name="cancelAppointment" returntype="boolean">
+        <cfargument name="appointmentId" type="string"/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryCancelAppointment">
+                UPDATE Appointments
+                SET status = <cfqueryparam value="Cancelled" cfsqltype="cf_sql_varchar"/>
+            </cfquery>
+            <cfcatch>
+                <cfset success = false/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
     </cffunction>
 
 </cfcomponent>

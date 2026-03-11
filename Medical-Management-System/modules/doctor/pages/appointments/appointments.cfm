@@ -25,6 +25,7 @@
                     <th>Status</th>
                     <th>View/Add Prescription</th>
                     <th>Patient History</th>
+                    <th>Cancel Appointment</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,6 +48,13 @@
                         </td>
                         <td>
                             <button name="btnViewPatientIdHistory" value="#appointmentList.patient_id#" class="btn btn-primary">View</button>
+                        </td>
+                        <td>
+                            <cfif appointmentList.status EQ "Booked">
+                                <button name="btnCancelAppointmentId" value="#appointmentList.appointment_id#" class="btn btn-danger">Cancel</button>
+                            <cfelse>
+                                <button disabled class="btn btn-danger">NA</button>
+                            </cfif>
                         </td>
                     </tr>
                 </cfoutput>
@@ -76,4 +84,21 @@
         <cflocation url="home.cfm?reqPage=viewPrescription&appointment_id=#form.btnView#"/>
     <cfelseif structKeyExists(form, "btnViewPatientIdHistory")>
         <cflocation url="home.cfm?reqPage=patientHistory&patientId=#form.btnViewPatientIdHistory#"/>
+</cfif>
+
+<cfif structKeyExists(form, "btnCancelAppointmentId")>
+    <cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="cancelAppointment" returnvariable="success">
+        <cfinvokeargument name="appointmentId" value="#form.btnCancelAppointmentId#"/>
+    </cfinvoke>
+
+    <cfif success EQ true>
+        <script>
+            alert("Appointment Cancelled successfully.");
+        </script>
+    <cfelse>
+        <script>
+            alert("Unable to cancel appointment. Please try again later.");
+        </script>
+    </cfif>
+
 </cfif>
