@@ -18,6 +18,7 @@
                 </span>
                 <span id="logInErrorMsg" class="text-danger d-none"></span>
                 <a href="../register/register.cfm" class="text-primary text-decoration-none">Register</a>
+                <a href="resetPassword.cfm" class="text-primary text-decoration-none">Reset Password</a>
             </div>
         </form>
     </div>

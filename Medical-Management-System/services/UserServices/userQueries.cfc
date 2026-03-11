@@ -63,4 +63,23 @@
         <cfreturn qryValidUser/>
     </cffunction>
 
+    <cffunction name="resetPassword" returntype="boolean">
+        <cfargument name="email" type="string"/>
+        <cfargument name="password" type="string"/>
+        <cfdump var=#arguments.email#/>
+        <cfdump var=#arguments.password#/>
+        <cfset success = true/>
+        <cftry>
+            <cfquery name="qryResetPassword">
+                UPDATE Users 
+                SET password = <cfqueryparam value="#arguments.password#" cfsqltype="cf_sql_varchar"/>
+                WHERE email = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar"/>
+            </cfquery>
+            <cfcatch>
+                <cfset success = false/>
+            </cfcatch>
+        </cftry>
+        <cfreturn success/>
+    </cffunction>
+
 </cfcomponent>
