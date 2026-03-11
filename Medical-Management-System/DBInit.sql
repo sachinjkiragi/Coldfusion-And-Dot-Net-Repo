@@ -421,3 +421,7 @@ VALUES(
 );
 
 SELECT * FROM Departments;
+SELECT * FROM Users;
+
+CREATE INDEX idx_email
+ON Users (email);
