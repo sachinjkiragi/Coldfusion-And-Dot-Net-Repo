@@ -1,9 +1,9 @@
 <cfinvoke method="getRoles" component="../../../../services/UserServices/userQueries.cfc" returnvariable="roles"/>
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
-    <div class="h-100 w-100 border border-black d-flex justify-content-center align-items-center">
+    <div class="h-100 w-100  d-flex justify-content-center align-items-center">
         <form class="p-5" method="POST">
-            <div class="bordr-black d-flex flex-column gap-3 align-items-center">
+            <div class="d-flex flex-column gap-3 align-items-center">
                 <div>
                     <h2 class="text-primary">Register Patient</h2>
                 </div>

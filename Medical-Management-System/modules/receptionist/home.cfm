@@ -3,16 +3,16 @@
     <cfinclude template="../../includes/header.cfm"/>
 
     <body>
-         <div class="h-100 w-100 border border-black">
+         <div class="h-100 w-100">
             <nav class="d-flex align-items-center justify-content-between px-4 py-3 text-white"
                 style="background: linear-gradient(90deg, #0d6efd, #0dcaf0);">
                 <h3 class="m-0">Hospital Here</h3>
                 <strong><a href="../../logout/logout.cfm" class="text-white text-decoration-none">Logout</a></strong>
             </nav>
-            <div class="border border-black">
+            <div>
                 <p class="text-center fw-normal display-6 mt-4">Welcome Receptionist</p>
             </div>
-            <div class="border border-black d-flex">
+            <div class="d-flex border border-black m-3 rounded">
                 <div class="text-white p-3" style="width: 20%">
                     <ul class="nav flex-column border border-black rounded overflow-hidden">
                         <li class="border-bottom border-black">
@@ -59,7 +59,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="border border-black" style="width: 80%">
+                <div style="width: 80%">
                     <cfswitch expression=#url.reqPage#>
                         <cfcase value="dashboard">
                             <cfinclude template="pages/dashboard.cfm"/>

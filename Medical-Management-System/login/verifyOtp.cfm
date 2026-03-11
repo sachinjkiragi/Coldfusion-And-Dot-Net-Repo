@@ -20,6 +20,10 @@
 
 <html>
     <cfdump var=#session.otp# label="OTP"/>
+    <nav class="d-flex align-items-center justify-content-between px-4 py-3 text-white" 
+     style="background: linear-gradient(90deg, #0d6efd, #0dcaf0);">
+        <h3 class="m-0">Hospital Here</h3>
+    </nav>
     <cfinclude template = "../includes/header.cfm"/>
     <div class="h-100 w-100 border border-black d-flex justify-content-center align-items-center">
         <form style="width: fit-content;" class="card shadow  p-5" method="POST" action="verifyOtp.cfm">

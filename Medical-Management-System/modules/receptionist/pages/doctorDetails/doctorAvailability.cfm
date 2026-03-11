@@ -27,7 +27,7 @@
                             <td>#timeFormat(availabilityList.start_time, "hh:mm tt")#</td>
                             <td>#timeFormat(availabilityList.end_time, "hh:mm tt")#</td>
                         </tr> 
-                        
+
                     </cfoutput>
                 </tbody>
             </table>
