@@ -22,11 +22,18 @@
                                 <a class="nav-link text-black" href="home.cfm?reqPage=dashboard">Dashboard</a>
                             </cfif>
                         </li>
-                        <li>
-                            <cfif url.reqPage EQ "patients">
-                                <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=appointments">Appointments</a>
+                        <li class="border-bottom border-black">
+                            <cfif url.reqPage EQ "appointments">
+                                <a class="nav-link text-white bg-primary" href="home.cfm?reqPage=appointments">Appointments</a>
                             <cfelse>
                                 <a class="nav-link text-black" href="home.cfm?reqPage=appointments">Appointments</a>
+                            </cfif>
+                        </li>
+                        <li>
+                            <cfif url.reqPage EQ "billingHistory">
+                                <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=billingHistory">Billing History</a>
+                            <cfelse>
+                                <a class="nav-link text-black" href="home.cfm?reqPage=billingHistory">Billing History</a>
                             </cfif>
                         </li>
                     </ul>
@@ -47,6 +54,9 @@
                         </cfcase>
                         <cfcase value="downloadPrescription">
                             <cfinclude template="pages/appointments/viewPrescription.cfm"/>
+                        </cfcase>
+                        <cfcase value="billingHistory">
+                            <cfinclude template="pages/billingHistory.cfm"/>
                         </cfcase>
                     </cfswitch>
                 </div>

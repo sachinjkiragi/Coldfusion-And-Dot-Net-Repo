@@ -167,9 +167,9 @@
                         Prescriptions.diagnosis, Prescriptions.diagnosis_notes,
                         Medicine_Prescriptions.medicine_id, Medicine_Prescriptions.dosage_info, Medicine_Prescriptions.quantity
                         FROM
-                        Appointments JOIN Prescriptions
+                        Appointments LEFT JOIN Prescriptions
                         ON Appointments.appointment_id = Prescriptions.appointment_id
-                        JOIN Medicine_Prescriptions
+                        LEFT JOIN Medicine_Prescriptions
                         ON Prescriptions.prescription_id = Medicine_Prescriptions.prescription_id
                         WHERE
                         Appointments.patient_id = <cfqueryparam value="#arguments.patientId#" cfsqltype="cf_sql_integer"/>
@@ -186,7 +186,7 @@
                         Medicines.medicine_name
                     FROM cte2 JOIN Time_Slots
                     ON cte2.timeslot_id = Time_Slots.timeslot_id
-                    JOIN Medicines
+                    LEFT JOIN Medicines
                     ON cte2.medicine_id = Medicines.medicine_id
                 ), patientHistory AS (
                     SELECT cte3.patient_name,

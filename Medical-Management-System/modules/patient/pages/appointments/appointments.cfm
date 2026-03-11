@@ -8,9 +8,9 @@
             table-layout: fixed;
         }
         #appointmentList td {
-    white-space: normal;
-    word-break: break-word;
-}
+            white-space: normal;
+            word-break: break-word;
+        }
     </style>
     
     <form method="POST" class="p-5">
@@ -38,8 +38,10 @@
                         <td>
                             <cfif appointmentList.status EQ "Booked">
                                 <button disabled class="btn btn-primary">NA&nbsp;&nbsp;&nbsp;</button>
-                            <cfelse>
+                            <cfelseif appointmentList.status EQ "Completed">
                                 <button name="btnView" value="#appointmentList.appointment_id#" class="btn btn-primary">View</button>
+                            <cfelse>
+                                <button disabled value="#appointmentList.appointment_id#" class="btn btn-primary">NA</button>
                             </cfif>
                         </td>
                     </tr>
