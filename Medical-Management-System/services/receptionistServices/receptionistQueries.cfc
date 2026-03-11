@@ -1,6 +1,25 @@
 <cfcomponent>
+
+    <cffunction name="checkPermission" returntype="boolean">
+        <cfargument name="permissionTag" type="string"/>
+        <cfquery name="qryPermission">
+            SELECT 1 FROM Permissions
+            WHERE permission_tag = <cfqueryparam value="#arguments.permissionTag#" cfsqltype="cf_sql_varchar"/> 
+        </cfquery> 
+        <cfreturn qryPermission.recordCount EQ 1/>
+    </cffunction>
+
     <cffunction name="getUserList" returntype="query">
         <cfargument name="role" type="string"/>
+
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="View_Users"/>
+        </cfinvoke>
+
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+
         <cfquery name="qryUserList">
             SELECT
                 Users.user_id, Users.first_name, Users.last_name, Users.email, Users.phone, Departments.department_name,
