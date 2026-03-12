@@ -102,6 +102,7 @@
     <cfset form.doctor_id = appointementData.doctor_id/>
     <cfset form.patient_id = appointementData.patient_id/>
     <cfset form.appointment_id = appointementData.appointment_id/>
+    
     <cfif form.status EQ "Booked">
         <cfinvoke component=#queryServicesPath# method="isDoctorAvailable" returnvariable="isAvailable">
             <cfinvokeargument name="appointmentDetails" value=#form#/>

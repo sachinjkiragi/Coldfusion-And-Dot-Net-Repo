@@ -79,7 +79,7 @@
         </cfinvoke>
         
         <cfif success EQ true>
-            <cfmail to="#form.email#" from="noreply@med.com" subject="temporary Passowrd for MedManage Login">Your temporary passowrd for MedManage LogIn is #form.password#
+            <cfmail to="#form.email#" from="noreply@med.com" subject="temporary Passoword for MedManage Login">Your temporary Passoword for MedManage LogIn is #form.password#
             </cfmail> 
             <script>alert('Registeration Done Successfully');</script>
         <cfelse>

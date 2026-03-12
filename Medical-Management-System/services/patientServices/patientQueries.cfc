@@ -43,7 +43,6 @@
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
-        <cftry>
             <cfquery name="qryPrescription">
                SELECT
                     Prescriptions.prescription_id,
@@ -63,22 +62,13 @@
                 WHERE Prescriptions.appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer">
             </cfquery>
             <cfreturn qryPrescription/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry> 
     </cffunction>
 
     <cffunction name="getMedicines" returntype="query">
-        <cftry>
-            <cfquery name="qryMedicines">
-                SELECT * FROM Medicines
-            </cfquery>
-            <cfreturn qryMedicines>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry>
+        <cfquery name="qryMedicines">
+            SELECT * FROM Medicines
+        </cfquery>
+        <cfreturn qryMedicines>
     </cffunction>
 
     <cffunction name="getPrescriptionDataByPrescriptionId" returntype="query">
@@ -90,25 +80,20 @@
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
-        <cftry>
-            <cfquery name="qryPrescription">
-                SELECT
-                 Prescriptions.prescription_id,
-                 Prescriptions.appointment_id,
-                 Prescriptions.diagnosis, 
-                 Prescriptions.diagnosis_notes, 
-                 Medicine_Prescriptions.quantity, 
-                 Medicine_Prescriptions.medicine_id, 
-                 Medicine_Prescriptions.dosage_info
-                FROM Prescriptions JOIN Medicine_Prescriptions
-                ON Medicine_Prescriptions.prescription_id = Prescriptions.prescription_id
-                WHERE Prescriptions.prescription_id = <cfqueryparam value="#arguments.prescription_id#" cfsqltype="cf_sql_integer">
-            </cfquery>
-            <cfreturn qryPrescription/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry> 
+        <cfquery name="qryPrescription">
+            SELECT
+                Prescriptions.prescription_id,
+                Prescriptions.appointment_id,
+                Prescriptions.diagnosis, 
+                Prescriptions.diagnosis_notes, 
+                Medicine_Prescriptions.quantity, 
+                Medicine_Prescriptions.medicine_id, 
+                Medicine_Prescriptions.dosage_info
+            FROM Prescriptions JOIN Medicine_Prescriptions
+            ON Medicine_Prescriptions.prescription_id = Prescriptions.prescription_id
+            WHERE Prescriptions.prescription_id = <cfqueryparam value="#arguments.prescription_id#" cfsqltype="cf_sql_integer">
+        </cfquery>
+        <cfreturn qryPrescription/>
     </cffunction>
 
     <cffunction name="getBillingHistory">
@@ -130,62 +115,56 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
         
-        <cftry>
-            <cfquery name="qryBillingHistory">
-                WITH cte1 AS
-                (
-                    SELECT 
-                        Appointments.doctor_id, Appointments.patient_id, Appointments.status, Appointments.appointment_charges, Appointments.timeslot_id, Appointments.slot_date,
-                        Prescriptions.diagnosis, Prescriptions.diagnosis_notes,
-                        Medicine_Prescriptions.medicine_id, Medicine_Prescriptions.dosage_info, Medicine_Prescriptions.quantity
-                        FROM
-                        Appointments LEFT JOIN Prescriptions
-                        ON Appointments.appointment_id = Prescriptions.appointment_id
-                        LEFT JOIN Medicine_Prescriptions
-                        ON Prescriptions.prescription_id = Medicine_Prescriptions.prescription_id
-                        WHERE Appointments.status = 'Completed' AND
-                        patient_id = <cfqueryparam value="#arguments.patientId#" cfsqltype="cf_sql_int"/>
-                ),
-                cte2 AS (
-                    SELECT cte1.*,
-                        (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = cte1.doctor_id) AS doctor_name,
-                        (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = cte1.patient_id) AS patient_name
-                    FROM cte1
-                ),
-                cte3 AS (
-                    SELECT cte2.*,
-                        Time_Slots.start_time, Time_Slots.end_time,
-                        Medicines.medicine_name, Medicines.unit_price
-                    FROM cte2 LEFT JOIN Time_Slots
-                    ON cte2.timeslot_id = Time_Slots.timeslot_id
-                    LEFT JOIN Medicines
-                    ON cte2.medicine_id = Medicines.medicine_id
-                ),
-                billingHistory AS (
-                    SELECT cte3.patient_name,
-                    cte3.doctor_name,
-                    cte3.slot_date,
-                    cte3.start_time,
-                    cte3.end_time,
-                    cte3.medicine_name,
-                    cte3.diagnosis,
-                    cte3.quantity,
-                    cte3.unit_price,
-                    cte3.appointment_charges,
-                    CASE
-                        WHEN cte3.quantity IS NULL then cte3.appointment_charges
-                        ELSE cte3.quantity * cte3.unit_price + cte3.appointment_charges
-                    END
-                    AS 'total_bill'
-                    FROM cte3
-                ) SELECT * FROM billingHistory;
-            </cfquery>
-            <cfreturn qryBillingHistory/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry>
+        <cfquery name="qryBillingHistory">
+            WITH cte1 AS
+            (
+                SELECT 
+                    Appointments.doctor_id, Appointments.patient_id, Appointments.status, Appointments.appointment_charges, Appointments.timeslot_id, Appointments.slot_date,
+                    Prescriptions.diagnosis, Prescriptions.diagnosis_notes,
+                    Medicine_Prescriptions.medicine_id, Medicine_Prescriptions.dosage_info, Medicine_Prescriptions.quantity
+                    FROM
+                    Appointments LEFT JOIN Prescriptions
+                    ON Appointments.appointment_id = Prescriptions.appointment_id
+                    LEFT JOIN Medicine_Prescriptions
+                    ON Prescriptions.prescription_id = Medicine_Prescriptions.prescription_id
+                    WHERE Appointments.status = 'Completed' AND
+                    patient_id = <cfqueryparam value="#arguments.patientId#" cfsqltype="cf_sql_int"/>
+            ),
+            cte2 AS (
+                SELECT cte1.*,
+                    (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = cte1.doctor_id) AS doctor_name,
+                    (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = cte1.patient_id) AS patient_name
+                FROM cte1
+            ),
+            cte3 AS (
+                SELECT cte2.*,
+                    Time_Slots.start_time, Time_Slots.end_time,
+                    Medicines.medicine_name, Medicines.unit_price
+                FROM cte2 LEFT JOIN Time_Slots
+                ON cte2.timeslot_id = Time_Slots.timeslot_id
+                LEFT JOIN Medicines
+                ON cte2.medicine_id = Medicines.medicine_id
+            ),
+            billingHistory AS (
+                SELECT cte3.patient_name,
+                cte3.doctor_name,
+                cte3.slot_date,
+                cte3.start_time,
+                cte3.end_time,
+                cte3.medicine_name,
+                cte3.diagnosis,
+                cte3.quantity,
+                cte3.unit_price,
+                cte3.appointment_charges,
+                CASE
+                    WHEN cte3.quantity IS NULL then cte3.appointment_charges
+                    ELSE cte3.quantity * cte3.unit_price + cte3.appointment_charges
+                END
+                AS 'total_bill'
+                FROM cte3
+            ) SELECT * FROM billingHistory;
+        </cfquery>
+        <cfreturn qryBillingHistory/>
     </cffunction>
-
 
 </cfcomponent>

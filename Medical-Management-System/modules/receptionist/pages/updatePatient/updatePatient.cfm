@@ -81,8 +81,8 @@
         </cfinvoke>
         
         <cfif success EQ true>
-            <!--- <cfmail from="noreply@mms.com" to=#form.email# subject="temporary Passowrd for MMS Login">
-                Your temporary Passowrd for MMS Login #form.password#
+            <!--- <cfmail from="noreply@mms.com" to=#form.email# subject="temporary Passoword for MMS Login">
+                Your temporary Passoword for MMS Login #form.password#
             </cfmail> --->
             <script>alert('Update Done Successfully');</script>
         <cfelse>

@@ -27,7 +27,7 @@
 
     <cffunction name="insertUserData" returntype="boolean">
         <cfargument name="userData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
 
         <cfset local.hashedPassword = hash(userData.password, "SHA-256")>
         
@@ -46,11 +46,11 @@
                 )
             </cfquery>
         <cfcatch>
-            <cfset success = false/>
+            <cfset local.success = false/>
             <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="isUserValid" returntype="query">
@@ -71,7 +71,7 @@
         <cfargument name="email" type="string"/>
         <cfargument name="password" type="string"/>
         <cfset local.hashedPassword = hash(arguments.password, "SHA-256")>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryResetPassword">
                 UPDATE Users 
@@ -79,10 +79,10 @@
                 WHERE email = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar"/>
             </cfquery>
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
 </cfcomponent>

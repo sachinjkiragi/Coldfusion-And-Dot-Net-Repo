@@ -15,7 +15,7 @@
     </cffunction>
 
 
-    <cffunction name="onError" returntype="void">
+    <!---<cffunction name="onError" returntype="void">
         <cfargument name="exception" required="true">
         <cfargument name="eventName" required="true">
         <cfset errorMessage = " Error Message: #arguments.exception.message#
@@ -24,6 +24,6 @@
         Time: #now()#">
         <cflog file="medManageLogs" text="#errorMessage#" type="error">
         <cflocation url="/Coldfusion-And-Dot-Net-Repo/Medical-Management-System/error.cfm">
-    </cffunction>
+    </cffunction>--->
 
 </cfcomponent>

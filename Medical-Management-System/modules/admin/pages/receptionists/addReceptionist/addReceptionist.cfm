@@ -94,12 +94,12 @@
         </script>
     <cfelse>
         <cfset form.password = randRange(100000, 999999)/>
-        <cfinvoke component="../../../../../services/adminServices/adminQueries" method="insertDoctorData" returnvariable="success">
-            <cfinvokeargument name="doctorData" value=#form#/>
+        <cfinvoke component="../../../../../services/adminServices/adminQueries" method="insertReceptionistData" returnvariable="success">
+            <cfinvokeargument name="receptionistData" value=#form#/>
         </cfinvoke>
         
         <cfif success EQ true>
-            <cfmail to="#form.email#" from="noreply@med.com" subject="temporary Passowrd for MedManage Login">Your temporary passowrd for MedManage LogIn is #form.password#
+            <cfmail to="#form.email#" from="noreply@med.com" subject="temporary Passoword for MedManage Login">Your temporary Passoword for MedManage LogIn is #form.password#
             </cfmail> 
             <script>alert('Registeration Done Successfully');</script>
         <cfelse>

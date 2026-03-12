@@ -33,7 +33,7 @@
 
     <cffunction name="updatePatientData" returntype="boolean">
         <cfargument name="patientData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdate">
                 UPDATE Users
@@ -46,16 +46,16 @@
                 WHERE user_id = <cfqueryparam value="#arguments.patientData.patient_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
         <cfcatch>
-            <cfset success = false/>
+            <cfset local.success = false/>
             <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="deletePatient" returntype="boolean">
         <cfargument name="patient_id" type="numeric"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryDeletePatient">
                 DELETE FROM
@@ -67,10 +67,10 @@
             </cfquery>
             <cfcatch>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
-                <cfset success = false/>
+                <cfset local.success = false/>
             </cfcatch>
         </cftry> 
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
 
@@ -96,7 +96,7 @@
     
     <cffunction name="updateDoctorData" returntype="boolean">
         <cfargument name="doctorData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdate">
                 UPDATE Users
@@ -110,17 +110,17 @@
                 WHERE user_id = <cfqueryparam value="#arguments.doctorData.doctor_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
         <cfcatch>
-            <cfset success = false/>
+            <cfset local.success = false/>
             <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
     
 
     <cffunction name="deleteDoctor" returntype="boolean">
         <cfargument name="doctor_id" type="numeric"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryDeleteDoctor">
                 DELETE FROM
@@ -132,10 +132,10 @@
             </cfquery>
             <cfcatch>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
-                <cfset success = false/>
+                <cfset local.success = false/>
             </cfcatch>
         </cftry> 
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
         <cffunction name="doesMailExists" returntype="boolean">
@@ -152,7 +152,7 @@
 
     <cffunction name="updateReceptionistData" returntype="boolean">
         <cfargument name="receptionistData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdate">
                 UPDATE Users
@@ -166,17 +166,17 @@
                 WHERE user_id = <cfqueryparam value="#arguments.receptionistData.receptionist_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
         <cfcatch>
-            <cfset success = false/>
+            <cfset local.success = false/>
             <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
 
         <cffunction name="deleteReceptionist" returntype="boolean">
         <cfargument name="receptionist_id" type="numeric"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryDeleteReceptionist">
                 DELETE FROM
@@ -185,10 +185,10 @@
             </cfquery>
             <cfcatch>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
-                <cfset success = false/>
+                <cfset local.success = false/>
             </cfcatch>
         </cftry> 
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
 
@@ -224,7 +224,7 @@
     <cffunction name="updateAppointmentData" returntype="boolean">
         <cfargument name="appointmentDetails" type="struct"/>
         
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdate">
                 UPDATE Appointments
@@ -239,15 +239,17 @@
             </cfquery>
         <cfcatch>
             <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
-            <cfset success = false/>
+            <cfset local.success = false/>
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="insertPatientData" returntype="boolean">
         <cfargument name="patientData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
+
+        <cfset local.hashedPassword = hash(arguments.patientData.password, "SHA-256")>
 
         <cftry>
             <cfquery name="qryInsert">
@@ -258,21 +260,23 @@
                     <cfqueryparam value="#arguments.patientData.email#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.patientData.phone#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.patientData.role_id#" cfsqltype="cf_sql_integer"/>,
-                    <cfqueryparam value="#arguments.patientData.password#" cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value="#local.hashedPassword#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.patientData.gender#" cfsqltype="cf_sql_char"/>
                 )
             </cfquery>
         <cfcatch>
             <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
-            <cfset success = false/>
+            <cfset local.success = false/>
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="insertDoctorData" returntype="boolean">
         <cfargument name="doctorData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
+
+        <cfset local.hashedPassword = hash(arguments.doctorData.password, "SHA-256")>
 
         <cftry>
             <cfquery name="qryInsert">
@@ -283,22 +287,50 @@
                     <cfqueryparam value="#arguments.doctorData.email#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.doctorData.phone#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.doctorData.role_id#" cfsqltype="cf_sql_integer"/>,
-                    <cfqueryparam value="#arguments.doctorData.password#" cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value="#local.hashedPassword#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.doctorData.gender#" cfsqltype="cf_sql_char"/>,
                     <cfqueryparam value="#arguments.doctorData.department_id#" cfsqltype="cf_sql_integer"/>
                 )
             </cfquery>
         <cfcatch>
-            <cfset success = false/>
+            <cfset local.success = false/>
             <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
+    </cffunction>
+
+    <cffunction name="insertReceptionistData" returntype="boolean">
+        <cfargument name="receptionistData" type="struct"/>
+        <cfset local.success = true/>
+
+        <cfset local.hashedPassword = hash(arguments.receptionistData.password, "SHA-256")>
+
+        <cftry>
+            <cfquery name="qryInsert">
+                INSERT INTO Users (first_name, last_name, email, phone, role_id, password, gender, department_id)
+                VALUES (
+                    <cfqueryparam value="#arguments.receptionistData.firstName#" cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value="#arguments.receptionistData.lastName#" cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value="#arguments.receptionistData.email#" cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value="#arguments.receptionistData.phone#" cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value="#arguments.receptionistData.role_id#" cfsqltype="cf_sql_integer"/>,
+                    <cfqueryparam value="#local.hashedPassword#" cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value="#arguments.receptionistData.gender#" cfsqltype="cf_sql_char"/>,
+                    <cfqueryparam value="#arguments.receptionistData.department_id#" cfsqltype="cf_sql_integer"/>
+                )
+            </cfquery>
+        <cfcatch>
+            <cfset local.success = false/>
+            <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
+        </cfcatch>
+        </cftry>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="insertAppointment" returntype="boolean">
         <cfargument name="appointmentDetails" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
 
         <cftry>
             <cfquery name="qryInsertAppointment">
@@ -315,17 +347,17 @@
                 )
             </cfquery>
         <cfcatch>
-            <cfset success = false/>
+            <cfset local.success = false/>
             <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
 
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="isDoctorAvailable" returntype="boolean">
         <cfargument name="appointmentDetails" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
 
         <cftry>
             <cfquery name="qryDoctorAvailable">
@@ -338,12 +370,12 @@
             </cfquery>
             <cfreturn qryDoctorAvailable.recordCount EQ 0/>
         <cfcatch>
-            <cfset success = false/>
+            <cfset local.success = false/>
             <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
 
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="getTimeSlots" returntype="query">
@@ -365,7 +397,7 @@
 
     <cffunction name="addPrescription" returntype="boolean">
         <cfargument name="prescription_data" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryInsertPrescription" result="res">
                 INSERT INTO Prescriptions (appointment_id, diagnosis, diagnosis_notes, digital_signature)
@@ -400,11 +432,11 @@
             </cfif>           
 
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="getPrescriptionData" returntype="query">
@@ -444,7 +476,7 @@
 
     <cffunction name="updatePrescriptionData" returntype="boolean">
         <cfargument name="prescriptionData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdatePrescription">
                 UPDATE Prescriptions
@@ -464,18 +496,18 @@
             </cfquery>
 
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
             </cftry>
-            <cfreturn success/>
+            <cfreturn local.success/>
     </cffunction>
 
 
     <cffunction name="deletePrescription">
         <cfargument name="prescription_id" type="numeric"/>
         <cfargument name="appointment_id" type="numeric"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryDeletePrescription">
                 DELETE FROM Prescriptions 
@@ -486,11 +518,11 @@
                 WHERE appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
         <cfcatch>
-            <cfset success = false/>
+            <cfset local.success = false/>
             <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="getMedicines" returntype="query">
@@ -502,7 +534,7 @@
 
     <cffunction name="addMedicine" returntype="boolean">
         <cfargument name="medicineData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryInsertMedicine">
                 INSERT INTO Medicines (medicine_name, unit_price)
@@ -512,11 +544,11 @@
                 )
             </cfquery>
             <cfcatch>
-                <cfset success = true/>
+                <cfset local.success = true/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="medicineExists" returntype="boolean">
@@ -539,7 +571,7 @@
 
     <cffunction name="updateMedicine" returntype="boolean">
         <cfargument name="medicineData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdateMedicine">
                 UPDATE  Medicines 
@@ -549,27 +581,27 @@
                 WHERE medicine_id = <cfqueryparam value="#arguments.medicineData.medicineId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = true/>
+                <cfset local.success = true/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="deleteMedicine" returntype="boolean">
         <cfargument name="medicineId" type="numeric"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdateMedicine">
                 DELETE FROM Medicines
                 WHERE medicine_id = <cfqueryparam value="#arguments.medicineId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = true/>
+                <cfset local.success = true/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     
@@ -583,7 +615,7 @@
 
     <cffunction name="addTimeSlot" returntype="boolean">
         <cfargument name="availableTimeSlotId" type="numeric"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryInsertTimeSlot">
                 INSERT INTO Time_Slots (start_time, end_time)
@@ -593,33 +625,33 @@
                 )
             </cfquery>
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="deleteTimeSlot" returntype="boolean">
         <cfargument name="timeSlotId" type="numeric">
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryDeleteTimeSlot">
                 DELETE FROM Time_Slots
                 WHERE timeslot_id = <cfqueryparam value="#timeSlotId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
 
     <cffunction name="addDepartment" returntype="boolean">
         <cfargument name="departmentData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryInsertMedicine">
                 INSERT INTO Departments (department_name)
@@ -628,11 +660,11 @@
                 )
             </cfquery>
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="departmentExists" returntype="boolean">
@@ -655,7 +687,7 @@
 
     <cffunction name="updateDepartment" returntype="boolean">
         <cfargument name="departmentData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdateDepartment">
                 UPDATE  Departments 
@@ -664,27 +696,27 @@
                 WHERE department_id = <cfqueryparam value="#arguments.departmentData.departmentId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="deleteDepartment" returntype="boolean">
         <cfargument name="departmentId" type="numeric"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qeyDeleteDepartment">
                 DELETE FROM Departments
                 WHERE department_id = <cfqueryparam value="#arguments.departmentId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
 
@@ -698,7 +730,7 @@
 
     <cffunction name="addRole" returntype="boolean">
         <cfargument name="roleData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryInsertMedicine">
                 INSERT INTO Roles (role_name)
@@ -707,11 +739,11 @@
                 )
             </cfquery>
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="roleExists" returntype="boolean">
@@ -734,7 +766,7 @@
 
     <cffunction name="updateRole" returntype="boolean">
         <cfargument name="roletData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdateRole">
                 UPDATE Roles
@@ -743,27 +775,27 @@
                 WHERE role_id = <cfqueryparam value="#arguments.roleData.roleId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="deleteRole" returntype="boolean">
         <cfargument name="roleId" type="numeric"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qeyDeleteRole">
                 DELETE FROM Roles
                 WHERE role_id = <cfqueryparam value="#arguments.roleId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
                 <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="getReceptionistData" returntype="query">

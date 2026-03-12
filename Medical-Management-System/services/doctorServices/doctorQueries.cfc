@@ -57,7 +57,8 @@
             <cfreturn qryPrescExists.recordCount GTE 1>
             <cfcatch>
                 <cfdump var=#cfcatch#/>
-                <cfreturn false/>
+                <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
+                <cfreturn true/>
             </cfcatch>
         </cftry>
     </cffunction>
@@ -105,7 +106,8 @@
 
             <cfreturn true/>
             <cfcatch>
-                <cfdump var=#cfcatch#/>
+                <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
+                <cfreturn false/>
             </cfcatch>
         </cftry>
     </cffunction>
@@ -120,7 +122,6 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
         
-        <cftry>
             <cfquery name="qryPrescription">
                 SELECT
                  Prescriptions.prescription_id,
@@ -134,10 +135,6 @@
                 WHERE Prescriptions.appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer">
             </cfquery>
             <cfreturn qryPrescription/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry> 
     </cffunction>
 
     <cffunction name="getPrescriptionDataByPrescriptionId" returntype="query">
@@ -148,7 +145,6 @@
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
-        <cftry>
             <cfquery name="qryPrescription">
                 SELECT
                  Prescriptions.prescription_id,
@@ -163,10 +159,6 @@
                 WHERE Prescriptions.prescription_id = <cfqueryparam value="#arguments.prescription_id#" cfsqltype="cf_sql_integer">
             </cfquery>
             <cfreturn qryPrescription/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry> 
     </cffunction>
 
     <cffunction name="updatePrescriptionData" returntype="boolean">
@@ -179,7 +171,7 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
 
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdatePrescription">
                 UPDATE Prescriptions
@@ -199,11 +191,11 @@
             </cfquery>
 
             <cfcatch>
-                <cfset success = false/>
-                <cfdump var=#cfcatch#/>
+                <cfset local.success = false/>
+                <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
             </cfcatch>
             </cftry>
-            <cfreturn success/>
+            <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="getPatientHistory">
@@ -214,7 +206,6 @@
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
-        <cftry>
             <cfquery name="qryPatientHistory">
                 WITH cte1 AS
                 (
@@ -259,10 +250,6 @@
                 ) SELECT * FROM patientHistory;
             </cfquery>
             <cfreturn qryPatientHistory/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry>
     </cffunction>
 
     <cffunction name="cancelAppointment" returntype="boolean">
@@ -275,7 +262,7 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
 
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryCancelAppointment">
                 UPDATE Appointments
@@ -283,10 +270,10 @@
                 WHERE appointment_id = <cfqueryparam value="#arguments.appointmentId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = false/>
+                <cfset local.success = false/>
             </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
 </cfcomponent>

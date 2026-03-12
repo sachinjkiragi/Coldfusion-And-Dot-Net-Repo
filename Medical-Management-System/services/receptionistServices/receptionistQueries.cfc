@@ -57,7 +57,7 @@
 
     <cffunction name="insertPatientData" returntype="boolean">
         <cfargument name="patientData" type="struct"/>
-        <cfset success = true/>
+        <cfset local.success = true/>
 
         <cfinvoke method="checkPermission" returnvariable="hasPermission">
             <cfinvokeargument name="permissionTag" value="Create_Users"/>
@@ -66,6 +66,8 @@
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
+
+        <cfset local.hashedPassword = hash(arguments.patientData.password, "SHA-256")>
 
         <cftry>
             <cfquery name="qryInsert">
@@ -76,16 +78,16 @@
                     <cfqueryparam value="#arguments.patientData.email#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.patientData.phone#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.patientData.role_id#" cfsqltype="cf_sql_integer"/>,
-                    <cfqueryparam value="#arguments.patientData.password#" cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value="#local.hashedPassword#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.patientData.gender#" cfsqltype="cf_sql_char"/>
                 )
             </cfquery>
         <cfcatch>
-            <cfdump var=#cfcatch#/>
-            <cfset success = false/>
+            <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
+            <cfset local.success = false/>
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="updatePatientData" returntype="boolean">
@@ -99,7 +101,7 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
 
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryUpdate">
                 UPDATE Users
@@ -112,22 +114,18 @@
                 WHERE user_id = <cfqueryparam value="#arguments.patientData.patient_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
         <cfcatch>
-            <cfset success = false/>
+            <cfset local.success = false/>
+            <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="getTimeSlots" returntype="query">
-        <cftry>
-            <cfquery name="qryTimeSlots">
-                SELECT * FROM Time_Slots;
-            </cfquery>
-            <cfreturn qryTimeSlots/>
-        <cfcatch>
-            <cfdump var=#cfcatch#/>
-        </cfcatch>
-        </cftry>
+        <cfquery name="qryTimeSlots">
+            SELECT * FROM Time_Slots;
+        </cfquery>
+        <cfreturn qryTimeSlots/>
     </cffunction>
 
     <cffunction name="insertAppointment" returntype="boolean">
@@ -141,7 +139,7 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
         
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryInsertAppointment">
                 INSERT INTO Appointments
@@ -157,12 +155,12 @@
                 )
             </cfquery>
         <cfcatch>
-            <cfset success = false/>
-            <cfdump var=#cfcatch# label="inserting appointment"/>
+            <cfset local.success = false/>
+            <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/> 
         </cfcatch>
         </cftry>
 
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
     <cffunction name="isDoctorAvailable" returntype="boolean">
@@ -176,24 +174,15 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
         
-        <cfset success = true/>
-        <cftry>
-            <cfquery name="qryDoctorAvailable">
-                SELECT 1 
-                FROM Appointments 
-                WHERE doctor_id = <cfqueryparam value=#arguments.appointmentDetails.doctor_id#/>
-                AND slot_date = <cfqueryparam value=#arguments.appointmentDetails.slot_date#/>
-                AND timeslot_id = <cfqueryparam value=#arguments.appointmentDetails.timeslot_id#/> 
-                AND status = <cfqueryparam value="Booked" cfsqltype="cf_sql_varchar"/>
-            </cfquery>
-            <cfreturn qryDoctorAvailable.recordCount EQ 0/>
-        <cfcatch>
-            <cfset success = false/>
-            <cfdump var=#cfcatch# label="qryDoctorAvailable"/>
-        </cfcatch>
-        </cftry>
-
-        <cfreturn success/>
+        <cfquery name="qryDoctorAvailable">
+            SELECT 1 
+            FROM Appointments 
+            WHERE doctor_id = <cfqueryparam value=#arguments.appointmentDetails.doctor_id# cfsqltype="cf_sql_integer"/>
+            AND slot_date = <cfqueryparam value=#arguments.appointmentDetails.slot_date# cfsqltype="cf_sql_date"/>
+            AND timeslot_id = <cfqueryparam value=#arguments.appointmentDetails.timeslot_id#/> 
+            AND status = <cfqueryparam value="Booked" cfsqltype="cf_sql_varchar"/>
+        </cfquery>
+        <cfreturn qryDoctorAvailable.recordCount EQ 0/>
     </cffunction>
 
     <cffunction name="getPatientData" returntype="query">
@@ -207,17 +196,12 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
 
-        <cftry>
-            <cfquery name="qryPatientData">
-                SELECT first_name, last_name, email, phone, gender
-                FROM Users 
-                WHERE user_id = <cfqueryparam value=#arguments.patient_id# cfsqltype="cf_sql_integer"/> 
-            </cfquery>
-            <cfreturn qryPatientData/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry> 
+        <cfquery name="qryPatientData">
+            SELECT first_name, last_name, email, phone, gender
+            FROM Users 
+            WHERE user_id = <cfqueryparam value=#arguments.patient_id# cfsqltype="cf_sql_integer"/> 
+        </cfquery>
+        <cfreturn qryPatientData/>
     </cffunction>
 
     <cffunction name="deletePatient" returntype="boolean">
@@ -231,7 +215,7 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
 
-        <cfset success = true/>
+        <cfset local.success = true/>
         <cftry>
             <cfquery name="qryDeletePatient">
                 DELETE FROM
@@ -243,11 +227,11 @@
                 WHERE user_id = <cfqueryparam value="#patient_id#" cfsqltype="cf_sql_varchar"/> 
             </cfquery>
             <cfcatch>
-                <cfdump var=#cfcatch#/>
-                <cfset success = false/>
+                <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
+                <cfset local.success = false/>
             </cfcatch>
         </cftry> 
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
 
@@ -284,22 +268,17 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
 
-        <cftry>
-            <cfquery name="qryAppointment">
-                SELECT Appointments.*,
-                (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.doctor_id) AS 'doctor_name',
-                (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.patient_id) AS 'patient_name',
-                (SELECT start_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'start_time',
-                (SELECT end_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'end_time'
-                FROM 
-                Appointments
-                WHERE appointment_id = <cfqueryparam value="#appointment_id#" cfsqltype="cf_sql_integer"/>
-            </cfquery>
-            <cfreturn qryAppointment/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry> 
+        <cfquery name="qryAppointment">
+            SELECT Appointments.*,
+            (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.doctor_id) AS 'doctor_name',
+            (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.patient_id) AS 'patient_name',
+            (SELECT start_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'start_time',
+            (SELECT end_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'end_time'
+            FROM 
+            Appointments
+            WHERE appointment_id = <cfqueryparam value="#appointment_id#" cfsqltype="cf_sql_integer"/>
+        </cfquery>
+        <cfreturn qryAppointment/>
     </cffunction>
     
 
@@ -313,8 +292,8 @@
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
-
-        <cfset success = true/>
+        <cfset local.success = true/>
+        
         <cftry>
             <cfquery name="qryUpdate">
                 UPDATE Appointments
@@ -328,12 +307,11 @@
                 WHERE appointment_id = <cfqueryparam value="#arguments.appointmentDetails.appointment_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
         <cfcatch>
-            <cfdump var=#cfcatch#/>
-            <cfabort/>
-            <cfset success = false/>
+            <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
+            <cfset local.success = false/>
         </cfcatch>
         </cftry>
-        <cfreturn success/>
+        <cfreturn local.success/>
     </cffunction>
 
 
@@ -347,26 +325,19 @@
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
-            <cftry>
-                <cfquery name="qryAvailabilityList">
-                    WITH cte AS(
-                        SELECT * 
-                        FROM Appointments
-                        WHERE Appointments.doctor_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_integer"/> AND Appointments.slot_date = <cfqueryparam value="#form.slot_date#" cfsqltype="date"/>
-                        ),
-                        res AS(
-                            SELECT Time_Slots.start_time, Time_Slots.end_time
-                            FROM Time_Slots LEFT JOIN cte
-                            ON Time_Slots.timeslot_id = cte.timeslot_id
-                            WHERE cte.appointment_id IS NULL
-                        ) SELECT * FROM res;
-                </cfquery>
-                <cfreturn qryAvailabilityList/>
-                <cfcatch>
-                    <cfdump var=#cfcatch#/>
-                </cfcatch>
-            </cftry>
+        <cfquery name="qryAvailabilityList">
+            WITH cte AS(
+                SELECT * 
+                FROM Appointments
+                WHERE Appointments.doctor_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_integer"/> AND Appointments.slot_date = <cfqueryparam value="#form.slot_date#" cfsqltype="date"/>
+                ),
+                res AS(
+                    SELECT Time_Slots.start_time, Time_Slots.end_time
+                    FROM Time_Slots LEFT JOIN cte
+                    ON Time_Slots.timeslot_id = cte.timeslot_id
+                    WHERE cte.appointment_id IS NULL
+                ) SELECT * FROM res;
+        </cfquery>
+        <cfreturn qryAvailabilityList/>
     </cffunction>
-
-
 </cfcomponent>
