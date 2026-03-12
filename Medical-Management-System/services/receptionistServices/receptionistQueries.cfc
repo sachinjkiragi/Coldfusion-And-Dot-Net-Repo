@@ -3,8 +3,12 @@
     <cffunction name="checkPermission" returntype="boolean">
         <cfargument name="permissionTag" type="string"/>
         <cfquery name="qryPermission">
-            SELECT 1 FROM Permissions
-            WHERE permission_tag = <cfqueryparam value="#arguments.permissionTag#" cfsqltype="cf_sql_varchar"/> 
+            SELECT Roles.role_name, Permissions.permission_tag
+            FROM Role_Permissions
+            JOIN Roles ON Role_Permissions.role_id = Roles.role_id
+            JOIN Permissions ON Role_Permissions.permission_id = Permissions.permission_id
+            WHERE Roles.role_name = 'Receptionist'
+            AND permission_tag = <cfqueryparam value="#arguments.permissionTag#" cfsqltype="cf_sql_varchar"/>
         </cfquery> 
         <cfreturn qryPermission.recordCount EQ 1/>
     </cffunction>
@@ -55,6 +59,14 @@
         <cfargument name="patientData" type="struct"/>
         <cfset success = true/>
 
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="Create_Users"/>
+        </cfinvoke>
+
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+
         <cftry>
             <cfquery name="qryInsert">
                 INSERT INTO Users (first_name, last_name, email, phone, role_id, password, gender)
@@ -78,6 +90,15 @@
 
     <cffunction name="updatePatientData" returntype="boolean">
         <cfargument name="patientData" type="struct"/>
+
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="Update_Users"/>
+        </cfinvoke>
+
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+
         <cfset success = true/>
         <cftry>
             <cfquery name="qryUpdate">
@@ -111,8 +132,16 @@
 
     <cffunction name="insertAppointment" returntype="boolean">
         <cfargument name="appointmentDetails" type="struct"/>
-        <cfset success = true/>
 
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="Create_Appointments"/>
+        </cfinvoke>
+        
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+        
+        <cfset success = true/>
         <cftry>
             <cfquery name="qryInsertAppointment">
                 INSERT INTO Appointments
@@ -138,8 +167,16 @@
 
     <cffunction name="isDoctorAvailable" returntype="boolean">
         <cfargument name="appointmentDetails" type="struct"/>
-        <cfset success = true/>
 
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="View_Appointments"/>
+        </cfinvoke>
+        
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+        
+        <cfset success = true/>
         <cftry>
             <cfquery name="qryDoctorAvailable">
                 SELECT 1 
@@ -161,6 +198,15 @@
 
     <cffunction name="getPatientData" returntype="query">
         <cfargument name="patient_id" type="numeric"/>
+
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="View_Users"/>
+        </cfinvoke>
+        
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+
         <cftry>
             <cfquery name="qryPatientData">
                 SELECT first_name, last_name, email, phone, gender
@@ -176,6 +222,15 @@
 
     <cffunction name="deletePatient" returntype="boolean">
         <cfargument name="patient_id" type="numeric"/>
+
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="Delete_Users"/>
+        </cfinvoke>
+        
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+
         <cfset success = true/>
         <cftry>
             <cfquery name="qryDeletePatient">
@@ -197,6 +252,15 @@
 
 
     <cffunction name="getAppointmentList" returntype="query">
+
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="View_Appointments"/>
+        </cfinvoke>
+        
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+
         <cfquery name="qryAppointmentList">
             SELECT Appointments.*,
             (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.doctor_id) AS 'doctor_name',
@@ -209,8 +273,17 @@
         <cfreturn qryAppointmentList/>
     </cffunction>
 
-        <cffunction name="getAppointmentData" returntype="query">
+    <cffunction name="getAppointmentData" returntype="query">
         <cfargument name="appointment_id" type="numeric"/>
+
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="View_Appointments"/>
+        </cfinvoke>
+        
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+
         <cftry>
             <cfquery name="qryAppointment">
                 SELECT Appointments.*,
@@ -233,6 +306,14 @@
     <cffunction name="updateAppointmentData" returntype="boolean">
         <cfargument name="appointmentDetails" type="struct"/>
         
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="Update_Appointments"/>
+        </cfinvoke>
+
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+
         <cfset success = true/>
         <cftry>
             <cfquery name="qryUpdate">
@@ -259,6 +340,13 @@
     <cffunction name="getDoctorsAvailability" returntype="query">
         <cfargument name="doctor_id" type="string"/>
         <cfargument name="slot_date" type="string"/>
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="View_Appointments"/>
+        </cfinvoke>
+
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
             <cftry>
                 <cfquery name="qryAvailabilityList">
                     WITH cte AS(

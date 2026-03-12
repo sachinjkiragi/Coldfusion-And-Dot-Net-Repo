@@ -65,7 +65,7 @@
 
 <cfif structKeyExists(form, "update-btn")>
     <cfset mailFlag = false/>
-    <cfif doctorData.email NEQ form.email>
+    <cfif patientData.email NEQ form.email>
         <cfinvoke method="doesMailExists" component="../../../../services/receptionistServices/receptionistQueries" returnvariable="flag">
             <cfinvokeargument name="email" value=#form.email#/>
         </cfinvoke>
@@ -75,7 +75,7 @@
     </cfif>
     
     <cfif mailFlag EQ false>
-        <cfset form.doctor_id = doctorIdToUpdate/>
+        <cfset form.patient_id = patientIdToUpdate/>
         <cfinvoke component="../../../../services/receptionistServices/receptionistQueries" method="updatePatientData" returnvariable="success">
             <cfinvokeargument name="patientData" value=#form#/>
         </cfinvoke>

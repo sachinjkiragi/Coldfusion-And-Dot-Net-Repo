@@ -247,6 +247,11 @@ INSERT INTO Medicine_Prescriptions (medicine_id, prescription_id, dosage_info, q
 (1,7,'1 tablet if fever occurs',4);
 
 
+INSERT INTO Users 
+(first_name, last_name, email, password, role_id, gender, phone, department_id)
+VALUES
+('Admin', 'User', 'admin@hospital.com', 'Admin@123', 1, 'M', '9999999999', NULL);
+
 END
 
 EXEC spInit;
@@ -258,6 +263,7 @@ EXEC spInit;
 SELECT first_name FROM Users;
 
 SELECT * FROM Users;
+SELECT * FROM Appointments;
 
 
 SELECT Appointments.*,
@@ -354,9 +360,9 @@ WITH cte1 AS
 		Prescriptions.diagnosis, Prescriptions.diagnosis_notes,
 		Medicine_Prescriptions.medicine_id, Medicine_Prescriptions.dosage_info, Medicine_Prescriptions.quantity
 		FROM
-		Appointments JOIN Prescriptions
+		Appointments LEFT JOIN Prescriptions
 		ON Appointments.appointment_id = Prescriptions.appointment_id
-		JOIN Medicine_Prescriptions
+		LEFT JOIN Medicine_Prescriptions
 		ON Prescriptions.prescription_id = Medicine_Prescriptions.prescription_id
 ),
 cte2 AS (
@@ -371,7 +377,7 @@ cte3 AS (
 		   Medicines.medicine_name
 	FROM cte2 JOIN Time_Slots
 	ON cte2.timeslot_id = Time_Slots.timeslot_id
-	JOIN Medicines
+	LEFT JOIN Medicines
 	ON cte2.medicine_id = Medicines.medicine_id
 ),
 patientHistory AS (
@@ -401,10 +407,6 @@ WHERE Appointments.patient_id = 10;
 
 SELECT * FROM Users;
 
-INSERT INTO Users 
-(first_name, last_name, email, password, role_id, gender, phone, department_id)
-VALUES
-('Admin', 'User', 'admin@hospital.com', 'Admin@123', 1, 'M', '9999999999', NULL);
 
 
 DELETE FROM Appointments WHERE patient_id = 7;
@@ -425,3 +427,55 @@ SELECT * FROM Users;
 
 CREATE INDEX idx_email
 ON Users (email);
+
+
+WITH cte1 AS
+(
+	SELECT 
+		Appointments.doctor_id, Appointments.patient_id, Appointments.status, Appointments.appointment_charges, Appointments.timeslot_id, Appointments.slot_date,
+		Prescriptions.diagnosis, Prescriptions.diagnosis_notes,
+		Medicine_Prescriptions.medicine_id, Medicine_Prescriptions.dosage_info, Medicine_Prescriptions.quantity
+		FROM
+		Appointments LEFT JOIN Prescriptions
+		ON Appointments.appointment_id = Prescriptions.appointment_id
+		LEFT JOIN Medicine_Prescriptions
+		ON Prescriptions.prescription_id = Medicine_Prescriptions.prescription_id
+		WHERE Appointments.status = 'Completed'
+),
+cte2 AS (
+	SELECT cte1.*,
+		   (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = cte1.doctor_id) AS doctor_name,
+		   (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = cte1.patient_id) AS patient_name
+	FROM cte1
+),
+cte3 AS (
+	SELECT cte2.*,
+		   Time_Slots.start_time, Time_Slots.end_time,
+		   Medicines.medicine_name, Medicines.unit_price
+	FROM cte2 LEFT JOIN Time_Slots
+	ON cte2.timeslot_id = Time_Slots.timeslot_id
+	LEFT JOIN Medicines
+	ON cte2.medicine_id = Medicines.medicine_id
+),
+billingHistory AS (
+	SELECT cte3.patient_name,
+	cte3.doctor_name,
+	cte3.slot_date,
+	cte3.start_time,
+	cte3.end_time,
+	cte3.medicine_name,
+	cte3.diagnosis,
+	cte3.quantity,
+	cte3.unit_price,
+	cte3.appointment_charges,
+	CASE
+		WHEN cte3.quantity IS NULL then cte3.appointment_charges
+		ELSE cte3.quantity * cte3.unit_price + cte3.appointment_charges
+	END
+	 AS 'total_bill'
+	FROM cte3
+) SELECT * FROM billingHistory;
+
+SELECT * FROM Appointments;
+
+SELECT * FROM Permissions;
