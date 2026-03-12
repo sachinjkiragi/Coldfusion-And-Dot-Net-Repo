@@ -23,7 +23,7 @@
                             </div>
                             <div>
                                 <label class="form-label fw-semibold">Diagnosis Notes:</label>
-                                <textarea rows="1" cols="40" name="diagnosis_notes" class="form-control" type="text" id="diagnosis_notes" placeholder="Diagnosis Notes">#prescriptionData.diagnosis_notes#</textarea>
+                                <textarea required rows="1" cols="40" name="diagnosis_notes" class="form-control" type="text" id="diagnosis_notes" placeholder="Diagnosis Notes">#prescriptionData.diagnosis_notes#</textarea>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div id="availableMedicines" class="d-flex justify-content-between w-100 gap-4 p-0">
                         <div>
                             <label class="form-label fw-semibold">Medicine:</label>
-                            <select id="medicineList" class="form-control d-block form-select" name="medicine_id" style="width: fit-content;">
+                            <select required id="medicineList" class="form-control d-block form-select" name="medicine_id" style="width: fit-content;">
                                 <option value="">Select Medicine</option>
                                 <cfoutput query="#medicineList#">
                                     <cfif medicineList.medicine_id EQ prescriptionData.medicine_id>
@@ -44,12 +44,12 @@
                         </div>
                         <div class="form-check">
                             <label class="form-label fw-semibold">Medicine Quantity:</label>
-                            <input type="number" min="0" class="form-control" name="medicine_qty" placeholder="Quantity" value="#prescriptionData.quantity#"/>
+                            <input required type="number" min="0" class="form-control" name="medicine_qty" placeholder="Quantity" value="#prescriptionData.quantity#"/>
                         </div>
                     </div>
                     <div>
                         <label class="form-label fw-semibold">Dosage Info:</label>
-                        <textarea rows="1" cols="70" name="dosage_info" class="form-control" type="text" id="dosage_info" placeholder="Dosage Information">#prescriptionData.dosage_info#</textarea>
+                        <textarea required rows="1" cols="70" name="dosage_info" class="form-control" type="text" id="dosage_info" placeholder="Dosage Information">#prescriptionData.dosage_info#</textarea>
                     </div>
                     
                     <span title="Please complete all required fields">

@@ -20,16 +20,16 @@
                             <input class="form-control" type="text" name="doctor_name" id="doctor" readonly value="#appointementData.doctor_name#"/>
                         </div>
                         <div class="form-check">
-                            <input class="form-control" type="text" name="patient_name" id="patient" readonly value="#appointementData.patient_name#"/>
+                            <input  class="form-control" type="text" name="patient_name" id="patient" readonly value="#appointementData.patient_name#"/>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
                         <div class="form-check">
-                            <input name="appointment_charges" class="form-control" placeholder="Appointment Charges" id="appointment_charges" type="number" min="0" required value="#appointementData.appointment_charges#"/>
+                            <input required name="appointment_charges" class="form-control" placeholder="Appointment Charges" id="appointment_charges" type="number" min="0" required value="#appointementData.appointment_charges#"/>
                         </div>
 
                         <div class="form-check">
-                            <select id="timeSlots" class="form-control form-select" name="timeslot_id" style="width: fit-content">
+                            <select required id="timeSlots" class="form-control form-select" name="timeslot_id" style="width: fit-content">
                                 <option value="">Select Time Slot</option>
                                 <cfoutput query=#timeSlotList#>
                                     <cfif timeSlotList.timeslot_id EQ appointementData.timeslot_id>
@@ -45,7 +45,7 @@
                     <div class="d-flex justify-content-between">
                         
                         <div class="form-check">
-                            <select class="form-control form-select"  name="status">
+                            <select required class="form-control form-select"  name="status">
                                 <cfif appointementData.status EQ "Booked">
                                     <option value="Booked" selected>Booked</option>
                                     <option value="Cancelled">Cancel</option>
@@ -62,7 +62,7 @@
                             </select>
                         </div>
                         <div class="form-check">
-                            <input value="#dateFormat(appointementData.slot_date, "dd-mm-yyyy")#" class="form-control" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
+                            <input required value="#dateFormat(appointementData.slot_date, "dd-mm-yyyy")#" class="form-control" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
                         </div>
                     </div>
                     <button name="update-btn" type="submit" class="btn btn-primary mx-auto" style="width: fit-content;">Update Appointment</button>

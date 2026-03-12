@@ -26,7 +26,7 @@
                     </select>
                 </div>
                 <div class="form-check">
-                    <select id="patient" class="form-control form-select" name="patient_id" style="width: fit-content;" required>
+                    <select required id="patient" class="form-control form-select" name="patient_id" style="width: fit-content;" required>
                         <option value="">Select Patient</option>
                         <cfoutput query=#patientList#>
                             <option value=#patientList.user_id#>#patientList.first_name#  #patientList.last_name#</option>
@@ -40,7 +40,7 @@
                 </div>
 
                  <div class="form-check">
-                    <select id="timeSlots" class="form-control form-select" name="timeslot_id" style="width: fit-content">
+                    <select required id="timeSlots" class="form-control form-select" name="timeslot_id" style="width: fit-content">
                         <option value="">Select Time Slot</option>
                         <cfoutput query=#timeSlotList#>
                             <option value=#timeSlotList.timeslot_id#>#timeFormat(timeSlotList.start_time, 'HH:mm')# - #timeFormat(timeSlotList.end_time, 'HH:mm')# </option>
@@ -50,7 +50,7 @@
             </div>
             
             <div class="form-check">
-                <input class="form-control w-25" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
+                <input required class="form-control w-25" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
             </div>
             <button name="book-btn" type="submit" class="btn btn-primary mx-auto" style="width: fit-content;">Book Appointment</button>
         </div>

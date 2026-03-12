@@ -23,17 +23,12 @@
 
     <cffunction name="getPatientData" returntype="query">
         <cfargument name="patient_id" type="numeric"/>
-        <cftry>
             <cfquery name="qryPatientData">
                 SELECT first_name, last_name, email, phone, gender, password
                 FROM Users 
                 WHERE user_id = <cfqueryparam value=#arguments.patient_id# cfsqltype="cf_sql_integer"/> 
             </cfquery>
-            <cfreturn qryPatientData/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry> 
+        <cfreturn qryPatientData/>
     </cffunction>
 
     <cffunction name="updatePatientData" returntype="boolean">
@@ -53,6 +48,7 @@
             </cfquery>
         <cfcatch>
             <cfset success = false/>
+            <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -71,8 +67,7 @@
                 WHERE user_id = <cfqueryparam value="#patient_id#" cfsqltype="cf_sql_varchar"/> 
             </cfquery>
             <cfcatch>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
                 <cfset success = false/>
             </cfcatch>
         </cftry> 
@@ -93,17 +88,11 @@
     </cffunction>
 
     <cffunction name="getDepartments" returntype="query">
-        <cftry>
-            <cfquery name="qryDepartments">
-                SELECT * FROM Departments
-            </cfquery>
-            <cfreturn qryDepartments>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry>
+        <cfquery name="qryDepartments">
+            SELECT * FROM Departments
+        </cfquery>
+        <cfreturn qryDepartments>
     </cffunction>
-
 
     
     <cffunction name="updateDoctorData" returntype="boolean">
@@ -124,8 +113,7 @@
             </cfquery>
         <cfcatch>
             <cfset success = false/>
-            <cfdump var=#cfcatch#/>
-            <cfabort/>
+            <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -145,7 +133,7 @@
                 WHERE user_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_varchar"/> 
             </cfquery>
             <cfcatch>
-                <cfdump var=#cfcatch#/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
                 <cfset success = false/>
             </cfcatch>
         </cftry> 
@@ -182,8 +170,7 @@
             </cfquery>
         <cfcatch>
             <cfset success = false/>
-            <cfdump var=#cfcatch#/>
-            <cfabort/>
+            <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -200,7 +187,7 @@
                 WHERE user_id = <cfqueryparam value="#receptionist_id#" cfsqltype="cf_sql_varchar"/> 
             </cfquery>
             <cfcatch>
-                <cfdump var=#cfcatch#/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
                 <cfset success = false/>
             </cfcatch>
         </cftry> 
@@ -221,9 +208,8 @@
         <cfreturn qryAppointmentList/>
     </cffunction>
 
-        <cffunction name="getAppointmentData" returntype="query">
+    <cffunction name="getAppointmentData" returntype="query">
         <cfargument name="appointment_id" type="numeric"/>
-        <cftry>
             <cfquery name="qryAppointment">
                 SELECT Appointments.*,
                 (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.doctor_id) AS 'doctor_name',
@@ -235,10 +221,6 @@
                 WHERE appointment_id = <cfqueryparam value="#appointment_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfreturn qryAppointment/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry> 
     </cffunction>
     
 
@@ -259,8 +241,7 @@
                 WHERE appointment_id = <cfqueryparam value="#arguments.appointmentDetails.appointment_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
         <cfcatch>
-            <cfdump var=#cfcatch#/>
-            <cfabort/>
+            <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             <cfset success = false/>
         </cfcatch>
         </cftry>
@@ -285,7 +266,7 @@
                 )
             </cfquery>
         <cfcatch>
-            <cfdump var=#cfcatch#/>
+            <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             <cfset success = false/>
         </cfcatch>
         </cftry>
@@ -311,9 +292,8 @@
                 )
             </cfquery>
         <cfcatch>
-            <cfdump var=#cfcatch#/>
             <cfset success = false/>
-            <cfabort/>
+            <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -339,7 +319,7 @@
             </cfquery>
         <cfcatch>
             <cfset success = false/>
-            <cfdump var=#cfcatch# label="inserting appointment"/>
+            <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
 
@@ -362,7 +342,7 @@
             <cfreturn qryDoctorAvailable.recordCount EQ 0/>
         <cfcatch>
             <cfset success = false/>
-            <cfdump var=#cfcatch# label="qryDoctorAvailable"/>
+            <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
 
@@ -370,35 +350,25 @@
     </cffunction>
 
     <cffunction name="getTimeSlots" returntype="query">
-        <cftry>
-            <cfquery name="qryTimeSlots">
-                SELECT * FROM Time_Slots;
-            </cfquery>
-            <cfreturn qryTimeSlots/>
-        <cfcatch>
-            <cfdump var=#cfcatch#/>
-        </cfcatch>
-        </cftry>
+        <cfquery name="qryTimeSlots">
+            SELECT * FROM Time_Slots;
+        </cfquery>
+        <cfreturn qryTimeSlots/>
     </cffunction>
 
 
-        <cffunction name="doesPrescriptionExists" returntype="boolean">
+    <cffunction name="doesPrescriptionExists" returntype="boolean">
         <cfargument name="appointment_id" type="numeric"/>
-        <cftry>
-            <cfquery name="qryPrescExists">
-                SELECT 1 FROM Prescriptions 
-                WHERE appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer"/>
-            </cfquery>
-            <cfreturn qryPrescExists.recordCount GTE 1>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-                <cfreturn false/>
-            </cfcatch>
-        </cftry>
+        <cfquery name="qryPrescExists">
+            SELECT 1 FROM Prescriptions 
+            WHERE appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer"/>
+        </cfquery>
+        <cfreturn qryPrescExists.recordCount GTE 1>
     </cffunction>
 
-    <cffunction name="addPrescription" returntype="any">
+    <cffunction name="addPrescription" returntype="boolean">
         <cfargument name="prescription_data" type="struct"/>
+        <cfset success = true/>
         <cftry>
             <cfquery name="qryInsertPrescription" result="res">
                 INSERT INTO Prescriptions (appointment_id, diagnosis, diagnosis_notes, digital_signature)
@@ -432,16 +402,16 @@
                 </cfquery>
             </cfif>           
 
-            <cfreturn true/>
             <cfcatch>
-                <cfdump var=#cfcatch#/>
+                <cfset success = false/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
+        <cfreturn success/>
     </cffunction>
 
     <cffunction name="getPrescriptionData" returntype="query">
         <cfargument name="appointment_id" type="numeric"/>
-        <cftry>
             <cfquery name="qryPrescription">
                 SELECT
                  Prescriptions.prescription_id,
@@ -455,15 +425,10 @@
                 WHERE Prescriptions.appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer">
             </cfquery>
             <cfreturn qryPrescription/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry> 
     </cffunction>
 
     <cffunction name="getPrescriptionDataByPrescriptionId" returntype="query">
         <cfargument name="prescription_id" type="numeric"/>
-        <cftry>
             <cfquery name="qryPrescription">
                 SELECT
                  Prescriptions.prescription_id,
@@ -478,10 +443,6 @@
                 WHERE Prescriptions.prescription_id = <cfqueryparam value="#arguments.prescription_id#" cfsqltype="cf_sql_integer">
             </cfquery>
             <cfreturn qryPrescription/>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry> 
     </cffunction>
 
     <cffunction name="updatePrescriptionData" returntype="boolean">
@@ -507,7 +468,7 @@
 
             <cfcatch>
                 <cfset success = false/>
-                <cfdump var=#cfcatch#/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
             </cftry>
             <cfreturn success/>
@@ -528,9 +489,8 @@
                 WHERE appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
         <cfcatch>
-            <cfdump var=#cfcatch#/>
             <cfset success = false/>
-            <cfabort/>
+            <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
         </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -556,8 +516,7 @@
             </cfquery>
             <cfcatch>
                 <cfset success = true/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -594,8 +553,7 @@
             </cfquery>
             <cfcatch>
                 <cfset success = true/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -611,8 +569,7 @@
             </cfquery>
             <cfcatch>
                 <cfset success = true/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -640,8 +597,7 @@
             </cfquery>
             <cfcatch>
                 <cfset success = false/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -657,8 +613,7 @@
             </cfquery>
             <cfcatch>
                 <cfset success = false/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -676,9 +631,8 @@
                 )
             </cfquery>
             <cfcatch>
-                <cfset success = true/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cfset success = false/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -713,9 +667,8 @@
                 WHERE department_id = <cfqueryparam value="#arguments.departmentData.departmentId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = true/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cfset success = false/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -730,9 +683,8 @@
                 WHERE department_id = <cfqueryparam value="#arguments.departmentId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = true/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cfset success = false/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -758,9 +710,8 @@
                 )
             </cfquery>
             <cfcatch>
-                <cfset success = true/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cfset success = false/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -795,9 +746,8 @@
                 WHERE role_id = <cfqueryparam value="#arguments.roleData.roleId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = true/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cfset success = false/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -812,9 +762,8 @@
                 WHERE role_id = <cfqueryparam value="#arguments.roleId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
-                <cfset success = true/>
-                <cfdump var=#cfcatch#/>
-                <cfabort/>
+                <cfset success = false/>
+                <cflog file="medManageLogs" text="#cfcatch.message#" type="error">
             </cfcatch>
         </cftry>
         <cfreturn success/>
@@ -833,9 +782,3 @@
     </cffunction>
 
 </cfcomponent>
-
-
-
-
-
-

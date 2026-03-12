@@ -18,7 +18,7 @@
                                 <span id="firstNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
-                                <input name="lastName" class="form-control" value=#patientData.last_name# type="text" id="lastName" placeholder="Last Name"/>
+                                <input required name="lastName" class="form-control" value=#patientData.last_name# type="text" id="lastName" placeholder="Last Name"/>
                                 <span id="lastNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                         </div>
