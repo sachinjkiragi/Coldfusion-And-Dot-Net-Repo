@@ -6,10 +6,12 @@
         <!--- <cfmail from="noreply@med.com" to=#form.email# subject="OTP Verification">
             Your Otp Is #session.otp#
         </cfmail> --->
-        
+        <cfmail to="#form.email#" from="noreply@med.com" subject="OTP Verification">Your OTP is #session.otp#
+        </cfmail> 
     </cfif>
 <cfcatch>
     <cfset success = false/>
+    <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
     <!---<cfdump var=#cfcatch#/> --->
 </cfcatch>
 </cftry>

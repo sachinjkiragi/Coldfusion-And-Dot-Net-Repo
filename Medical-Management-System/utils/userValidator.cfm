@@ -3,9 +3,8 @@
     <cfif structKeyExists(session, "otp") EQ false>
         <cfset session.otp = randRange(100000, 999999)>
         <cfset session.otpTime = now()/>
-        <!--- <cfmail from="noreply@mms.com" to=#session.userData.email# subject="OTP Verification">
-            Your Otp Is #session.otp#
-        </cfmail> --->
+        <cfmail to="#session.userData.email#" from="noreply@med.com" subject="OTP Verification">Your OTP is #session.otp#
+        </cfmail> 
     </cfif>
 <cfcatch>
     <cfset success = false/>

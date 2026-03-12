@@ -100,9 +100,8 @@
         </cfinvoke>
         
         <cfif success EQ true>
-            <!--- <cfmail from="noreply@mms.com" to=#form.email# subject="temporary Passowrd for MMS Login">
-                Your temporary Passowrd for MMS Login #form.password#
-            </cfmail> --->
+            <cfmail to="#form.email#" from="noreply@med.com" subject="temporary Passowrd for MedManage Login">Your temporary passowrd for MedManage LogIn is #form.password#
+            </cfmail> 
             <script>alert('Registeration Done Successfully');</script>
         <cfelse>
             <script>alert('Registration failed. Please try again.');</script>
