@@ -50,11 +50,9 @@ function getPasswordStrength(password) {
         return "Very Strong";
     } else if (/^[a-zA-Z0-9]{8,50}$/.test(password)) {
         return "Strong";
-    } else if (/^[a-zA-Z0-9]+$/.test(password)) {
+    } else{
         return "Weak";
-    } else {
-        return "Invalid";
-    }
+    } 
 }
 passwordField.addEventListener('input', (e)=>{
     if (passwordField.value.length > 0) {

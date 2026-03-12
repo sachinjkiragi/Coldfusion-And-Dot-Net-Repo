@@ -84,7 +84,7 @@
         </form>
     </div>
 
-    <script src="register/register.js"></script>
+    <script src="register.js"></script>
 </html>
 
 <cfif structKeyExists(form, "register-btn")>

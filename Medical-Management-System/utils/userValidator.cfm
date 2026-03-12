@@ -9,7 +9,7 @@
     </cfif>
 <cfcatch>
     <cfset success = false/>
-    <!---<cfdump var=#cfcatch#/> --->
+    <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
 </cfcatch>
 </cftry>
 
@@ -27,16 +27,13 @@
                         <p class="text-secondary">An OTP has been sent to your email address. Please enter it to complete verification.</p>
                     </div>
                     <div>
-                        <input name="otp" class="form-control" type="text" id="otp" required placeholder="OTP *"/>
-                    </div>
-                    <div>
-                        <p id="otpTimer" class="text-secondary"></p>
+                        <input name="otp" class="form-control" type="text" id="otp" placeholder="OTP *"/>
                     </div>
                     
                     <span title="Please complete all required fields">
                         <button class="btn btn-primary" type="submit" name="submit-btn"> Submit </button>
                     </span>
-                    <a href="userValidator.cfm" class="text-primary text-decoration-none">Resend OTP</a>
+                    <button type="submit" name="resendotp-btn" class="btn btn-link text-primary p-0 text-decoration-none">Resend OTP</button>
                     <a href="../register/register.cfm" class="text-primary text-decoration-none">Go Back</a>
                 </div>
             </form>
@@ -61,6 +58,12 @@
         <script>
             alert('OTP Expired');
         </script>
+    </cfif>
+
+    <cfif structKeyExists(form, 'resendotp-btn')>
+        <cfset structDelete(session, 'otp')/>
+        <cfset structDelete(session, 'otpTime')/>
+        <cflocation url="userValidator.cfm"/>
     </cfif>
 
     <cfif structKeyExists(form, "submit-btn") AND structKeyExists(session, "otp") AND structKeyExists(form, 'otp')>
