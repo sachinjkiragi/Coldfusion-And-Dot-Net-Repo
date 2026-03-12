@@ -24,7 +24,6 @@
                     <th>Phone</th>
                     <th>Department</th>
                     <th>Gender</th>
-                    <th>Password</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
@@ -38,7 +37,6 @@
                         <td>#doctorList.phone#</td>
                         <td>#doctorList.department_name#</td>
                         <td>#doctorList.gender#</td>
-                        <td>#doctorList.password#</td>
                         <td>
                             <button class="btn btn-primary" name="updateDoctorId" value=#doctorList.user_id# type="submit">Update</button>
                         </td>

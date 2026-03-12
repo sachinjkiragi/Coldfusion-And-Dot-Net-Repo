@@ -27,9 +27,16 @@
                                 <span id="lastNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
-                                <label class="form-label fw-semibold">Password:</label>
-                                <input name="password" class="form-control" value=#receptionistData.password# type="text" id="password" required placeholder="Password *"/>
-                                <span id="passwordError" class="invalid-feedback d-block invisible">&nbsp;</span>
+                                <label class="form-label fw-semibold">Department:</label>
+                                <div>
+                                    <select id="departmentList" class="form-control d-block form-select" name="department_id" style="width: fit-content;">
+                                        <cfoutput query="#departmentList#">
+                                            <cfif departmentList.department_id EQ receptionistData.department_id>
+                                                <option selected value="#departmentList.department_id#">#department_name#</option>
+                                            </cfif>
+                                        </cfoutput>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="form-check d-flex flex-column gap-2">
@@ -43,18 +50,7 @@
                                 <input name="phone" class="form-control" value=#receptionistData.phone# type="phone" id="phone" required placeholder="Phone *"/>
                                 <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
-                            <div>
-                                <label class="form-label fw-semibold">Department:</label>
-                                <div>
-                                    <select id="departmentList" class="form-control d-block form-select" name="department_id" style="width: fit-content;">
-                                        <cfoutput query="#departmentList#">
-                                            <cfif departmentList.department_id EQ receptionistData.department_id>
-                                                <option selected value="#departmentList.department_id#">#department_name#</option>
-                                            </cfif>
-                                        </cfoutput>
-                                    </select>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                     <div class="d-flex gap-3">

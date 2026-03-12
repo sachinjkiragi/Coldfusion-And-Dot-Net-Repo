@@ -39,13 +39,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-check d-flex flex-column gap-2">
-                        <div>
-                            <label class="form-label fw-semibold">Password:</label>
-                            <input name="password" class="form-control" value=#patientData.password# type="text" id="password" required placeholder="Password *"/>
-                            <span id="passwordError" class="invalid-feedback d-block invisible">&nbsp;</span>
-                        </div>
-                    </div>
                     <div class="d-flex gap-3">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="gender" value="m" id="male" required <cfif patientData.gender EQ 'M'>checked</cfif> >

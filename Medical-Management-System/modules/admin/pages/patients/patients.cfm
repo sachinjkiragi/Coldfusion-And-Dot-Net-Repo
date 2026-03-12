@@ -24,7 +24,6 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Gender</th>
-                    <th>Password</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
@@ -37,7 +36,6 @@
                         <td> #patientList.email#</td>
                         <td>#patientList.phone#</td>
                         <td>#patientList.gender#</td>
-                        <td>#patientList.password#</td>
                         <td>
                             <button class="btn btn-primary" name="updatePatientId" value=#patientList.user_id# type="submit">Update</button>
                         </td>

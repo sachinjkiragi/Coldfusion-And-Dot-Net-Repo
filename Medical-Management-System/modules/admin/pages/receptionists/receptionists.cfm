@@ -24,7 +24,6 @@
                     <th>Phone</th>
                     <th>Department</th>
                     <th>Gender</th>
-                    <th>Password</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
@@ -38,7 +37,6 @@
                         <td>#receptionistList.phone#</td>
                         <td>#receptionistList.department_name#</td>
                         <td>#receptionistList.gender#</td>
-                        <td>#receptionistList.password#</td>
                         <td>
                             <button class="btn btn-primary" name="updateReceptionistId" value=#receptionistList.user_id# type="submit">Update</button>
                         </td>

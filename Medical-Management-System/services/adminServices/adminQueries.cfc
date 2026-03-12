@@ -3,7 +3,7 @@
         <cfargument name="role" type="string"/>
         <cfquery name="qryUserList">
             SELECT
-                Users.user_id, Users.first_name, Users.last_name, Users.email, Users.phone, Users.password, Departments.department_name,
+                Users.user_id, Users.first_name, Users.last_name, Users.email, Users.phone, Departments.department_name,
                 CASE 
                     WHEN Users.gender = 'M' THEN 'Male'
                     WHEN Users.gender = 'F' then 'Female'
@@ -24,7 +24,7 @@
     <cffunction name="getPatientData" returntype="query">
         <cfargument name="patient_id" type="numeric"/>
             <cfquery name="qryPatientData">
-                SELECT first_name, last_name, email, phone, gender, password
+                SELECT first_name, last_name, email, phone, gender
                 FROM Users 
                 WHERE user_id = <cfqueryparam value=#arguments.patient_id# cfsqltype="cf_sql_integer"/> 
             </cfquery>
@@ -42,8 +42,7 @@
                     last_name  = <cfqueryparam value="#arguments.patientData.lastName#" cfsqltype="cf_sql_varchar"/>,
                     email = <cfqueryparam value="#arguments.patientData.email#" cfsqltype="cf_sql_varchar"/>,
                     phone = <cfqueryparam value="#arguments.patientData.phone#" cfsqltype="cf_sql_varchar"/>,
-                    gender = <cfqueryparam value="#arguments.patientData.gender#" cfsqltype="cf_sql_char"/>,
-                    password = <cfqueryparam value="#arguments.patientData.password#" cfsqltype="cf_sql_char"/>
+                    gender = <cfqueryparam value="#arguments.patientData.gender#" cfsqltype="cf_sql_char"/>
                 WHERE user_id = <cfqueryparam value="#arguments.patientData.patient_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
         <cfcatch>
@@ -79,7 +78,7 @@
         <cfargument name="doctorId" type="numeric"/>
         <cfquery name="qryUserList">
             SELECT
-                user_id, first_name, last_name, email, phone, department_id, password, gender
+                user_id, first_name, last_name, email, phone, department_id, gender
                 FROM
                 Users
                 WHERE user_id = <cfqueryparam value=#arguments.doctorId# cfsqltype="cf_sql_varchar"/>
@@ -107,7 +106,6 @@
                     email = <cfqueryparam value="#arguments.doctorData.email#" cfsqltype="cf_sql_varchar"/>,
                     phone = <cfqueryparam value="#arguments.doctorData.phone#" cfsqltype="cf_sql_varchar"/>,
                     gender = <cfqueryparam value="#arguments.doctorData.gender#" cfsqltype="cf_sql_char"/>,
-                    password = <cfqueryparam value="#arguments.doctorData.password#" cfsqltype="cf_sql_char"/>,
                     department_id = <cfqueryparam value="#arguments.doctorData.department_id#" cfsqltype="cf_sql_char"/>
                 WHERE user_id = <cfqueryparam value="#arguments.doctorData.doctor_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
@@ -164,7 +162,6 @@
                     email = <cfqueryparam value="#arguments.receptionistData.email#" cfsqltype="cf_sql_varchar"/>,
                     phone = <cfqueryparam value="#arguments.receptionistData.phone#" cfsqltype="cf_sql_varchar"/>,
                     gender = <cfqueryparam value="#arguments.receptionistData.gender#" cfsqltype="cf_sql_char"/>,
-                    password = <cfqueryparam value="#arguments.receptionistData.password#" cfsqltype="cf_sql_char"/>,
                     department_id = <cfqueryparam value="#arguments.receptionistData.department_id#" cfsqltype="cf_sql_char"/>
                 WHERE user_id = <cfqueryparam value="#arguments.receptionistData.receptionist_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
@@ -773,7 +770,7 @@
         <cfargument name="receptionistId" type="numeric"/>
         <cfquery name="qryReceptionistData">
             SELECT
-                user_id, first_name, last_name, email, phone, department_id, password, gender
+                user_id, first_name, last_name, email, phone, department_id, gender
                 FROM
                 Users
                 WHERE user_id = <cfqueryparam value=#arguments.receptionistId# cfsqltype="cf_sql_varchar"/>
