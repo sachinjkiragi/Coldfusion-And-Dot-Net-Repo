@@ -1,17 +1,38 @@
 <cfcomponent>
+
+        <cffunction name="checkPermission" returntype="boolean">
+            <cfargument name="permissionTag" type="string"/>
+            <cfquery name="qryPermission">
+                SELECT Roles.role_name, Permissions.permission_tag
+                FROM Role_Permissions
+                JOIN Roles ON Role_Permissions.role_id = Roles.role_id
+                JOIN Permissions ON Role_Permissions.permission_id = Permissions.permission_id
+                WHERE Roles.role_name = 'Doctor'
+                AND permission_tag = <cfqueryparam value="#arguments.permissionTag#" cfsqltype="cf_sql_varchar"/>
+            </cfquery> 
+            <cfreturn qryPermission.recordCount EQ 1/>
+        </cffunction>       
+
         <cffunction name="getAppointmentList" returntype="query">
             <cfargument name="doctor_id" type="numeric"/>
-        <cfquery name="qryAppointmentList">
 
-            SELECT Appointments.*,
-            (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.patient_id) AS 'patient_name',
-            (SELECT start_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'start_time',
-            (SELECT end_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'end_time'
-            FROM Appointments 
-            WHERE 
-            Appointments.doctor_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_integer"/>
-        </cfquery>
-        <cfreturn qryAppointmentList/>
+            <cfinvoke method="checkPermission" returnvariable="hasPermission">
+                <cfinvokeargument name="permissionTag" value="View_Appointments"/>
+            </cfinvoke>
+            <cfif hasPermission EQ false>
+                <cflocation url="../../noPermission.cfm"/>
+            </cfif>
+
+            <cfquery name="qryAppointmentList">
+                SELECT Appointments.*,
+                (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.patient_id) AS 'patient_name',
+                (SELECT start_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'start_time',
+                (SELECT end_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'end_time'
+                FROM Appointments 
+                WHERE 
+                Appointments.doctor_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_integer"/>
+            </cfquery>
+            <cfreturn qryAppointmentList/>
     </cffunction>
 
     <cffunction name="getMedicines" returntype="query">
@@ -43,6 +64,12 @@
 
     <cffunction name="addPrescription" returntype="any">
         <cfargument name="prescription_data" type="struct"/>
+            <cfinvoke method="checkPermission" returnvariable="hasPermission">
+                <cfinvokeargument name="permissionTag" value="Create_Prescriptions"/>
+            </cfinvoke>
+            <cfif hasPermission EQ false>
+                <cflocation url="../../noPermission.cfm"/>
+            </cfif>
         <cftry>
             <cfquery name="qryInsertPrescription" result="res">
                 INSERT INTO Prescriptions (appointment_id, diagnosis, diagnosis_notes, digital_signature)
@@ -85,6 +112,14 @@
 
     <cffunction name="getPrescriptionData" returntype="query">
         <cfargument name="appointment_id" type="numeric"/>
+
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="View_Prescriptions"/>
+        </cfinvoke>
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+        
         <cftry>
             <cfquery name="qryPrescription">
                 SELECT
@@ -107,6 +142,12 @@
 
     <cffunction name="getPrescriptionDataByPrescriptionId" returntype="query">
         <cfargument name="prescription_id" type="numeric"/>
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="View_Prescriptions"/>
+        </cfinvoke>
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
         <cftry>
             <cfquery name="qryPrescription">
                 SELECT
@@ -130,6 +171,14 @@
 
     <cffunction name="updatePrescriptionData" returntype="boolean">
         <cfargument name="prescriptionData" type="struct"/>
+
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="Update_Prescriptions"/>
+        </cfinvoke>
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+
         <cfset success = true/>
         <cftry>
             <cfquery name="qryUpdatePrescription">
@@ -159,6 +208,12 @@
 
     <cffunction name="getPatientHistory">
         <cfargument name="patientId" type="numeric"/>
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="View_Appointments"/>
+        </cfinvoke>
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
         <cftry>
             <cfquery name="qryPatientHistory">
                 WITH cte1 AS
@@ -212,11 +267,20 @@
 
     <cffunction name="cancelAppointment" returntype="boolean">
         <cfargument name="appointmentId" type="string"/>
+
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="Update_Appointments"/>
+        </cfinvoke>
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+
         <cfset success = true/>
         <cftry>
             <cfquery name="qryCancelAppointment">
                 UPDATE Appointments
                 SET status = <cfqueryparam value="Cancelled" cfsqltype="cf_sql_varchar"/>
+                WHERE appointment_id = <cfqueryparam value="#arguments.appointmentId#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfcatch>
                 <cfset success = false/>
