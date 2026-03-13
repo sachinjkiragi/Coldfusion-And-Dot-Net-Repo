@@ -29,7 +29,7 @@
                         <div class="form-check d-flex flex-column gap-2">
                             <div>
                                 <label class="form-label fw-semibold">Email:</label>
-                                <input name="email" class="form-control" value=#patientData.email# type="email" id="email" required placeholder="Email *"/>
+                                <input readonly name="email" class="form-control" value=#patientData.email# type="email" id="email" required placeholder="Email *"/>
                                 <span id="emailError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
@@ -67,27 +67,14 @@
 </html>
 
 <cfif structKeyExists(form, "update-btn")>
-    <cfif patientData.email NEQ form.email>
-        <cfinvoke method="doesMailExists" component="../../../../services/adminServices/adminQueries" returnvariable="flag">
-            <cfinvokeargument name="email" value=#form.email#/>
-        </cfinvoke>
-        <cfif flag EQ true>
-            <script>
-                alert('Given Email Already Exists!')
-            </script>
-        </cfif>
-    <cfelse>
-        <cfset form.patient_id = patientIdToUpdate/>
-        <cfinvoke component="../../../../services/adminServices/adminQueries" method="updatePatientData" returnvariable="success">
-            <cfinvokeargument name="patientData" value=#form#/>
-        </cfinvoke>
+    <cfset form.patient_id = patientIdToUpdate/>
+    <cfinvoke component="../../../../services/adminServices/adminQueries" method="updatePatientData" returnvariable="success">
+        <cfinvokeargument name="patientData" value=#form#/>
+    </cfinvoke>
 
-        <cfif success EQ true>
-            <cfmail to="#form.email#" from="noreply@med.com" subject="temporary Passoword for MedManage Login">Your temporary Passoword for MedManage LogIn is #form.password#
-            </cfmail> 
-            <script>alert('Update Done Successfully');</script>
-        <cfelse>
-            <script>alert('Update failed. Please try again.');</script>
-        </cfif>
+    <cfif success EQ true>
+        <script>alert('Update Done Successfully');</script>
+    <cfelse>
+        <script>alert('Update failed. Please try again.');</script>
     </cfif>
 </cfif>
