@@ -1,8 +1,13 @@
 <html>
     <cfinclude template = "../includes/header.cfm"/>
-    <nav class="d-flex align-items-center justify-content-between px-4 py-3 text-white" 
-     style="background: linear-gradient(90deg, #0d6efd, #0dcaf0);">
-        <h3 class="m-0">MedManage</h3>
+    <nav class="d-flex align-items-center px-4 py-3 text-white shadow-sm"
+        style="background: linear-gradient(90deg, #0d6efd, #0dcaf0);">
+        <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-heart-pulse fs-1"></i>
+            <h2 class="m-0 fw-bold">
+                MedManage
+            </h2>
+        </div>
     </nav>
     <div class="h-100 w-100 d-flex justify-content-center align-items-center">
         <form style="width: fit-content;" class="card shadow  p-5" method="POST" action="verifyOtp.cfm">

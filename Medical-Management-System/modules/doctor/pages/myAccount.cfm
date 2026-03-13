@@ -29,16 +29,11 @@
                             <div>
                                 <label class="form-label fw-semibold">Department:</label>
                                 <div>
-                                    <select disabled id="departmentList" class="form-control d-block form-select" name="department_id" style="width: fit-content;">
-                                        <option value="">Select Department</option>
-                                        <cfoutput query="#departmentList#">
-                                            <cfif departmentList.department_id EQ doctorData.department_id>
-                                                <option selected value="#departmentList.department_id#">#department_name#</option>
-                                            <cfelse>
-                                                <option value="#departmentList.department_id#">#department_name#</option>
-                                            </cfif>
-                                        </cfoutput>
-                                    </select>
+                                    <cfoutput query="#departmentList#">
+                                        <cfif departmentList.department_id EQ doctorData.department_id>
+                                            <input class="form-control" readonly value="#departmentList.department_name#"/>
+                                        </cfif>
+                                    </cfoutput>
                                 </div>
                             </div>
                         </div>
@@ -53,22 +48,19 @@
                                 <input readonly name="phone" class="form-control" value=#doctorData.phone# type="phone" id="phone" required placeholder="Phone *"/>
                                 <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-3">
-                        <div class="form-check">
-                            <input  readonly class="form-check-input" type="radio" name="gender" value="m" id="male" required <cfif doctorData.gender EQ 'M'>checked</cfif> >
-                            <label class="form-check-label" for="male">Male</label>
-                        </div>
 
-                        <div class="form-check">
-                            <input readonly class="form-check-input" type="radio" name="gender" value="f" id="female" required <cfif doctorData.gender EQ 'F'>checked</cfif>>
-                            <label class="form-check-label" for="female">Female</label>
-                        </div>
-
-                        <div class="form-check">
-                            <input readonly class="form-check-input" type="radio" name="gender" value="o" id="other" required <cfif doctorData.gender EQ 'O'>checked</cfif>>
-                            <label class="form-check-label" for="other">Other</label>
+                            <div class="d-flex flex-column">
+                                <label class="form-label fw-semibold">Gender:</label>
+                                <div class="d-flex">
+                                    <cfif doctorData.gender EQ 'M'>
+                                        <input readonly name="gender" class="form-control" value='Male' type="phone" id="gender" required/>
+                                    <cfelseif doctorData.gender EQ 'F'>
+                                        <input readonly name="gender" class="form-control" value='Female' type="phone" id="gender" required />
+                                    <cfelse>
+                                        <input readonly name="gender" class="form-control" value='Other' type="phone" id="gender" required />
+                                    </cfif>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -77,34 +69,3 @@
         </div>
     </cfoutput>
 </html>
-
-<cfif structKeyExists(form, "update-btn")>
-    <cfset mailExists = false/>
-    <cfif doctorData.email NEQ form.email>
-        <cfinvoke method="doesMailExists" component="../../../../services/adminServices/adminQueries" returnvariable="flag">
-            <cfinvokeargument name="email" value=#form.email#/>
-        </cfinvoke>
-        <cfif flag EQ true>
-            <cfset mailExists = true/>
-        </cfif>
-    </cfif>
-    
-    <cfif mailExists EQ false>
-        <cfset form.doctor_id = doctorIdToUpdate/>
-        <cfinvoke component="../../../../services/adminServices/adminQueries" method="updatedoctorData" returnvariable="success">
-            <cfinvokeargument name="doctorData" value=#form#/>
-        </cfinvoke>
-        
-        <cfif success EQ true>
-            <cfmail to="#form.email#" from="noreply@med.com" subject="temporary Passoword for MedManage Login">Your temporary Passoword for MedManage LogIn is #form.password#
-            </cfmail> 
-            <script>alert('Update Done Successfully');</script>
-        <cfelse>
-            <script>alert('Update failed. Please try again.');</script>
-        </cfif>
-    <cfelse>
-        <script>
-            alert('Given Email Already Exists!')
-        </script>
-    </cfif>
-</cfif>
