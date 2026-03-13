@@ -1,6 +1,6 @@
 <html>
     <cfinclude template = "../includes/header.cfm"/>
-    <nav class="d-flex align-items-center px-4 py-3 text-white shadow-sm"
+    <nav class="d-flex align-items-center px-4 py-3 text-white shadow-sm position-fixed w-100 z-1"
         style="background: linear-gradient(90deg, #0d6efd, #0dcaf0);">
         <div class="d-flex align-items-center gap-3">
             <i class="bi bi-heart-pulse fs-1"></i>
@@ -10,7 +10,7 @@
         </div>
     </nav>
     <div class="h-100 w-100 d-flex justify-content-center align-items-center">
-        <form style="width: fit-content;" class="card shadow  p-5" method="POST">
+        <form class="card shadow-lg p-5 border-0 mt-5" style="width:360px;" method="POST">
             <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                 <div>
                     <h2 class="text-primary">Log In</h2>

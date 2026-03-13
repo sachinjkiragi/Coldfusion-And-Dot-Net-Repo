@@ -4,7 +4,7 @@
 
     <body>
          <div class="min-vh-100 w-100">
-            <nav class="d-flex align-items-center justify-content-between px-4 py-3 text-white shadow-sm"
+            <nav class="position-fixed top-0 w-100 d-flex align-items-center justify-content-between px-4 py-3 text-white shadow-sm"
                 style="background: linear-gradient(90deg, #0d6efd, #0dcaf0);">
                 <div class="d-flex gap-2">
                     <i class="bi bi-heart-pulse fs-1"></i>
@@ -18,16 +18,15 @@
                     Logout
                 </a>
             </nav>
-            <div>
+            <div class="min-vh-100 w-100" style="padding-top: 80px;">
                 <cfoutput>
-                   <div class="text-center mt-4 mb-4">
+                     <div class="text-center mt-4 mb-4">
                         <h2 class="fw-semibold text-secondary">
                             <i class="bi bi-person-circle"></i>
                             Welcome, <span class="text-primary">#session.currUser.first_name#</span>
                         </h2>
                     </div>
                 </cfoutput>
-            </div>
             <div class="d-flex m-3 rounded shadow bg-white overflow-hidden">
                 <div class="text-white p-3" style="width: 20%">
                     <ul class="nav flex-column bg-light rounded overflow-hidden">
