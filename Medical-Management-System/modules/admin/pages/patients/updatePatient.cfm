@@ -7,7 +7,7 @@
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
     <cfoutput>
-        <div class="h-100 w-100 border border-black d-flex justify-content-center align-items-center">
+        <div class="h-100 w-100 d-flex justify-content-center align-items-center">
             <form class="py-1" method="POST">
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
