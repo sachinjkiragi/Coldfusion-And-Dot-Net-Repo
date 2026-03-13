@@ -16,6 +16,7 @@ BEGIN
 	DROP TABLE IF EXISTS Doctor_Timeslots;
 	DROP TABLE IF EXISTS All_Slots;
 	DROP TABLE IF EXISTS Time_Slots;
+
 	CREATE TABLE Departments (
 		department_id INT PRIMARY KEY IDENTITY(1,1),
 		department_name VARCHAR(100) NOT NULL
@@ -251,7 +252,7 @@ BEGIN
 	INSERT INTO Users 
 	(first_name, last_name, email, password, role_id, gender, phone, department_id)
 	VALUES
-	('Admin', 'User', 'admin@hospital.com', 'Admin@123', 1, 'M', '9999999999', NULL);
+	('Admin', 'User', 'admin@hospital.com', 'E86F78A8A3CAF0B60D8E74E5942AA6D86DC150CD3C03338AEF25B7D2D7E3ACC7', 1, 'M', '9999999999', NULL);
 
 
 	INSERT INTO Role_Permissions (role_id, permission_id)
@@ -296,3 +297,8 @@ BEGIN
 END
 
 EXEC spInit;
+
+SELECT * FROM Users;
+
+DELETE FROM Users WHERE user_id = 15;
+

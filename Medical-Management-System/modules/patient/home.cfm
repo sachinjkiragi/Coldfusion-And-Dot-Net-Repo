@@ -25,6 +25,14 @@
                             </cfif>
                         </li>
                         <li class="border-bottom border-black">
+                            <cfif url.reqPage EQ "myAccount">
+                                <a class="nav-link text-white bg-primary" href="home.cfm?reqPage=myAccount">My Account</a>
+                            <cfelse>
+                                <a class="nav-link text-black" href="home.cfm?reqPage=myAccount">My Account</a>
+                            </cfif>
+                        </li>
+                        </li>
+                        <li class="border-bottom border-black">
                             <cfif url.reqPage EQ "appointments">
                                 <a class="nav-link text-white bg-primary" href="home.cfm?reqPage=appointments">Appointments</a>
                             <cfelse>
@@ -44,6 +52,9 @@
                     <cfswitch expression=#url.reqPage#>
                         <cfcase value="dashboard">
                             <cfinclude template="pages/dashboard.cfm"/>
+                        </cfcase>
+                        <cfcase value="myAccount">
+                            <cfinclude template="pages/myAccount.cfm"/>
                         </cfcase>
                         <cfcase value="appointments">
                             <cfinclude template="pages/appointments/appointments.cfm"/>

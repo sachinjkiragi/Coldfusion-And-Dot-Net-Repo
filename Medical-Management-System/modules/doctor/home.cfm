@@ -24,8 +24,15 @@
                                 <a class="nav-link text-black" href="home.cfm?reqPage=dashboard">Dashboard</a>
                             </cfif>
                         </li>
+                        <li class="border-bottom border-black">
+                            <cfif url.reqPage EQ "myAccount">
+                                <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=myAccount">My Account</a>
+                            <cfelse>
+                                <a class="nav-link text-black" href="home.cfm?reqPage=myAccount">My Account</a>
+                            </cfif>
+                        </li>
                         <li>
-                            <cfif url.reqPage EQ "patients">
+                            <cfif url.reqPage EQ "appointments">
                                 <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=appointments">Appointments</a>
                             <cfelse>
                                 <a class="nav-link text-black" href="home.cfm?reqPage=appointments">Appointments</a>
@@ -52,6 +59,9 @@
                         </cfcase>
                         <cfcase value="updatePrescription">
                             <cfinclude template="pages/appointments/updatePrescription.cfm"/>
+                        </cfcase>
+                        <cfcase value="myAccount">
+                            <cfinclude template="pages/myAccount.cfm"/>
                         </cfcase>
                     </cfswitch>
                 </div>

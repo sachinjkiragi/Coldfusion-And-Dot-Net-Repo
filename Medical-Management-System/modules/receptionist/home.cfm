@@ -25,6 +25,13 @@
                             </cfif>
                         </li>
                         <li class="border-bottom border-black">
+                            <cfif url.reqPage EQ "myAccount">
+                                <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=myAccount">My Account</a>
+                            <cfelse>
+                                <a class="nav-link text-black" href="home.cfm?reqPage=myAccount">My Account</a>
+                            </cfif>
+                        </li>
+                        <li class="border-bottom border-black">
                             <cfif url.reqPage EQ "patients">
                                 <a class="nav-link bg-primary text-white" href="home.cfm?reqPage=patients">Patient List</a>
                             <cfelse>
@@ -92,6 +99,9 @@
                         <cfcase value="doctorAvailability">
                             <cfset doctor_id = url.doctorId/>
                             <cfinclude template="pages/doctorDetails/doctorAvailability.cfm"/>
+                        </cfcase>
+                        <cfcase value="myAccount">
+                            <cfinclude template="pages//myAccount.cfm"/>
                         </cfcase>
                     </cfswitch>
                 </div>
