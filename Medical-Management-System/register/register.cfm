@@ -36,7 +36,7 @@
                             <span id="firstNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
-                            <input name="lastName" class="form-control" type="text" id="lastName" placeholder="Last Name" required/>
+                            <input name="lastName" class="form-control" type="text" id="lastName" placeholder="Last Name *" required/>
                             <span id="lastNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
@@ -50,7 +50,7 @@
                             <span id="emailError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
-                            <input name="phone" class="form-control" type="phone" id="phone" required placeholder="Your Phone *"/>
+                            <input name="phone" class="form-control" type="phone" id="phone" required placeholder="Your Phone *"  pattern="\d{10}"/>
                             <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
