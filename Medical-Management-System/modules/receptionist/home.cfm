@@ -4,7 +4,7 @@
 
     <body>
          <div class="min-vh-100 w-100">
-            <nav class="position-fixed top-0 w-100 d-flex align-items-center justify-content-between px-4 py-3 text-white shadow-sm"
+            <nav class="z-3 position-fixed top-0 w-100 d-flex align-items-center justify-content-between px-4 py-3 text-white shadow-sm"
                 style="background: linear-gradient(90deg, #0d6efd, #0dcaf0);">
                 <div class="d-flex gap-2">
                     <i class="bi bi-heart-pulse fs-1"></i>
