@@ -1,11 +1,22 @@
 <cfset success = true/>
+<cfif structKeyExists(form, "email")>
+    <cfinvoke method="doesMailExists" component="../services/UserServices/userQueries" returnvariable="flag">
+        <cfinvokeargument name="email" value=#form.email#/>
+    </cfinvoke>
+    <cfif flag EQ false>
+        <script>
+        alert('Given Email does not Exists!')
+        window.location.href = "resetPassword.cfm";
+        </script>
+    <cfelse>
+        <cfset session.email = form.email/>
+    </cfif>
+</cfif>
+
 <cftry>
     <cfif structKeyExists(session, "otp") EQ false>
         <cfset session.otp = randRange(100000, 999999)>
         <cfset session.otpTime = now()/>
-        <!--- <cfmail from="noreply@med.com" to=#form.email# subject="OTP Verification">
-            Your Otp Is #session.otp#
-        </cfmail> --->
         <cfmail to="#form.email#" from="noreply@med.com" subject="OTP Verification">Your OTP is #session.otp#
         </cfmail> 
     </cfif>
@@ -16,9 +27,6 @@
 </cfcatch>
 </cftry>
 
-<cfif structKeyExists(form, "email")>
-   <cfset session.email = form.email/>
-</cfif>
 
 <html>
     <nav class="d-flex align-items-center px-4 py-3 text-white shadow-sm position-fixed w-100 z-1"
