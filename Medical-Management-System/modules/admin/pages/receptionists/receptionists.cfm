@@ -3,13 +3,59 @@
         <cfinvokeargument name="role" value="Receptionist"/>
     </cfinvoke>
     <style>
-        #receptionistList {
-            width: 100%;
-            table-layout: fixed;
-        }
-        #receptionistList td {
+        #receptionistList td, #receptionistList th {
             white-space: normal;
             word-break: break-word;
+            vertical-align: middle;
+            text-align: center;
+            padding: 0.75rem 0.5rem;
+        }
+
+        #receptionistList tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        #receptionistList tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        #receptionistList thead {
+            background-color: #0d6efd;
+            color: white;
+            font-weight: 600;
+        }
+
+        #receptionistList .btn {
+            min-width: 80px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        #receptionistList {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #receptionistList, #receptionistList th, #receptionistList td {
+            border: 1px solid #dee2e6;
+        }
+
+        div.dataTables_wrapper div.dataTables_length,
+        div.dataTables_wrapper div.dataTables_filter {
+            margin-bottom: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate {
+            margin-top: 1rem;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            float: right;
+        }
+
+        div.dataTables_wrapper div.dataTables_length {
+            float: left;
         }
     </style>
     

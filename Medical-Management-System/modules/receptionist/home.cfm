@@ -18,7 +18,7 @@
                     Logout
                 </a>
             </nav>
-            <div style="margin-top: 10rem">
+            <div style="margin-top: 6rem">
                 <cfoutput>
                    <div class="text-center">
                         <h2 class="fw-semibold text-secondary">
