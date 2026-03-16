@@ -58,6 +58,8 @@
         }
     </style>
     
+    <cfinclude template="../../../../includes/header.cfm"/>
+    <cfinclude template="../../../../includes/toast.cfm"/>
     <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
         <a href="home.cfm?reqPage=addTimeSlot" class="btn btn-primary" style="width: 8rem;">Add Time Slot</a>
         <table id="timeSlotList"  class="display">
@@ -107,12 +109,12 @@
 
     <cfif success EQ true>
         <script>
-            alert("Time slot deleted successfully.");
+            showToast("Time slot deleted successfully.", "success");
         </script>
     <cfelse>
         <script>
-            alert("Failed to delete time slot. Please try again.");
+            showToast("Failed to delete time slot. Please try again.", "warning");
         </script>
-</cfif>
+    </cfif>
 
 </cfif>

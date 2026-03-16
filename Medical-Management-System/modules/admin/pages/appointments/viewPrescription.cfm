@@ -7,6 +7,7 @@
 
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../includes/toast.cfm"/>
     <div class="h-100 w-100  d-flex justify-content-center">
         <cfoutput>
             <form class="p-5" method="POST">
@@ -75,11 +76,11 @@
 
     <cfif success EQ true>
         <script>
-            alert('Prescription record deleted successfully');
+            showToast('Prescription record deleted successfully', 'success')
         </script>
     <cfelse>
         <script>
-            alert('Deleting prescription failed. Try again.');
+            showToast('Deleting prescription failed. Try again.', 'danger')
         </script>
     </cfif>
 

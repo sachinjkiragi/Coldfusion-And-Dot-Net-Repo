@@ -7,6 +7,7 @@
 
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../includes/toast.cfm"/>
     <div class="h-100 w-100 d-flex justify-content-center align-items-center">
         <cfoutput>
             <form class="p-5" method="POST">
@@ -55,11 +56,11 @@
         
         <cfif success EQ true>
             <script>
-                alert('Role Updated successfully');
+                showToast('Role updated successfully.', 'success');
             </script>
-            <cfelse>
+        <cfelse>
             <script>
-                alert('Failed to update role. Please try again.');
+                showToast('Failed to update role. Please try again.', 'warning');
             </script>
         </cfif>
     </cfif>

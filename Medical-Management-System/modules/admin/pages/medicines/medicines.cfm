@@ -57,7 +57,8 @@
             float: left;
         }
     </style>
-    
+    <cfinclude template="../../../../includes/header.cfm"/>
+    <cfinclude template="../../../../includes/toast.cfm"/>
     <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
         <a href="home.cfm?reqPage=addMedicine" class="btn btn-primary" style="width: 8rem;">Add Medicine</a>
         <table id="medicineList"  class="display">
@@ -111,9 +112,13 @@
     </cfinvoke> 
 
    <cfif success EQ true>
-        <script>alert("Medicine record deleted successfully.");</script>
+        <script>
+            showToast('Medicine record deleted successfully.', 'success')
+        </script>
     <cfelse>
-        <script>alert("Failed to delete Medicine record. Please try again.");</script>
+        <script>
+            showToast('Failed to delete Medicine record. Please try again.', 'danger')
+        </script>
     </cfif>
 </cfif>
 

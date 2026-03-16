@@ -2,6 +2,7 @@
 
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../includes/toast.cfm"/>
     <div class="h-100 w-100  d-flex justify-content-center">
         <form class="p-5" method="POST">
             <div class="d-flex flex-column gap-3 align-items-center justify-content-center">
@@ -65,7 +66,7 @@
 
     <cfif doesExists EQ true>
         <script>
-            alert('Prescription Already Exists for this Appointment');
+            showToast('Prescription Already Exists for this Appointment', 'warning')
         </script>
         <cfabort/>
     </cfif>
@@ -74,6 +75,8 @@
         <cfinvokeargument name="prescription_data" value="#form#"/>
     </cfinvoke>
     <cfif success EQ true>
-        <script>alert('Prescription added successfully')</script>
+        <script>
+            showToast('Prescription added successfully', 'success')
+        </script>
     </cfif>
 </cfif>

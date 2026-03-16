@@ -58,6 +58,8 @@
         }
     </style>
     
+    <cfinclude template="../../../../includes/header.cfm"/>
+    <cfinclude template="../../../../includes/toast.cfm"/>
     <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
         <a href="home.cfm?reqPage=addRole" class="btn btn-primary" style="width: 10rem;">Add Role</a>
         <table id="rolesList"  class="display">
@@ -110,10 +112,14 @@
         <cfinvokeargument name="roleId" value=#form.deleteRoleId#/>
     </cfinvoke> 
 
-   <cfif success EQ true>
-        <script>alert("Role record deleted successfully.");</script>
+    <cfif success EQ true>
+        <script>
+            showToast("Role record deleted successfully.", "success");
+        </script>
     <cfelse>
-        <script>alert("Failed to delete Role record. Please try again.");</script>
+        <script>
+            showToast("Failed to delete Role record. Please try again.", "warning");
+        </script>
     </cfif>
 </cfif>
 

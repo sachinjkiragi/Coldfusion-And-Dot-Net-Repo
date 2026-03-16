@@ -58,7 +58,8 @@
             float: left;
         }
     </style>
-    
+    <cfinclude template="../../../../includes/header.cfm"/>
+    <cfinclude template="../../../../includes/toast.cfm"/>
     <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
         <a href="home.cfm?reqPage=addReceptionist" class="btn btn-primary" style="width: 10rem;">Add Receptionist</a>
         <table id="receptionistList"  class="display">
@@ -123,9 +124,13 @@
     </cfinvoke> 
 
    <cfif success EQ true>
-        <script>alert("receptionist record deleted successfully.");</script>
+        <script>
+            showToast('receptionist record deleted successfully.', 'success')
+        </script>
     <cfelse>
-        <script>alert("Failed to delete receptionist record. Please try again.");</script>
+        <script>
+            showToast('Failed to delete receptionist record. Please try again.', 'danger')
+        </script>
     </cfif>
 
 </cfif>

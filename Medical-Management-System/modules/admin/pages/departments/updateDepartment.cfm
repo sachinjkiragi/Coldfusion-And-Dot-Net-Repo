@@ -7,6 +7,7 @@
 
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../includes/toast.cfm"/>
     <div class="h-100 w-100 d-flex justify-content-center align-items-center">
         <cfoutput>
             <form class="p-5" method="POST">
@@ -55,11 +56,11 @@
         
         <cfif success EQ true>
             <script>
-                alert('Department Updated successfully');
+                showToast('Department updated successfully.', 'success');
             </script>
-            <cfelse>
+        <cfelse>
             <script>
-                alert('Failed to update department. Please try again.');
+                showToast('Failed to update department. Please try again.', 'warning');
             </script>
         </cfif>
     </cfif>

@@ -2,6 +2,7 @@
 
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../includes/toast.cfm"/>
     <div class="h-100 w-100 d-flex justify-content-center align-items-center">
         <form class="p-5" method="POST">
             <div class="bordr-black d-flex flex-column gap-3 align-items-center">
@@ -37,11 +38,11 @@
     
     <cfif success EQ true>
         <script>
-            alert('Time Slot added successfully');
+            showToast('Time slot added successfully.', 'success');
         </script>
     <cfelse>
         <script>
-            alert('Failed to add Time slot. Please try again.');
+            showToast('Failed to add time slot. Please try again.', 'warning');
         </script>
     </cfif>
 </cfif>

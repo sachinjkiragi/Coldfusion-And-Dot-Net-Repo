@@ -4,6 +4,7 @@
 
 <html>
     <cfinclude template = "../../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../../includes/toast.cfm"/>
     <cfoutput>
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
             <form class="py-1" method="POST">
@@ -92,7 +93,7 @@
     </cfinvoke>
     <cfif flag EQ true>
         <script>
-            alert('Given Email Already Exists!')
+            showToast('Given Email Already Exists!', 'warning');
         </script>
     <cfelse>
         <cfset form.password = randRange(100000, 999999)/>
@@ -103,9 +104,13 @@
         <cfif success EQ true>
             <cfmail to="#form.email#" from="noreply@med.com" subject="temporary Passoword for MedManage Login">Your temporary Passoword for MedManage LogIn is #form.password#
             </cfmail> 
-            <script>alert('Registeration Done Successfully');</script>
+            <script>
+                showToast('Registeration Done Successfully', 'success');
+            </script>
         <cfelse>
-            <script>alert('Registration failed. Please try again.');</script>
+            <script>
+                showToast('Registration failed. Please try again.', 'danger');
+            </script>
         </cfif>
 
     </cfif>

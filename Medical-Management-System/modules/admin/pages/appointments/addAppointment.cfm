@@ -11,6 +11,8 @@
 </cfinvoke>
 
 <div>
+    <cfinclude template="../../../../includes/header.cfm"/>
+    <cfinclude template="../../../../includes/toast.cfm"/>
     <form class="p-3 d-flex flex-column align-items-center gap-4" method="POST">
         <div>
             <h3 class="text-primary">Schedule an appointment</h3>
@@ -98,7 +100,9 @@
     </cfinvoke>
 
     <cfif isAvailable EQ false>
-        <script>alert('The selected date and time slot are not available for this doctor. Please choose another slot.');</script>
+        <script>
+            showToast('The selected date and time slot are not available for this doctor. Please choose another slot.', 'warning')
+        </script>
         <cfabort/>
     </cfif>
 
@@ -109,11 +113,11 @@
 
     <cfif success EQ true>
         <script>
-            alert("Appointment booked successfully.");
+            showToast('Appointment booked successfully.', 'success')
         </script>
     <cfelse>
         <script>
-            alert("Appointment booking failed. Please try again.");
+            showToast('Appointment booking failed. Please try again.', 'danger');
         </script>
     </cfif>
 

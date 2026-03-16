@@ -58,6 +58,8 @@
         }
     </style>
     
+    <cfinclude template="../../../../includes/header.cfm"/>
+    <cfinclude template="../../../../includes/toast.cfm"/>
     <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
         <a href="home.cfm?reqPage=addDepartment" class="btn btn-primary" style="width: 10rem;">Add Department</a>
         <table id="departmentList"  class="display">
@@ -108,10 +110,14 @@
         <cfinvokeargument name="departmentId" value=#form.deleteDepartmentId#/>
     </cfinvoke> 
 
-   <cfif success EQ true>
-        <script>alert("Department record deleted successfully.");</script>
+    <cfif success EQ true>
+        <script>
+            showToast("Department record deleted successfully.", "success");
+        </script>
     <cfelse>
-        <script>alert("Failed to delete Department record. Please try again.");</script>
+        <script>
+            showToast("Failed to delete Department record. Please try again.", "warning");
+        </script>
     </cfif>
 </cfif>
 

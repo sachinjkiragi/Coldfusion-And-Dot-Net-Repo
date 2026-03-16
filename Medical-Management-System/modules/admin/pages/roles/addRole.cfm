@@ -1,5 +1,6 @@
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../includes/toast.cfm"/>
     <div class="h-100 w-100 d-flex justify-content-center align-items-center">
         <form class="p-5" method="POST">
             <div class="bordr-black d-flex flex-column gap-3 align-items-center">
@@ -31,9 +32,9 @@
     </cfinvoke>
 
     <cfif flag EQ true>
-        <script>
-            alert('Role Exists Already')
-        </script>
+    <script>
+        showToast('Role already exists.', 'warning');
+    </script>
     <cfelse>
         <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="addRole" returnvariable="success">
             <cfinvokeargument name="RoleData" value="#form#"/>
@@ -41,11 +42,11 @@
         
         <cfif success EQ true>
             <script>
-            alert('Role added successfully');
+                showToast('Role added successfully.', 'success');
             </script>
         <cfelse>
             <script>
-                alert('Failed to add Role. Please try again.');
+                showToast('Failed to add Role. Please try again.', 'warning');
             </script>
         </cfif>
     </cfif>

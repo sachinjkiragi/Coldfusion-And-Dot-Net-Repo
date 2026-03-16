@@ -12,7 +12,7 @@
             <cflocation url="/Coldfusion-And-Dot-Net-Repo/Medical-Management-System/login/login.cfm">
         </cfif>
 
-        <cfif structKeyExists(session, "currUser")>
+        <cfif structKeyExists(session, "currUser") AND listContains(targetPage, "modules", "/")>
             <cfif(session.currUser.role_id EQ 1 AND !listContains(targetPage, "admin", "/"))
                    OR
                    (session.currUser.role_id EQ 2 AND !listContains(targetPage, "doctor", "/"))

@@ -7,6 +7,7 @@
 
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../includes/toast.cfm"/>
     <cfoutput>
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
             <form class="py-1" method="POST">
@@ -88,8 +89,12 @@
     </cfinvoke>
     
     <cfif success EQ true>
-        <script>alert('Update Done Successfully');</script>
+        <script>
+            showToast('Update Done Successfully', 'success')
+        </script>
     <cfelse>
-        <script>alert('Update failed. Please try again.');</script>
+        <script>
+            showToast('Update failed. Please try again.', 'danger')
+        </script>
     </cfif>
 </cfif>
