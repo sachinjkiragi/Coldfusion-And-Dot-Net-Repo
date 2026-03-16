@@ -12,7 +12,11 @@
     word-break: break-word;
 }
     </style>
+
+    <cfinclude template="../../../../includes/header.cfm"/>
+    <cfinclude template="../../../../includes/toast.cfm"/>
     
+
     <form method="POST" class="p-5">
         <table id="appointmentList"  class="display">
             <thead>
@@ -51,7 +55,7 @@
                         </td>
                         <td>
                             <cfif appointmentList.status EQ "Booked">
-                                <button onclick="return confirm('Are you sure you want to delete this appoin record?');"> name="btnCancelAppointmentId" value="#appointmentList.appointment_id#" class="btn btn-danger">Cancel</button>
+                                <button onclick="return confirm('Are you sure you want to delete this appoin record?');" name="btnCancelAppointmentId" value="#appointmentList.appointment_id#" class="btn btn-danger">Cancel</button>
                             <cfelse>
                                 <button disabled class="btn btn-danger">NA</button>
                             </cfif>
@@ -96,11 +100,11 @@
 
     <cfif success EQ true>
         <script>
-            alert("Appointment Cancelled successfully.");
+            showToast('Appointment Cancelled successfully.', 'success');
         </script>
     <cfelse>
         <script>
-            alert("Unable to cancel appointment. Please try again later.");
+            showToast('Unable to cancel appointment. Please try again later.', 'danger');
         </script>
     </cfif>
 
