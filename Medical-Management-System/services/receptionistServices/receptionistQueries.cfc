@@ -188,6 +188,25 @@
         <cfreturn qryDoctorAvailable.recordCount EQ 0/>
     </cffunction>
 
+    <cffunction name="getDoctorName" returntype="query">
+        <cfargument name="doctor_id" type="numeric"/>
+
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="View_Users"/>
+        </cfinvoke>
+        
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+        
+        <cfquery name="qryDoctorData">
+            SELECT first_name, last_name
+            FROM Users 
+            WHERE user_id = <cfqueryparam value=#arguments.doctor_id# cfsqltype="cf_sql_integer"/>;
+        </cfquery>
+        <cfreturn qryDoctorData/>
+    </cffunction>
+
     <cffunction name="getPatientData" returntype="query">
         <cfargument name="patient_id" type="numeric"/>
 
@@ -341,6 +360,7 @@
                     WHERE cte.appointment_id IS NULL
                 ) SELECT* FROM res;
         </cfquery>
+        
         <cfreturn qryAvailabilityList/>
     </cffunction>
 </cfcomponent>

@@ -1,9 +1,20 @@
+ <cfinvoke component="../../../../services/receptionistServices/receptionistQueries.cfc" method="getDoctorName" returnvariable="doctorName">
+    <cfinvokeargument name="doctor_id" value="#url.doctorId#"/>
+</cfinvoke>
 <div class="px-5">
     <form class="py-3 d-flex flex-column gap-4" method="POST">
         <div class="form-check d-flex flex-column gap-2 p-0 ">
+           <div class="mb-3 fs-5">
+            <span class="fw-semibold text-primary">Doctor:</span>
+            <cfoutput>
+                <span class="fw-bold">#doctorName.first_name# #doctorName.last_name#</span>
+            </cfoutput>
+        </div>
             <label class="form-label fw-semibold">Select Date:</label>
             <div class="d-flex gap-4">
-                <input required class="form-control w-25" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
+                <cfoutput>
+                    <input <cfif structKeyExists(form, "slot_date")>value="#form.slot_date#"</cfif> required class="form-control w-25" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
+                </cfoutput>
                 <button name="check-btn" type="submit" class="btn btn-primary" style="width: fit-content;">Check Availability</button>
             </div>
         </div>
