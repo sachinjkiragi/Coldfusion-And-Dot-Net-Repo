@@ -1,9 +1,21 @@
 <cfinvoke method="getRoles" component="../../../../services/UserServices/userQueries.cfc" returnvariable="roles"/>
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
-    <div class="h-100 w-100  d-flex justify-content-center align-items-center">
-        <form class="p-5" method="POST">
-            <div class="d-flex flex-column gap-3 align-items-center">
+        <div class="h-100 w-100  d-flex justify-content-center align-items-center">
+            <form class="p-5" method="POST">
+                <div class="d-flex flex-column gap-3 align-items-center">
+                    <div class="toast-container position-fixed top-0 end-0" style="padding: 5rem 1rem;">
+                        <div class="toast p-2" id="toast" role="alert" data-bs-delay="4000">
+                            <div class="toast-body">
+                                <div class="d-flex flex-column flex-grow-1 gap-2">
+                                    <div class="d-flex align-items-center">
+                                        <span id="alertMsg" class="fw-semibold text-white"></span>
+                                        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="toast"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <div>
                     <h2 class="text-primary">Register Patient</h2>
                 </div>
@@ -71,13 +83,21 @@
     <script src="pages/addPatient/addPatient.js"></script>
 </html>
 
+<script>
+    const alertEle = document.getElementById('alertMsg');
+    const toastEle = document.getElementById("toast");
+</script>
+
 <cfif structKeyExists(form, "register-btn")>
     <cfinvoke method="doesMailExists" component="../../../../services/receptionistServices/receptionistQueries" returnvariable="flag">
         <cfinvokeargument name="email" value=#form.email#/>
     </cfinvoke>
     <cfif flag EQ true>
         <script>
-            alert('Given Email Already Exists!')
+            toastEle.classList.add('text-bg-warning');
+            alertEle.innerText = 'Provided email exists already!';
+            const toast = new bootstrap.Toast(toastEle);
+            toast.show();
         </script>
     <cfelse>
         <cfset form.password = randRange(100000, 999999)/>
@@ -88,10 +108,25 @@
         <cfif success EQ true>
             <cfmail to="#form.email#" from="noreply@med.com" subject="temporary Passoword for MedManage Login">Your temporary Passoword for MedManage LogIn is #form.password#
             </cfmail> 
-            <script>alert('Registeration Done Successfully');</script>
+            <script>
+                toastEle.classList.add('text-bg-success');
+                alertEle.innerText = 'Registeration Done Successfully';
+                const toast = new bootstrap.Toast(toastEle);
+                toast.show();
+            </script>
         <cfelse>
-            <script>alert('Registration failed. Please try again.');</script>
+            <script>
+                toastEle.classList.add('text-bg-danger');
+                alertEle.innerText = 'Registration failed. Please try again.';
+                const toast = new bootstrap.Toast(toastEle);
+                toast.show();
+            </script>
         </cfif>
 
     </cfif>
 </cfif>
+
+
+<script>
+
+</script>
