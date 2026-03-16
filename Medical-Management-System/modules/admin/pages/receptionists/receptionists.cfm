@@ -87,7 +87,7 @@
                             <button class="btn btn-primary" name="updateReceptionistId" value=#receptionistList.user_id# type="submit">Update</button>
                         </td>
                         <td data-order=#receptionistList.gender#>
-                            <button class="btn btn-danger" name="deleteReceptionistId" value=#receptionistList.user_id# type="submit">Delete</button>
+                            <button onclick="return confirm('Are you sure you want to delete this receptionist record?');" class="btn btn-danger" name="deleteReceptionistId" value=#receptionistList.user_id# type="submit">Delete</button>
                         </td>
                     </tr>
                 </cfoutput>

@@ -51,7 +51,7 @@
                         </td>
                         <td>
                             <cfif appointmentList.status EQ "Booked">
-                                <button name="btnCancelAppointmentId" value="#appointmentList.appointment_id#" class="btn btn-danger">Cancel</button>
+                                <button onclick="return confirm('Are you sure you want to delete this appoin record?');"> name="btnCancelAppointmentId" value="#appointmentList.appointment_id#" class="btn btn-danger">Cancel</button>
                             <cfelse>
                                 <button disabled class="btn btn-danger">NA</button>
                             </cfif>

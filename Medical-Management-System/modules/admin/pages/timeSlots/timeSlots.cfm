@@ -74,7 +74,7 @@
                         <td>#timeFormat(timeSlotList.start_time, "hh:mm tt")#</td>
                         <td>#timeFormat(timeSlotList.end_time, "hh:mm tt")#</td>
                         <td>
-                            <button class="btn btn-danger" name="deleteTimeSlotId" value=#timeSlotList.timeslot_id# type="submit">Delete</button>
+                            <button onclick="return confirm('Are you sure you want to delete this patient record?');" class="btn btn-danger" name="deleteTimeSlotId" value=#timeSlotList.timeslot_id# type="submit">Delete</button>
                         </td>
                     </tr>
                 </cfoutput>

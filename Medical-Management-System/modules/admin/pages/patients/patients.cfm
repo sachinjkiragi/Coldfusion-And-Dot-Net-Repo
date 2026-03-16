@@ -86,7 +86,7 @@
                             <button class="btn btn-primary" name="updatePatientId" value=#patientList.user_id# type="submit">Update</button>
                         </td>
                         <td data-order=#patientList.gender#>
-                            <button class="btn btn-danger" name="deletePatientId" value=#patientList.user_id# type="submit">Delete</button>
+                            <button onclick="return confirm('Are you sure you want to delete this patient record?');" class="btn btn-danger" name="deletePatientId" value=#patientList.user_id# type="submit">Delete</button>
                         </td>
                     </tr>
                 </cfoutput>

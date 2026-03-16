@@ -77,7 +77,7 @@
                                 <button class="btn btn-primary" name="updateRoleId" value=#rolesList.role_id# type="submit">Update</button>
                             </td>
                             <td>
-                                <button class="btn btn-danger" name="deleteRoleId" value=#rolesList.role_id# type="submit">Delete</button>
+                                <button onclick="return confirm('Are you sure you want to delete this patient record?');" class="btn btn-danger" name="deleteRoleId" value=#rolesList.role_id# type="submit">Delete</button>
                             </td>
                         </tr>
                     </cfif>

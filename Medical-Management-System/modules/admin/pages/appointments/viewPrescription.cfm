@@ -50,7 +50,7 @@
                     
                     <span title="Please complete all required fields">
                         <button class="btn btn-primary" type="submit" name="update_prescription_id" value="#prescriptionData.prescription_id#">Update Prescription</button>
-                        <button class="btn btn-primary" type="submit" name="delete_prescription_id" value="#prescriptionData.prescription_id#">Delete Prescription</button>
+                        <button onclick="return confirm('Are you sure you want to delete this prescription record?');" class="btn btn-primary" type="submit" name="delete_prescription_id" value="#prescriptionData.prescription_id#">Delete Prescription</button>
                     </span>
                     
                     <a href="home.cfm?reqPage=appointments" class="text-primary text-decoration-none">Go Back</a>

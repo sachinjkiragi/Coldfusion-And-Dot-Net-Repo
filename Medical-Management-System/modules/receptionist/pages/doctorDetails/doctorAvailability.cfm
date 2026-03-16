@@ -1,8 +1,11 @@
 <div class="px-5">
     <form class="py-3 d-flex flex-column gap-4" method="POST">
-        <div class="form-check d-flex gap-4 p-0 ">
-            <input required class="form-control w-25" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
-            <button name="check-btn" type="submit" class="btn btn-primary" style="width: fit-content;">Check Availability</button>
+        <div class="form-check d-flex flex-column gap-2 p-0 ">
+            <label class="form-label fw-semibold">Select Date:</label>
+            <div class="d-flex gap-4">
+                <input required class="form-control w-25" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
+                <button name="check-btn" type="submit" class="btn btn-primary" style="width: fit-content;">Check Availability</button>
+            </div>
         </div>
     </form>
     
@@ -30,6 +33,7 @@
 
                     </cfoutput>
                 </tbody>
+
             </table>
             
             <cfcatch>
