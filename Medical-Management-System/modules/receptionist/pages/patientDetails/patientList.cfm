@@ -59,7 +59,8 @@
             float: left;
         }
     </style>
-    
+    <cfinclude template="../../../../includes/header.cfm"/>
+    <cfinclude template="../../../../includes/toast.cfm"/>
     <form method="POST">
         <table id="patientList"  class="display">
             <thead>
@@ -120,9 +121,13 @@
     </cfinvoke> 
 
    <cfif success EQ true>
-        <script>alert("Patient record deleted successfully.");</script>
+        <script>
+            showToast('Patient record deleted successfully.', 'success');
+        </script>
     <cfelse>
-        <script>alert("Failed to delete patient record. Please try again.");</script>
+        <script>
+            showToast('Failed to delete patient record. Please try again.', 'danger');
+        </script>
     </cfif>
 
 </cfif>

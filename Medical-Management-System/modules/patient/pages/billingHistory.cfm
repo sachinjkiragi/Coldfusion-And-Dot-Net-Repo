@@ -80,7 +80,7 @@
                 <cfoutput query=#billingHistory#>
                     <tr style="width: 10rem;">
                         <td>#billingHistory.doctor_name#</td>
-                        <td>#dateFormat(billingHistory.slot_date, "dd-mm-yyyy")#</td>
+                        <td>#dateFormat(billingHistory.slot_date, "dd/mm/yyyy")#</td>
                         <td>#timeFormat(billingHistory.start_time, "hh:mm tt")#</td>
                         <td>#timeFormat(billingHistory.end_time, "hh:mm tt")#</td>
                         <td>#billingHistory.medicine_name#</td>

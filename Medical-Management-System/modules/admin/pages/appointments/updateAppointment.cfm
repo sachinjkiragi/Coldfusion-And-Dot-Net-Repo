@@ -69,7 +69,7 @@
                         </div>
                         <div class="form-check">
                             <label class="form-label fw-semibold">Slot Date:</label>
-                            <input required value="#dateFormat(appointementData.slot_date, "dd-mm-yyyy")#" class="form-control" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
+                            <input required value="#dateFormat(appointementData.slot_date, "dd/mm/yyyy")#" class="form-control" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
                         </div>
                     </div>
                     <button name="update-btn" type="submit" class="btn btn-primary mx-auto" style="width: fit-content;">Update Appointment</button>

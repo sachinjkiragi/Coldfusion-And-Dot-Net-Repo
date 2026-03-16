@@ -33,7 +33,7 @@
                     <tr style="width: 10rem;">
                         <td>#appointmentList.patient_name#</td>
                         <td> #appointmentList.appointment_charges#</td>
-                        <td>#dateFormat(appointmentList.slot_date, "dd-mm-yyyy")#</td>
+                        <td>#dateFormat(appointmentList.slot_date, "dd/mm/yyyy")#</td>
                         <td>#timeFormat(appointmentList.start_time, "hh:mm tt")#</td>
                         <td>#timeFormat(appointmentList.end_time, "hh:mm tt")#</td>
                         <td>#appointmentList.status#</td>

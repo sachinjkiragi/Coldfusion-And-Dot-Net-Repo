@@ -34,7 +34,7 @@
                 <cfoutput query=#patientHistory#>
                     <tr style="width: 10rem;">
                         <td>#patientHistory.doctor_name#</td>
-                        <td>#dateFormat(patientHistory.slot_date, "dd-mm-yyyy")#</td>
+                        <td>#dateFormat(patientHistory.slot_date, "dd/mm/yyyy")#</td>
                         <td>#timeFormat(patientHistory.start_time, "hh:mm tt")#</td>
                         <td>#timeFormat(patientHistory.end_time, "hh:mm tt")#</td>
                         <td>#patientHistory.medicine_name#</td>

@@ -4,6 +4,7 @@
 
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../includes/toast.cfm"/>
     <cfoutput>
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
             <form class="p-5" method="POST">
@@ -64,7 +65,6 @@
         </div>
     </cfoutput>
 
-
     <script src="pages/addPatient/addPatient.js"></script>
 </html>
 
@@ -75,8 +75,12 @@
     </cfinvoke>
     
     <cfif success EQ true>
-        <script>alert('Update Done Successfully');</script>
+        <script>
+            showToast('Patient record updated successfully.', 'success');
+        </script>
     <cfelse>
-        <script>alert('Update failed. Please try again.');</script>
+        <script>
+            showToast('Failed to update patient record.', 'danger');
+        </script>
     </cfif>
 </cfif>

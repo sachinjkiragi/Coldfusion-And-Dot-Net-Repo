@@ -8,6 +8,7 @@
 
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../includes/toast.cfm"/>
     <cfoutput>
         <div>
             <form class="p-3 d-flex flex-column align-items-center gap-4" method="POST">
@@ -68,7 +69,7 @@
                         </div>
                         <div class="form-check">
                             <label class="form-label fw-semibold">Slot Date:</label>
-                            <input required value="#dateFormat(appointementData.slot_date, "dd-mm-yyyy")#" class="form-control" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
+                            <input required value="#dateFormat(appointementData.slot_date, "dd/mm/yyyy")#" class="form-control" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
                         </div>
                     </div>
                     <button name="update-btn" type="submit" class="btn btn-primary mx-auto" style="width: fit-content;">Update Appointment</button>
@@ -117,7 +118,9 @@
         </cfinvoke>
         
         <cfif isAvailable EQ false>
-            <script>alert('The selected date and time slot are not available for this doctor. Please choose another slot.');</script>
+            <script>
+                showToast('The selected date and time slot are not available for this doctor. Please choose another slot.', 'warning');
+            </script>
             <cfabort/>
         </cfif>
     </cfif>
@@ -129,11 +132,11 @@
 
     <cfif success EQ true>
         <script>
-            alert("Appointment details have been updated successfully.");
+            showToast('Appointment details have been updated successfully.', 'success');
         </script>
     <cfelse>
         <script>
-            alert("Unable to update appointment. Please try again later.");
+            showToast('Unable to update appointment. Please try again later.', 'warning');
         </script>
     </cfif>
 

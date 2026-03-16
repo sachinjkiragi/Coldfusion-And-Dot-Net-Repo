@@ -11,6 +11,18 @@
 </cfinvoke>
 
 <div>
+    <div class="toast-container position-fixed top-0 end-0" style="padding: 5rem 1rem;">
+        <div class="toast p-2" id="toast" role="alert" data-bs-delay="4000">
+            <div class="toast-body">
+                <div class="d-flex flex-column flex-grow-1 gap-2">
+                    <div class="d-flex align-items-center">
+                        <span id="alertMsg" class="fw-semibold text-white"></span>
+                        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <form class="p-3 d-flex flex-column align-items-center gap-4" method="POST">
         <div>
             <h3 class="text-primary">Schedule an appointment</h3>
@@ -88,6 +100,12 @@
     }) 
 </script>
 
+
+<script>
+    const alertEle = document.getElementById('alertMsg');
+    const toastEle = document.getElementById("toast");
+</script>
+
 <cfif structKeyExists(form, "book-btn")>
     <cfset form.status = "Booked"/>
 
@@ -96,7 +114,9 @@
     </cfinvoke>
 
     <cfif isAvailable EQ false>
-        <script>alert('The selected date and time slot are not available for this doctor. Please choose another slot.');</script>
+        <script>
+            showToast('The selected date and time slot are not available for this doctor. Please choose another slot.', 'warning');
+        </script>
         <cfabort/>
     </cfif>
 
@@ -107,11 +127,11 @@
 
     <cfif success EQ true>
         <script>
-            alert("Appointment booked successfully.");
+            showToast('Appointment Book Successfully.', 'success');
         </script>
     <cfelse>
         <script>
-            alert("Appointment booking failed. Please try again.");
+            showToast('Appointment booking failed. Please try again.', 'danger');
         </script>
     </cfif>
 
