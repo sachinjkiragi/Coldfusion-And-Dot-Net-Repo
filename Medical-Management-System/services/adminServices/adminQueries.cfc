@@ -367,6 +367,7 @@
                 AND slot_date = <cfqueryparam value=#arguments.appointmentDetails.slot_date#/>
                 AND timeslot_id = <cfqueryparam value=#arguments.appointmentDetails.timeslot_id#/> 
                 AND status = <cfqueryparam value="Booked" cfsqltype="cf_sql_varchar"/>
+                AND appointment_id != <cfqueryparam value="#arguments.appointmentDetails.appointment_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
             <cfreturn qryDoctorAvailable.recordCount EQ 0/>
         <cfcatch>
