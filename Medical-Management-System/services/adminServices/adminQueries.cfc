@@ -88,7 +88,7 @@
 
     <cffunction name="getDepartments" returntype="query">
         <cfquery name="qryDepartments">
-            SELECT * FROM Departments
+            SELECT* FROM Departments
         </cfquery>
         <cfreturn qryDepartments>
     </cffunction>
@@ -142,7 +142,7 @@
         <cfargument name="email" required="true" type="string"/>
         
         <cfquery result="query">
-            SELECT * 
+            SELECT* 
             FROM Users 
             WHERE email = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">
         </cfquery>
@@ -380,7 +380,7 @@
 
     <cffunction name="getTimeSlots" returntype="query">
         <cfquery name="qryTimeSlots">
-            SELECT * FROM Time_Slots;
+            SELECT* FROM Time_Slots;
         </cfquery>
         <cfreturn qryTimeSlots/>
     </cffunction>
@@ -527,7 +527,7 @@
 
     <cffunction name="getMedicines" returntype="query">
         <cfquery name="qryMedicines">
-            SELECT * FROM Medicines;
+            SELECT* FROM Medicines;
         </cfquery>
         <cfreturn qryMedicines/>
     </cffunction>
@@ -607,7 +607,7 @@
     
     <cffunction name="getAvailableTimeSlots">
         <cfquery name="qryAvailableTimeSlots">
-            SELECT * FROM ALL_Slots
+            SELECT* FROM ALL_Slots
             WHERE start_time NOT IN (SELECT start_time FROM Time_Slots);
         </cfquery>
         <cfreturn qryAvailableTimeSlots/>
@@ -723,7 +723,7 @@
     
     <cffunction name="getRoles" returntype="query">
         <cfquery name="qryRoles">
-            SELECT * FROM Roles;
+            SELECT* FROM Roles;
         </cfquery>
         <cfreturn qryRoles/>
     </cffunction>

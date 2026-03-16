@@ -14,26 +14,31 @@
                     <div class="d-flex gap-4">
                         <div class="form-check d-flex flex-column gap-2">
                             <div>
-                                <input name="firstName" class="form-control" value=#patientData.first_name# type="text" id="firstName" required placeholder="First Name *"/>
+                                <label class="form-label fw-semibold">Fisrt Name:</label>
+                                <input name="firstName" class="form-control" value=#patientData.first_name# type="text" id="firstName" required placeholder="First Name*"/>
                                 <span id="firstNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
+                                <label class="form-label fw-semibold">Last Name:</label>
                                 <input required name="lastName" class="form-control" value=#patientData.last_name# type="text" id="lastName" placeholder="Last Name"/>
                                 <span id="lastNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                         </div>
                         <div class="form-check d-flex flex-column gap-2">
                             <div>
-                                <input readonly name="email" class="form-control" value=#patientData.email# type="email" id="email" required placeholder="Email *"/>
+                                <label class="form-label fw-semibold">Email:</label>
+                                <input readonly name="email" class="form-control" value=#patientData.email# type="email" id="email" required placeholder="Email*"/>
                                 <span id="emailError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
-                                <input name="phone" class="form-control" value=#patientData.phone# type="phone" id="phone" required placeholder="Phone *"/>
+                                <label class="form-label fw-semibold">Phone:</label>
+                                <input name="phone" class="form-control" value=#patientData.phone# type="phone" id="phone" required placeholder="Phone*"/>
                                 <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex gap-3">
+                        <label class="form-label fw-semibold">Gender:</label>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="gender" value="m" id="male" required <cfif patientData.gender EQ 'M'>checked</cfif> >
                             <label class="form-check-label" for="male">Male</label>

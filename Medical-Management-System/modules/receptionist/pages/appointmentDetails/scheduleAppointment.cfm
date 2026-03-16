@@ -18,6 +18,7 @@
         <div class="d-flex flex-column gap-3" style="width: 50%;">
             <div class="d-flex justify-content-between">
                 <div class="form-check">
+                    <label class="form-label fw-semibold">Doctor:</label>
                     <select id="doctor" class="form-control d-block form-select" name="doctor_id" style="width: fit-content;" required>
                         <option value="">Select Doctor</option>
                         <cfoutput query=#doctorList#>
@@ -26,6 +27,7 @@
                     </select>
                 </div>
                 <div class="form-check">
+                    <label class="form-label fw-semibold">Patient:</label>
                     <select required id="patient" class="form-control form-select" name="patient_id" style="width: fit-content;" required>
                         <option value="">Select Patient</option>
                         <cfoutput query=#patientList#>
@@ -36,10 +38,12 @@
             </div>
             <div class="d-flex justify-content-between">
                 <div class="form-check">
+                    <label class="form-label fw-semibold">Appointment Charges:</label>
                     <input name="appointment_charges" class="form-control" placeholder="Appointment Charges" id="appointment_charges" type="number" min="0" required/>
                 </div>
 
                  <div class="form-check">
+                    <label class="form-label fw-semibold">Time Slots:</label>
                     <select required id="timeSlots" class="form-control form-select" name="timeslot_id" style="width: fit-content">
                         <option value="">Select Time Slot</option>
                         <cfoutput query=#timeSlotList#>
@@ -50,6 +54,7 @@
             </div>
             
             <div class="form-check">
+                <label class="form-label fw-semibold">Slot Date:</label>
                 <input required class="form-control w-25" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
             </div>
             <button name="book-btn" type="submit" class="btn btn-primary mx-auto" style="width: fit-content;">Book Appointment</button>

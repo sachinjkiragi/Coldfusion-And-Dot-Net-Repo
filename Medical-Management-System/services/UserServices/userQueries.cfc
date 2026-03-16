@@ -1,14 +1,14 @@
 <cfcomponent>
     <cffunction name="getDepartments" returntype="query">
         <cfquery name="departments">
-            SELECT * FROM Departments;
+            SELECT* FROM Departments;
         </cfquery>
         <cfreturn departments/>
     </cffunction>
 
     <cffunction name="getRoles" returntype="query">
         <cfquery name="roles">
-            SELECT * FROM roles;
+            SELECT* FROM roles;
         </cfquery>
         <cfreturn roles/>
     </cffunction>
@@ -57,7 +57,7 @@
         <cfargument name="credentials" type="struct"/>
         <cfset local.hashedPassword = hash(credentials.password, "SHA-256")>
         <cfquery name="qryValidUser">
-            SELECT *
+            SELECT*
             FROM Users 
             WHERE
             email = <cfqueryparam value=#credentials.email# cfsqltype="cf_sql_varchar"/>

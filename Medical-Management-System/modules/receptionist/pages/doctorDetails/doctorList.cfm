@@ -69,7 +69,7 @@
                     <th>Phone</th>
                     <th>Department</th>
                     <th>Gender</th>
-                    <th>Check Availability</th>
+                    <th>Availability</th>
                 </tr>
             </thead>
             <tbody>

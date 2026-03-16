@@ -17,14 +17,14 @@
                     <div class="form-check d-flex gap-4 p-0 w-100">
                         <div class="w-100">
                             <label class="form-label fw-semibold">Doctor:</label>
-                            <input readonly name="doctor_name" value="#prescriptionData.doctor_name#" class="form-control w-100" type="text" id="diagnosis" required placeholder="Diagnosis *"/>
+                            <input readonly name="doctor_name" value="#prescriptionData.doctor_name#" class="form-control w-100" type="text" id="diagnosis" required placeholder="Diagnosis*"/>
                         </div>
                     </div>
                     <div class="d-flex gap-4">
                         <div class="form-check d-flex gap-4 p-0">
                             <div>
                                 <label class="form-label fw-semibold">Diagnosis:</label>
-                                <input readonly name="diagnosis" value="#prescriptionData.diagnosis#" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis *"/>
+                                <input readonly name="diagnosis" value="#prescriptionData.diagnosis#" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis*"/>
                             </div>
                             <div>
                                 <label class="form-label fw-semibold">Diagnosis Notes:</label>

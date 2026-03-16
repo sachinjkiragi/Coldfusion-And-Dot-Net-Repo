@@ -16,7 +16,8 @@
                     <h2 class="text-primary">Reset Password</h2>
                 </div>
                 <div class="form-check">
-                    <input name="email" class="form-control" type="email" id="email" required placeholder="Your Email *"/>
+                    <label class="form-label fw-semibold">Email:</label>
+                    <input name="email" class="form-control" type="email" id="email" required placeholder="Your Email*"/>
                 </div>
                 <span title="Please complete all required fields">
                     <button class="btn btn-primary" type="submit" name="submit-btn"> Submit </button>

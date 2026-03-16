@@ -11,6 +11,6 @@
     </head>
     <cfinclude template = "includes/header.cfm"/>
     <body class="h-100 w-100">
-        <cflocation url = "register/register.cfm"/>
+        <cflocation url = "login/login.cfm"/>
     </body>
 </html>

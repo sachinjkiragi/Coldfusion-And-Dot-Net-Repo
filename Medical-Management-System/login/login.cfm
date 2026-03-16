@@ -16,17 +16,18 @@
                     <h2 class="text-primary">Log In</h2>
                 </div>
                 <div class="form-check">
-                    <input name="email" class="form-control" type="email" id="email" required placeholder="Your Email *"/>
+                    <label class="form-label fw-semibold">Email:</label>
+                    <input name="email" class="form-control" type="email" id="email" required placeholder="Your Email*"/>
                 </div>
                 <div class="form-check">
-                    <input name="password" class="form-control" type="password" id="password" required placeholder="Password *"/>
+                    <label class="form-label fw-semibold">Password:</label>
+                    <input name="password" class="form-control" type="password" id="password" required placeholder="Password*"/>
                 </div>
                 
                 <span title="Please complete all required fields">
                     <button class="btn btn-primary" type="submit" name="submit-btn"> Log In </button>
                 </span>
                 <span id="logInErrorMsg" class="text-danger d-none"></span>
-                <a href="../register/register.cfm" class="text-primary text-decoration-none">Register</a>
                 <a href="resetPassword.cfm" class="text-primary text-decoration-none">Reset Password</a>
             </div>
         </form>

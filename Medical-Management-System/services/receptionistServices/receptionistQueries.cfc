@@ -48,7 +48,7 @@
         <cfargument name="email" required="true" type="string"/>
         
         <cfquery result="query">
-            SELECT * 
+            SELECT* 
             FROM Users 
             WHERE email = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">
         </cfquery>
@@ -123,7 +123,7 @@
 
     <cffunction name="getTimeSlots" returntype="query">
         <cfquery name="qryTimeSlots">
-            SELECT * FROM Time_Slots;
+            SELECT* FROM Time_Slots;
         </cfquery>
         <cfreturn qryTimeSlots/>
     </cffunction>
@@ -327,7 +327,7 @@
         </cfif>
         <cfquery name="qryAvailabilityList">
             WITH cte AS(
-                SELECT * 
+                SELECT* 
                 FROM Appointments
                 WHERE Appointments.doctor_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_integer"/> AND Appointments.slot_date = <cfqueryparam value="#form.slot_date#" cfsqltype="date"/>
                 ),
@@ -336,7 +336,7 @@
                     FROM Time_Slots LEFT JOIN cte
                     ON Time_Slots.timeslot_id = cte.timeslot_id
                     WHERE cte.appointment_id IS NULL
-                ) SELECT * FROM res;
+                ) SELECT* FROM res;
         </cfquery>
         <cfreturn qryAvailabilityList/>
     </cffunction>

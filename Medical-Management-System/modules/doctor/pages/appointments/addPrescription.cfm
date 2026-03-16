@@ -12,7 +12,7 @@
                 <div class="d-flex gap-4">
                     <div class="form-check d-flex gap-4 p-0">
                         <div>
-                            <input required name="diagnosis" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis *"/>
+                            <input required name="diagnosis" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis*"/>
                         </div>
                         <div>
                             <textarea required rows="1" cols="40" name="diagnosis_notes" class="form-control" type="text" id="diagnosis_notes" placeholder="Diagnosis Notes"></textarea>

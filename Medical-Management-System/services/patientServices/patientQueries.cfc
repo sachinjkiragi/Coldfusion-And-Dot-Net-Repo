@@ -66,7 +66,7 @@
 
     <cffunction name="getMedicines" returntype="query">
         <cfquery name="qryMedicines">
-            SELECT * FROM Medicines
+            SELECT* FROM Medicines
         </cfquery>
         <cfreturn qryMedicines>
     </cffunction>
@@ -158,11 +158,11 @@
                 cte3.appointment_charges,
                 CASE
                     WHEN cte3.quantity IS NULL then cte3.appointment_charges
-                    ELSE cte3.quantity * cte3.unit_price + cte3.appointment_charges
+                    ELSE cte3.quantity* cte3.unit_price + cte3.appointment_charges
                 END
                 AS 'total_bill'
                 FROM cte3
-            ) SELECT * FROM billingHistory;
+            ) SELECT* FROM billingHistory;
         </cfquery>
         <cfreturn qryBillingHistory/>
     </cffunction>

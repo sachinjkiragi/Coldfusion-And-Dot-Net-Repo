@@ -70,7 +70,7 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Status</th>
-                    <th>Update</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>

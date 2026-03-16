@@ -18,7 +18,7 @@
                 <div class="d-flex gap-4">
                     <div class="form-check d-flex flex-column gap-2">
                         <div>
-                            <input name="firstName" class="form-control" type="text" id="firstName" required placeholder="First Name *"/>
+                            <input name="firstName" class="form-control" type="text" id="firstName" required placeholder="First Name*"/>
                             <span id="firstNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
@@ -28,11 +28,11 @@
                     </div>
                     <div class="form-check d-flex flex-column gap-2">
                         <div>
-                            <input name="email" class="form-control" type="email" id="email" required placeholder="Email *"/>
+                            <input name="email" class="form-control" type="email" id="email" required placeholder="Email*"/>
                             <span id="emailError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
-                            <input name="phone" class="form-control" type="phone" id="phone" required placeholder="Phone *"/>
+                            <input name="phone" class="form-control" type="phone" id="phone" required placeholder="Phone*"/>
                             <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                     </div>

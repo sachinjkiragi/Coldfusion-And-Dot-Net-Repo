@@ -13,7 +13,6 @@ BEGIN
 	DROP TABLE IF EXISTS Users;
 	DROP TABLE IF EXISTS Roles;
 	DROP TABLE IF EXISTS Departments;
-	DROP TABLE IF EXISTS Doctor_Timeslots;
 	DROP TABLE IF EXISTS All_Slots;
 	DROP TABLE IF EXISTS Time_Slots;
 
@@ -157,7 +156,8 @@ BEGIN
 	('Paracetamol 500mg', 5.00),
 	('Amoxicillin 250mg', 12.50),
 	('Ibuprofen 400mg', 8.75),
-	('Cough Syrup 100ml', 45.00);
+	('Cough Syrup 100ml', 45.00),
+	('No Medicine', 0.00);
 
 	CREATE TABLE All_Slots (
 		slot_id INT PRIMARY KEY IDENTITY(1,1),
@@ -299,6 +299,3 @@ END
 EXEC spInit;
 
 SELECT * FROM Users;
-
-DELETE FROM Users WHERE user_id = 15;
-

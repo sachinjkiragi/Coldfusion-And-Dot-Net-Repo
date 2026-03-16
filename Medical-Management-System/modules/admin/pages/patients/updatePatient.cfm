@@ -17,7 +17,7 @@
                         <div class="form-check d-flex flex-column gap-2">
                             <div>
                                 <label class="form-label fw-semibold">First Name:</label>
-                                <input name="firstName" class="form-control" value=#patientData.first_name# type="text" id="firstName" required placeholder="First Name *"/>
+                                <input name="firstName" class="form-control" value=#patientData.first_name# type="text" id="firstName" required placeholder="First Name*"/>
                                 <span id="firstNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
@@ -29,12 +29,12 @@
                         <div class="form-check d-flex flex-column gap-2">
                             <div>
                                 <label class="form-label fw-semibold">Email:</label>
-                                <input readonly name="email" class="form-control" value=#patientData.email# type="email" id="email" required placeholder="Email *"/>
+                                <input readonly name="email" class="form-control" value=#patientData.email# type="email" id="email" required placeholder="Email*"/>
                                 <span id="emailError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
                                 <label class="form-label fw-semibold">Phone:</label>
-                                <input name="phone" class="form-control" value=#patientData.phone# type="phone" id="phone" required placeholder="Phone *"/>
+                                <input name="phone" class="form-control" value=#patientData.phone# type="phone" id="phone" required placeholder="Phone*"/>
                                 <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                         </div>

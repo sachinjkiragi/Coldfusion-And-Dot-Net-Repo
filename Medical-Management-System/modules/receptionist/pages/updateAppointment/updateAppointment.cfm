@@ -17,18 +17,22 @@
                 <div class="d-flex flex-column gap-3" style="width: 50%;">
                     <div class="d-flex justify-content-between">
                         <div class="form-check">
+                            <label class="form-label fw-semibold">Doctor:</label>
                             <input class="form-control" type="text" name="doctor_name" id="doctor" readonly value="#appointementData.doctor_name#"/>
                         </div>
                         <div class="form-check">
+                            <label class="form-label fw-semibold">Patient:</label>
                             <input  class="form-control" type="text" name="patient_name" id="patient" readonly value="#appointementData.patient_name#"/>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
                         <div class="form-check">
+                            <label class="form-label fw-semibold">Appointment Charges:</label>
                             <input required name="appointment_charges" class="form-control" placeholder="Appointment Charges" id="appointment_charges" type="number" min="0" required value="#appointementData.appointment_charges#"/>
                         </div>
 
                         <div class="form-check">
+                            <label class="form-label fw-semibold">Slot Time:</label>
                             <select required id="timeSlots" class="form-control form-select" name="timeslot_id" style="width: fit-content">
                                 <option value="">Select Time Slot</option>
                                 <cfoutput query=#timeSlotList#>
@@ -45,6 +49,7 @@
                     <div class="d-flex justify-content-between">
                         
                         <div class="form-check">
+                            <label class="form-label fw-semibold">Status:</label>
                             <select required class="form-control form-select"  name="status">
                                 <cfif appointementData.status EQ "Booked">
                                     <option value="Booked" selected>Booked</option>
@@ -62,6 +67,7 @@
                             </select>
                         </div>
                         <div class="form-check">
+                            <label class="form-label fw-semibold">Slot Date:</label>
                             <input required value="#dateFormat(appointementData.slot_date, "dd-mm-yyyy")#" class="form-control" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
                         </div>
                     </div>

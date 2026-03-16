@@ -19,7 +19,7 @@
                         <div class="form-check d-flex gap-4 p-0">
                             <div>
                                 <label class="form-label fw-semibold">Diagnosis:</label>
-                                <input value="#prescriptionData.diagnosis#" name="diagnosis" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis *"/>
+                                <input value="#prescriptionData.diagnosis#" name="diagnosis" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis*"/>
                             </div>
                             <div>
                                 <label class="form-label fw-semibold">Diagnosis Notes:</label>

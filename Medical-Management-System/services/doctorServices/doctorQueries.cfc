@@ -38,7 +38,7 @@
     <cffunction name="getMedicines" returntype="query">
         <cftry>
             <cfquery name="qryMedicines">
-                SELECT * FROM Medicines
+                SELECT* FROM Medicines
             </cfquery>
             <cfreturn qryMedicines>
             <cfcatch>
@@ -247,7 +247,7 @@
                     cte3.dosage_info,
                     cte3.quantity
                     FROM cte3
-                ) SELECT * FROM patientHistory;
+                ) SELECT* FROM patientHistory;
             </cfquery>
             <cfreturn qryPatientHistory/>
     </cffunction>

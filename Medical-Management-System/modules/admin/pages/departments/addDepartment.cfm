@@ -10,7 +10,7 @@
                 <div class="d-flex gap-4">
                     <div class="form-check d-flex flex-column gap-4 align-items-center">
                         <div>
-                            <input name="departmentName" class="form-control" type="text" id="departmentName" required placeholder="Department Name *"/>
+                            <input name="departmentName" class="form-control" type="text" id="departmentName" required placeholder="Department Name*"/>
                         </div>
                         <span title="Please complete all required fields">
                             <button class="btn btn-primary" type="submit" name="addBtn"> Add </button>

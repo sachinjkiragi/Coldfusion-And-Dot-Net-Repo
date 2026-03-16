@@ -18,7 +18,7 @@
                     <div class="d-flex gap-4">
                         <div class="form-check d-flex flex-column gap-4 align-items-center">
                         <div>
-                            <input name="roleName" class="form-control" type="text" id="roleName" required placeholder="Role Name *" value="#roleData.role_name#"/>
+                            <input name="roleName" class="form-control" type="text" id="roleName" required placeholder="Role Name*" value="#roleData.role_name#"/>
                         </div>
                         <span title="Please complete all required fields">
                             <button class="btn btn-primary" type="submit" name="updateroleId"> Update </button>

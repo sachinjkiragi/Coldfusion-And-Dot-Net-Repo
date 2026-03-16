@@ -32,30 +32,30 @@
                 <div class="d-flex gap-4">
                     <div class="form-check d-flex flex-column gap-2">
                         <div>
-                            <input name="firstName" class="form-control" type="text" id="firstName" required placeholder="First Name *"/>
+                            <input name="firstName" class="form-control" type="text" id="firstName" required placeholder="First Name*"/>
                             <span id="firstNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
-                            <input name="lastName" class="form-control" type="text" id="lastName" placeholder="Last Name *" required/>
+                            <input name="lastName" class="form-control" type="text" id="lastName" placeholder="Last Name*" required/>
                             <span id="lastNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
-                            <input name="password" class="form-control" type="password" id="password" required placeholder="Password *"/>
+                            <input name="password" class="form-control" type="password" id="password" required placeholder="Password*"/>
                             <span id="passwordError" class="valid-feedback d-block invisible">&nbsp;</span>
                         </div>
                     </div>
                     <div class="form-check d-flex flex-column gap-2">
                         <div>
-                            <input name="email" class="form-control" type="email" id="email" required placeholder="Your Email *"/>
+                            <input name="email" class="form-control" type="email" id="email" required placeholder="Your Email*"/>
                             <span id="emailError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
-                            <input name="phone" class="form-control" type="phone" id="phone" required placeholder="Your Phone *"  pattern="\d{10}"/>
+                            <input name="phone" class="form-control" type="phone" id="phone" required placeholder="Your Phone*"  pattern="\d{10}"/>
                             <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <div>
                             <select name="department_id" class="form-select" id="department" required>
-                                <option value="">Select Department *</option>
+                                <option value="">Select Department*</option>
                                 <cfoutput query=#departments#>
                                     <option value=#departments.department_id#>#departments.department_name#</option>
                                 </cfoutput>

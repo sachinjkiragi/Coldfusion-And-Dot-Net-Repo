@@ -18,10 +18,10 @@
                     <div class="d-flex gap-4">
                         <div class="form-check d-flex flex-column gap-4 align-items-center">
                         <div>
-                            <input name="medicineName" class="form-control" type="text" id="medicineName" required placeholder="Medicine Name *" value="#medicineData.medicine_name#"/>
+                            <input name="medicineName" class="form-control" type="text" id="medicineName" required placeholder="Medicine Name*" value="#medicineData.medicine_name#"/>
                         </div>
                         <div>
-                            <input name="unitPrice" class="form-control" type="text" id="unitPrice" placeholder="Unit Price *" required value="#medicineData.unit_price#"/>
+                            <input name="unitPrice" class="form-control" type="text" id="unitPrice" placeholder="Unit Price*" required value="#medicineData.unit_price#"/>
                             <span id="unitPriceError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>
                         <span title="Please complete all required fields">

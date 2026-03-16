@@ -26,7 +26,7 @@
                         <p class="text-secondary">An OTP has been sent to your email address. Please enter it to complete verification.</p>
                     </div>
                     <div>
-                        <input name="otp" class="form-control" type="text" id="otp" placeholder="OTP *"/>
+                        <input name="otp" class="form-control" type="text" id="otp" placeholder="OTP*"/>
                     </div>
                     
                     <span title="Please complete all required fields">
@@ -52,7 +52,7 @@
         </cfif>
     </cffunction>
 
-    <cfif dateDiff("s", session.otpTime, now()) GT 120>
+    <cfif dateDiff("s", session.otpTime, now()) GT 5>
         <cfinvoke method="clearOtp"/>
         <script>
             alert('OTP Expired');

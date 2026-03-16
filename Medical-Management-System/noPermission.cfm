@@ -6,9 +6,6 @@
         <nav class="d-flex align-items-center justify-content-between px-4 py-3 text-white"
             style="background: linear-gradient(90deg, #0d6efd, #0dcaf0);">
             <h3 class="m-0">MedManage</h3>
-            <strong>
-                <a href="../../logout/logout.cfm" class="text-white text-decoration-none">Logout</a>
-            </strong>
         </nav>
 
         <div class="flex-grow-1 d-flex justify-content-center align-items-center">

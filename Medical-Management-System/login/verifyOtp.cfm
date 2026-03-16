@@ -48,10 +48,12 @@
                     <p class="text-secondary">We have sent an OTP to your mail.</p>
                 </div>
                 <div class="form-check">
-                    <input name="otp" class="form-control" type="number" id="otp" required placeholder="OTP *"/>
+                    <label class="form-label fw-semibold">OTP:</label>
+                    <input name="otp" class="form-control" type="number" id="otp" required placeholder="OTP*"/>
                 </div>
                 <div class="form-check">
-                    <input name="newPassword" class="form-control" type="password" id="newPassword" required placeholder="New Password *"/>
+                    <label class="form-label fw-semibold">New Password:</label>
+                    <input name="newPassword" class="form-control" type="password" id="newPassword" required placeholder="New Password*"/>
                 </div>
                 <span title="Please complete all required fields">
                     <button class="btn btn-primary" type="submit" name="submit-btn"> Submit </button>
@@ -75,7 +77,7 @@
         </cfif>
     </cffunction>
 
-    <cfif dateDiff("s", session.otpTime, now()) GT 120>
+    <cfif dateDiff("s", session.otpTime, now()) GT 60>
         <cfinvoke method="clearOtp"/>
         <script>
             alert('OTP Expired');
