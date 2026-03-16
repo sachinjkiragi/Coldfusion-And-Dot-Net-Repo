@@ -9,7 +9,7 @@
     <cfinclude template = "../../../../includes/header.cfm"/>
     <div class="h-100 w-100  d-flex justify-content-center">
         <cfoutput>
-            <form class="p-5" method="POST">
+            <form class="p-3" method="POST">
                 <div class="d-flex flex-column gap-3 align-items-center justify-content-center">
                     <div>
                         <h2 class="text-primary text-center">Prescription Details</h2>
