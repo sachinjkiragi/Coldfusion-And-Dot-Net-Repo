@@ -1,4 +1,4 @@
-<cfparam name="url.reqPage" default="dashboard"/>
+<cfparam name="url.reqPage" default="appointments"/>
 <html>
     <cfinclude template="../../includes/header.cfm"/>
 
@@ -34,13 +34,6 @@
                 <div class="text-white p-3" style="width: 20%">
                     <ul class="nav flex-column bg-light rounded overflow-hidden">
                         <li class="border-bottom border-black">
-                            <cfif url.reqPage EQ "dashboard">
-                                <a class="nav-link text-white bg-primary" href="home.cfm?reqPage=dashboard"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
-                            <cfelse>
-                                <a class="nav-link text-black" href="home.cfm?reqPage=dashboard"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
-                            </cfif>
-                        </li>
-                        <li class="border-bottom border-black">
                             <cfif url.reqPage EQ "myAccount">
                                 <a class="nav-link text-white bg-primary" href="home.cfm?reqPage=myAccount"><i class="bi bi-person-circle me-2"></i>My Account</a>
                             <cfelse>
@@ -66,9 +59,6 @@
                 </div>
                 <div style="width: 80%">
                     <cfswitch expression=#url.reqPage#>
-                        <cfcase value="dashboard">
-                            <cfinclude template="pages/dashboard.cfm"/>
-                        </cfcase>
                         <cfcase value="myAccount">
                             <cfinclude template="pages/myAccount.cfm"/>
                         </cfcase>
