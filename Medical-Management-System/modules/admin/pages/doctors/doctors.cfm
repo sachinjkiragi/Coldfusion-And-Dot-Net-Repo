@@ -70,8 +70,7 @@
                     <th>Phone</th>
                     <th>Department</th>
                     <th>Gender</th>
-                    <th>Update</th>
-                    <th>Delete</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,8 +84,6 @@
                         <td>#doctorList.gender#</td>
                         <td>
                             <button class="btn btn-primary" name="updateDoctorId" value=#doctorList.user_id# type="submit">Update</button>
-                        </td>
-                        <td data-order=#doctorList.gender#>
                             <button onclick="return confirm('Are you sure you want to delete this doctor record?');" class="btn btn-danger" name="deleteDoctorId" value=#doctorList.user_id# type="submit">Delete</button>
                         </td>
                     </tr>

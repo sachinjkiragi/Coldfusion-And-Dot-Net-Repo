@@ -65,8 +65,7 @@
                 <tr>
                     <th>Medicine Name</th>
                     <th>Unit Price</th>
-                    <th>Update</th>
-                    <th>Delete</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,8 +75,6 @@
                         <td>#medicineList.unit_price#</td>
                         <td>
                             <button class="btn btn-primary" name="updateMedicineId" value=#medicineList.medicine_id# type="submit">Update</button>
-                        </td>
-                        <td>
                             <button onclick="return confirm('Are you sure you want to delete this patient record?');" class="btn btn-danger" name="deleteMedicineId" value=#medicineList.medicine_id# type="submit">Delete</button>
                         </td>
                     </tr>

@@ -70,7 +70,7 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Status</th>
-                    <th>Update</th>
+                    <th>Update Appointment</th>
                     <th>View/Add Prescription</th>
                 </tr>
             </thead>

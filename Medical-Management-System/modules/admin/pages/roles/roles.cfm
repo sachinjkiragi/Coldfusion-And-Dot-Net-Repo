@@ -64,8 +64,7 @@
             <thead>
                 <tr>
                     <th>Role Name</th>
-                    <th>Update</th>
-                    <th>Delete</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -75,8 +74,6 @@
                             <td>#rolesList.role_name#</td>
                             <td>
                                 <button class="btn btn-primary" name="updateRoleId" value=#rolesList.role_id# type="submit">Update</button>
-                            </td>
-                            <td>
                                 <button onclick="return confirm('Are you sure you want to delete this patient record?');" class="btn btn-danger" name="deleteRoleId" value=#rolesList.role_id# type="submit">Delete</button>
                             </td>
                         </tr>
