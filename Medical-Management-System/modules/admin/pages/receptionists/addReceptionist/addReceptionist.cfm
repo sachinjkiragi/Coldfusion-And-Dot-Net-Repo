@@ -56,6 +56,7 @@
                         </div>
                     </div>
                     <div class="d-flex gap-3">
+                        <label class="form-label fw-semibold">Gender:</label>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="gender" value="m" id="male" required/>
                             <label class="form-check-label" for="male">Male</label>

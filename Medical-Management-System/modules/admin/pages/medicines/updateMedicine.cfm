@@ -18,9 +18,11 @@
                     <div class="d-flex gap-4">
                         <div class="form-check d-flex flex-column gap-4 align-items-center">
                         <div>
+                            <label class="form-label fw-semibold">Medicine Name:</label>
                             <input name="medicineName" class="form-control" type="text" id="medicineName" required placeholder="Medicine Name*" value="#medicineData.medicine_name#"/>
                         </div>
                         <div>
+                            <label class="form-label fw-semibold">Unit Price:</label>
                             <input name="unitPrice" class="form-control" type="text" id="unitPrice" placeholder="Unit Price*" required value="#medicineData.unit_price#"/>
                             <span id="unitPriceError" class="invalid-feedback d-block invisible">&nbsp;</span>
                         </div>

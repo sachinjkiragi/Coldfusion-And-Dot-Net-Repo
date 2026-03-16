@@ -10,6 +10,7 @@
                 <div class="d-flex gap-4">
                     <div class="form-check d-flex flex-column gap-4 align-items-center">
                         <div>
+                            <label class="form-label fw-semibold">Role Name:</label>
                             <input name="roleName" class="form-control" type="text" id="roleName" required placeholder="Role Name*"/>
                         </div>
                         <span title="Please complete all required fields">

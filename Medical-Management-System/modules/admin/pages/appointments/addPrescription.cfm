@@ -12,9 +12,11 @@
                 <div class="d-flex gap-4">
                     <div class="form-check d-flex gap-4 p-0">
                         <div>
+                            <label class="form-label fw-semibold">Diagnosis:</label>
                             <input required name="diagnosis" class="form-control" type="text" id="diagnosis" required placeholder="Diagnosis*"/>
                         </div>
                         <div>
+                            <label class="form-label fw-semibold">Diagnosis Notes:</label>
                             <textarea required rows="1" cols="40" name="diagnosis_notes" class="form-control" type="text" id="diagnosis_notes" placeholder="Diagnosis Notes"></textarea>
                         </div>
                     </div>
@@ -22,6 +24,7 @@
                 
                 <div id="availableMedicines" class="d-flex justify-content-between w-100 gap-4 p-0">
                     <div>
+                        <label class="form-label fw-semibold">Medicine:</label>
                         <select required id="medicineList" class="form-control d-block form-select" name="medicine_id" style="width: fit-content;">
                             <option value="">Select Medicine</option>
                             <cfoutput query="#medicineList#">
@@ -30,10 +33,12 @@
                         </select>
                     </div>
                     <div class="form-check">
+                        <label class="form-label fw-semibold">Quantity:</label>
                         <input required type="number" min="0" class="form-control" name="medicine_qty" placeholder="Quantity"/>
                     </div>
                 </div>
                 <div>
+                    <label class="form-label fw-semibold">Dosage Info.:</label>
                     <textarea required rows="1" cols="70" name="dosage_info" class="form-control" type="text" id="dosage_info" placeholder="Dosage Information"></textarea>
                 </div>
                 
