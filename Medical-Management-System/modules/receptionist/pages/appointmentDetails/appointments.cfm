@@ -70,7 +70,7 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th class="no-sort">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -103,6 +103,9 @@
             pageLength: 5,
             lengthMenu: [5, 10, 25],
             autoWidth: false,
+            columnDefs: [
+                { orderable: false, targets: 'no-sort' }
+            ]
         });
     })
 </script>

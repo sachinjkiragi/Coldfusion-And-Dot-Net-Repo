@@ -69,7 +69,7 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Gender</th>
-                    <th>Actions</th>
+                    <th class="no-sort">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -101,6 +101,9 @@
             pageLength: 5,
             lengthMenu: [5, 10, 25],
             autoWidth: false,
+            columnDefs: [
+                { orderable: false, targets: 'no-sort' }
+            ]
         });
     })
 </script>

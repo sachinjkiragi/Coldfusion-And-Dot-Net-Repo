@@ -70,8 +70,8 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Status</th>
-                    <th>Update Appointment</th>
-                    <th>View/Add Prescription</th>
+                    <th class="no-sort">Appointment</th>
+                    <th class="no-sort">Prescription</th>
                 </tr>
             </thead>
             <tbody>
@@ -114,6 +114,9 @@
             pageLength: 5,
             lengthMenu: [5, 10, 25],
             autoWidth: false,
+            columnDefs: [
+                {orderable: false, targets: 'no-sort'}
+            ]
         });
     })
 </script>

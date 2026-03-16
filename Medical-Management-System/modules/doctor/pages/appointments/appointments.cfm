@@ -23,9 +23,9 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Status</th>
-                    <th>View/Add Prescription</th>
-                    <th>Patient History</th>
-                    <th>Cancel Appointment</th>
+                    <th class="no-sort">Prescription</th>
+                    <th class="no-sort">History</th>
+                    <th class="no-sort">Cancel</th>
                 </tr>
             </thead>
             <tbody>
@@ -73,6 +73,9 @@
             pageLength: 5,
             lengthMenu: [5, 10, 25],
             autoWidth: false,
+            columnDefs: [
+                {orderable: false, targets: 'no-sort'}
+            ]
         });
     })
 </script>
