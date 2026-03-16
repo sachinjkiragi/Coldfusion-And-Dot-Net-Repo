@@ -84,7 +84,7 @@
                         <td>#timeFormat(appointmentList.end_time, "hh:mm tt")#</td>
                         <td>#appointmentList.status#</td>
                         <td>
-                            <button class="btn btn-primary" name="updateAppointmentId" value=#appointmentList.appointment_id# type="submit">Update</button>
+                            <button <cfif appointmentList.status EQ 'Completed'>disabled</cfif> class="btn btn-primary" name="updateAppointmentId" value=#appointmentList.appointment_id# type="submit">Update</button>
                         </td>
                     </tr>
                 </cfoutput>
