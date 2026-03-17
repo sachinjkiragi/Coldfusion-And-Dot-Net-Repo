@@ -128,6 +128,7 @@
         </cfif>
     </cfif>
 
+    <cfset form.slot_date = dateFormat(parseDateTime(form.slot_date, "dd/mm/yyyy"), "yyyy-mm-dd")>
     <cfinvoke component=#queryServicesPath# method="updateAppointmentData" returnvariable="success">
         <cfinvokeargument name="appointmentDetails" value=#form#/>
     </cfinvoke>

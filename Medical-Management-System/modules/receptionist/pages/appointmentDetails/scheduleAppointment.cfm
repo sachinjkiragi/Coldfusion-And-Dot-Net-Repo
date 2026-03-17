@@ -119,7 +119,7 @@
 
 <cfif structKeyExists(form, "book-btn")>
     <cfset form.status = "Booked"/>
-
+    <cfset form.slot_date = dateFormat(parseDateTime(form.slot_date, "dd/mm/yyyy"), "yyyy-mm-dd")>
     <cfinvoke component=#queryServicesPath# method="isDoctorAvailable" returnvariable="isAvailable">
         <cfinvokeargument name="appointmentDetails" value=#form#/>
     </cfinvoke>

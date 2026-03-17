@@ -363,9 +363,9 @@
             <cfquery name="qryDoctorAvailable">
                 SELECT 1 
                 FROM Appointments 
-                WHERE doctor_id = <cfqueryparam value=#arguments.appointmentDetails.doctor_id#/>
-                AND slot_date = <cfqueryparam value=#arguments.appointmentDetails.slot_date#/>
-                AND timeslot_id = <cfqueryparam value=#arguments.appointmentDetails.timeslot_id#/> 
+                WHERE doctor_id = <cfqueryparam value=#arguments.appointmentDetails.doctor_id# cfsqltype="cf_sql_integer"/>
+                AND slot_date = <cfqueryparam value=#arguments.appointmentDetails.slot_date# cfsqltype="cf_sql_date"/>
+                AND timeslot_id = <cfqueryparam value=#arguments.appointmentDetails.timeslot_id# cfsqltype="cf_sql_integer"/> 
                 AND status = <cfqueryparam value="Booked" cfsqltype="cf_sql_varchar"/>
                 <cfif structKeyExists(arguments.appointmentDetails, "appointment_id")>
                     AND appointment_id != <cfqueryparam value="#arguments.appointmentDetails.appointment_id#" cfsqltype="cf_sql_integer"/>
