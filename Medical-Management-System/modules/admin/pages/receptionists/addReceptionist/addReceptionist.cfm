@@ -20,7 +20,7 @@
                             </cfif>
                         </cfoutput>
                     </div>
-                        <div class="form-check d-flex flex-column gap-2">
+                        <div class="form-check p-0 d-flex flex-column gap-2">
                             <div>
                                 <label class="form-label fw-semibold">First Name:</label>
                                 <input name="firstName" class="form-control" type="text" id="firstName" required placeholder="First Name*"/>
@@ -34,7 +34,7 @@
                             <div>
                                 <label class="form-label fw-semibold">Department:</label>
                                 <div>
-                                    <select id="departmentList" class="form-control d-block form-select" name="department_id" style="width: fit-content;">
+                                    <select id="departmentList" class="form-control d-block form-select w-100" name="department_id" style="width: fit-content;">
                                         <cfif departmentList.department_name EQ "Reception">
                                             <option selected value="#departmentList.department_id#">#departmentList.department_name#</option>
                                         </cfif>
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-check d-flex flex-column gap-2">
+                        <div class="form-check d-flex flex-column gap-2 p-0">
                             <div>
                                 <label class="form-label fw-semibold">Email:</label>
                                 <input name="email" class="form-control" type="email" id="email" required placeholder="Email*"/>

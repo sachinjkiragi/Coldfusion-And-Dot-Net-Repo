@@ -30,7 +30,7 @@
                             <div>
                                 <label class="form-label fw-semibold">Department:</label>
                                 <div>
-                                    <select id="departmentList" class="form-control d-block form-select" name="department_id" style="width: fit-content;">
+                                    <select  id="departmentList" class="form-control w-100 d-block form-select" name="department_id" style="width: fit-content;">
                                         <cfoutput query="#departmentList#">
                                             <cfif departmentList.department_id EQ receptionistData.department_id>
                                                 <option selected value="#departmentList.department_id#">#department_name#</option>
