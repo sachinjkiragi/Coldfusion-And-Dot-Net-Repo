@@ -77,6 +77,7 @@
                 <span title="Please complete all required fields">
                     <button class="btn btn-primary" type="submit" name="register-btn"> Register </button>
                 </span>
+                <a href="home.cfm?reqPage=patients" class="text-decoration-none">Go Back</a>
             </div>
         </form>
     </div>
