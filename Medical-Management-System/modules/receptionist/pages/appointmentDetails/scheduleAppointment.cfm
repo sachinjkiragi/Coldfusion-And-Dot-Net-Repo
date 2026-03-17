@@ -30,8 +30,8 @@
             <h3 class="text-primary">Schedule an appointment</h3>
         </div>
         <div class="d-flex flex-column gap-3" style="width: 50%;">
-            <div class="d-flex justify-content-between">
-                <div class="form-check">
+            <div class="d-flex justify-content-between gap-5">
+                <div class="form-check p-0 w-50">
                     <label class="form-label fw-semibold">Doctor:</label>
                     <select id="doctor" class="form-control d-block form-select" name="doctor_id" required>
                         <option value="">Select Doctor</option>
@@ -43,7 +43,7 @@
                         Please select a doctor.
                     </div>
                 </div>
-                <div class="form-check">
+                <div class="form-check p-0 w-50">
                     <label class="form-label fw-semibold">Patient:</label>
                     <select id="patient" class="form-control form-select" name="patient_id" required>
                         <option value="">Select Patient</option>
@@ -56,8 +56,8 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between">
-                <div class="form-check">
+            <div class="d-flex justify-content-between gap-5">
+                <div class="form-check p-0 w-50">
                     <label class="form-label fw-semibold">Appointment Charges:</label>
                     <input name="appointment_charges" class="form-control" placeholder="Appointment Charges" id="appointment_charges" type="number" min="0" required/>
                     <div class="invalid-feedback">
@@ -65,7 +65,7 @@
                     </div>
                 </div>
 
-                 <div class="form-check">
+                 <div class="form-check p-0 w-50">
                     <label class="form-label fw-semibold">Time Slots:</label>
                     <select required id="timeSlots" class="form-control form-select" name="timeslot_id" style="width: fit-content">
                         <option value="">Select Time Slot</option>
@@ -79,9 +79,9 @@
                 </div>
             </div>
             
-            <div class="form-check">
+            <div class="form-check p-0" style="width: 45%">
                 <label class="form-label fw-semibold">Slot Date:</label>
-                <input required class="form-control w-25" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
+                <input required class="form-control w-100" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
                 <div class="invalid-feedback">
                     Please select a date.
                 </div>
