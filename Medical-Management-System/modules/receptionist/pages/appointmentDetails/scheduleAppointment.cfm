@@ -67,7 +67,7 @@
 
                  <div class="form-check p-0 w-50">
                     <label class="form-label fw-semibold">Time Slots:</label>
-                    <select required id="timeSlots" class="form-control form-select" name="timeslot_id" style="width: fit-content">
+                    <select required id="timeSlots" class="form-control form-select w-100" name="timeslot_id">
                         <option value="">Select Time Slot</option>
                         <cfoutput query=#timeSlotList#>
                             <option value=#timeSlotList.timeslot_id#>#timeFormat(timeSlotList.start_time, 'HH:mm')# - #timeFormat(timeSlotList.end_time, 'HH:mm')# </option>
