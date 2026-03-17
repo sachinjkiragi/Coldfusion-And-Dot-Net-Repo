@@ -2,7 +2,7 @@
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
         <div class="h-100 w-100  d-flex justify-content-center align-items-center">
-            <form class="p-5" method="POST">
+            <form method="POST" class="needs-validation p-5" novalidate>
                 <div class="d-flex flex-column gap-3 align-items-center">
                     <cfinclude template="../../../../includes/toast.cfm"/>
                 <div>
@@ -22,11 +22,17 @@
                             <label class="form-label fw-semibold">First Name:</label>
                             <input name="firstName" class="form-control" type="text" id="firstName" required placeholder="First Name*"/>
                             <span id="firstNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
+                            <div class="invalid-feedback">
+                                Please enter valid first name
+                            </div>
                         </div>
                         <div>
                             <label class="form-label fw-semibold">Last Name:</label>
                             <input name="lastName" class="form-control" type="text" id="lastName" placeholder="Last Name"/>
                             <span id="lastNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
+                            <div class="invalid-feedback">
+                                Please enter valid last name
+                            </div>
                         </div>
                     </div>
                     <div class="form-check d-flex flex-column gap-2">
@@ -34,11 +40,17 @@
                             <label class="form-label fw-semibold">Email:</label>
                             <input name="email" class="form-control" type="email" id="email" required placeholder="Email*"/>
                             <span id="emailError" class="invalid-feedback d-block invisible">&nbsp;</span>
+                            <div class="invalid-feedback">
+                                Please enter valid email
+                            </div>
                         </div>
                         <div>
                             <label class="form-label fw-semibold">Phone:</label>
                             <input name="phone" class="form-control" type="phone" id="phone" required placeholder="Phone*"/>
                             <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
+                            <div class="invalid-feedback">
+                                Please enter valid phone number
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,8 +113,3 @@
 
     </cfif>
 </cfif>
-
-
-<script>
-
-</script>

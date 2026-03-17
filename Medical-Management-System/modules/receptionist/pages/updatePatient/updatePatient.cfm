@@ -7,7 +7,7 @@
     <cfinclude template = "../../../../includes/toast.cfm"/>
     <cfoutput>
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
-            <form class="p-5" method="POST">
+            <form class="p-5 needs-validation" method="POST" novalidate>
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
                         <h2 class="text-primary">Update Patient</h2>
@@ -65,7 +65,7 @@
         </div>
     </cfoutput>
 
-    <script src="pages/addPatient/addPatient.js"></script>
+    <script src="pages/updatePatient/updatePatient.js"></script>
 </html>
 
 <cfif structKeyExists(form, "update-btn")>

@@ -299,3 +299,6 @@ END
 EXEC spInit;
 
 SELECT * FROM Users;
+
+SELECT * FROM Roles;
+SELECT * FROM Appointments;

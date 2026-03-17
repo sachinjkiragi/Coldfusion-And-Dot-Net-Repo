@@ -11,7 +11,9 @@
 </cfinvoke>
 
 <div>
-    <div class="toast-container position-fixed top-0 end-0" style="padding: 5rem 1rem;">
+    <cfinclude template="../../../../includes/header.cfm"/>
+    <cfinclude template="../../../../includes/toast.cfm"/>
+    <div class="toast-container position-fixed top-0 end-0" style="padding: 4rem 1rem;">
         <div class="toast p-2" id="toast" role="alert" data-bs-delay="4000">
             <div class="toast-body">
                 <div class="d-flex flex-column flex-grow-1 gap-2">
@@ -23,7 +25,7 @@
             </div>
         </div>
     </div>
-    <form class="p-3 d-flex flex-column align-items-center gap-4" method="POST">
+    <form class=" d-flex flex-column align-items-center gap-4 needs-validation" method="POST" novalidate>
         <div>
             <h3 class="text-primary">Schedule an appointment</h3>
         </div>
@@ -31,27 +33,36 @@
             <div class="d-flex justify-content-between">
                 <div class="form-check">
                     <label class="form-label fw-semibold">Doctor:</label>
-                    <select id="doctor" class="form-control d-block form-select" name="doctor_id" style="width: fit-content;" required>
+                    <select id="doctor" class="form-control d-block form-select" name="doctor_id" required>
                         <option value="">Select Doctor</option>
                         <cfoutput query=#doctorList#>
                             <option value=#doctorList.user_id#>#doctorList.first_name#  #doctorList.last_name# - #doctorList.department_name#</option>
                         </cfoutput>
                     </select>
+                    <div class="invalid-feedback">
+                        Please select a doctor.
+                    </div>
                 </div>
                 <div class="form-check">
                     <label class="form-label fw-semibold">Patient:</label>
-                    <select required id="patient" class="form-control form-select" name="patient_id" style="width: fit-content;" required>
+                    <select id="patient" class="form-control form-select" name="patient_id" required>
                         <option value="">Select Patient</option>
                         <cfoutput query=#patientList#>
                             <option value=#patientList.user_id#>#patientList.first_name#  #patientList.last_name#</option>
                         </cfoutput>
                     </select>
+                    <div class="invalid-feedback">
+                        Please select a patient.
+                    </div>
                 </div>
             </div>
             <div class="d-flex justify-content-between">
                 <div class="form-check">
                     <label class="form-label fw-semibold">Appointment Charges:</label>
                     <input name="appointment_charges" class="form-control" placeholder="Appointment Charges" id="appointment_charges" type="number" min="0" required/>
+                    <div class="invalid-feedback">
+                        Please enter appointment charges.
+                    </div>
                 </div>
 
                  <div class="form-check">
@@ -62,12 +73,18 @@
                             <option value=#timeSlotList.timeslot_id#>#timeFormat(timeSlotList.start_time, 'HH:mm')# - #timeFormat(timeSlotList.end_time, 'HH:mm')# </option>
                         </cfoutput>
                     </select>
+                    <div class="invalid-feedback">
+                        Please select a time slot.
+                    </div>
                 </div>
             </div>
             
             <div class="form-check">
                 <label class="form-label fw-semibold">Slot Date:</label>
                 <input required class="form-control w-25" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
+                <div class="invalid-feedback">
+                    Please select a date.
+                </div>
             </div>
             <button name="book-btn" type="submit" class="btn btn-primary mx-auto" style="width: fit-content;">Book Appointment</button>
         </div>
@@ -75,20 +92,14 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        $('#doctor').select2({
-            placeholder: "Search doctor",
-            allowClear: true
-        });
-        $('#patient').select2({
-            placeholder: "Search doctor",
-            allowClear: true
-        });
-        $('#timeSlots').select2({
-            placeholder: "Search doctor",
-            allowClear: true
-        });
-    });
+
+    const formEle = document.querySelector('.needs-validation')
+    formEle.addEventListener('submit', (e)=>{
+        if(!formEle.checkValidity()){
+            e.preventDefault();
+        }
+        formEle.classList.add('was-validated');
+    })
     
     $(document).ready(function () {
         $(function () {

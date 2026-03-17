@@ -11,7 +11,7 @@
     <cfinclude template = "../../../../includes/toast.cfm"/>
     <cfoutput>
         <div>
-            <form class="p-3 d-flex flex-column align-items-center gap-4" method="POST">
+            <form class="p-3 d-flex flex-column align-items-center gap-4 needs-validation" method="POST" novalidate>
                 <div>
                     <h3 class="text-primary">Update an appointment</h3>
                 </div>
@@ -30,11 +30,14 @@
                         <div class="form-check">
                             <label class="form-label fw-semibold">Appointment Charges:</label>
                             <input required name="appointment_charges" class="form-control" placeholder="Appointment Charges" id="appointment_charges" type="number" min="0" required value="#appointementData.appointment_charges#"/>
+                            <div class="invalid-feedback">
+                                Please enter valid amount.
+                            </div>
                         </div>
 
                         <div class="form-check">
                             <label class="form-label fw-semibold">Slot Time:</label>
-                            <select required id="timeSlots" class="form-control form-select" name="timeslot_id" style="width: fit-content">
+                            <select required id="timeSlots" class="form-control form-select" name="timeslot_id">
                                 <option value="">Select Time Slot</option>
                                 <cfoutput query=#timeSlotList#>
                                     <cfif timeSlotList.timeslot_id EQ appointementData.timeslot_id>
@@ -44,6 +47,9 @@
                                     </cfif>
                                 </cfoutput>
                             </select>
+                            <div class="invalid-feedback">
+                                Please select a time slot.
+                            </div>
                         </div>
                     </div>
                     
@@ -70,6 +76,9 @@
                         <div class="form-check">
                             <label class="form-label fw-semibold">Slot Date:</label>
                             <input required value="#dateFormat(appointementData.slot_date, "dd/mm/yyyy")#" class="form-control" placeholder="Date" name="slot_date" type="text" id="my_date_picker">
+                            <div class="invalid-feedback">
+                                Please select a slot date.
+                            </div>
                         </div>
                     </div>
                     <button name="update-btn" type="submit" class="btn btn-primary mx-auto" style="width: fit-content;">Update Appointment</button>
@@ -82,20 +91,13 @@
 
 
 <script>
-    $(document).ready(function () {
-        $('#doctor').select2({
-            placeholder: "Search doctor",
-            allowClear: true
-        });
-        $('#patient').select2({
-            placeholder: "Search doctor",
-            allowClear: true
-        });
-        $('#timeSlots').select2({
-            placeholder: "Search doctor",
-            allowClear: true
-        });
-    });
+    const formEle = document.querySelector('.needs-validation');
+    formEle.addEventListener('submit', (e)=>{
+        if(!formEle.checkValidity()){
+            e.preventDefault();
+        }
+        formEle.classList.add('was-validated');
+    })
     
     $(document).ready(function () {
         $(function () {
