@@ -10,7 +10,7 @@
     <cfinclude template = "../../../../includes/toast.cfm"/>
     <div class="h-100 w-100 d-flex justify-content-center align-items-center">
         <cfoutput>
-            <form class="p-5" method="POST">
+            <form class="p-5 needs-validation" novalidate method="POST">
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
                         <h2 class="text-primary">Update Department</h2>
@@ -21,6 +21,9 @@
                         <div>
                             <label class="form-label fw-semibold">Department Name:</label>
                             <input name="departmentName" class="form-control" type="text" id="departmentName" required placeholder="Department Name*" value="#departmentData.department_name#"/>
+                            <div class="invalid-feedback">
+                                Please enter a department name.
+                            </div>
                         </div>
                         <span title="Please complete all required fields">
                             <button class="btn btn-primary" type="submit" name="updatedepartmentId"> Update </button>
@@ -32,8 +35,17 @@
         </cfoutput>
     </div>
 
-    <script src="pages/patients/addPatient/addPatient.js"></script>
 </html>
+
+<script>
+    const formEle = document.querySelector('.needs-validation')
+    formEle.addEventListener('submit', (e)=>{
+        if(!formEle.checkValidity()){
+            e.preventDefault();
+        }
+        formEle.classList.add('was-validated');
+    })
+</script>
 
 <cfif structKeyExists(form, "updatedepartmentId")>
     <cfset departmentExists = false/>

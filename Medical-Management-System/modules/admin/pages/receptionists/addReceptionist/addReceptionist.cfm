@@ -7,7 +7,7 @@
     <cfinclude template = "../../../../../includes/toast.cfm"/>
     <cfoutput>
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
-            <form class="py-1" method="POST">
+            <form class="py-1 needs-validation" method="POST" novalidate>
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
                         <h2 class="text-primary">Add Receptionist</h2>
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" value="o" id="other" required />
+                            <input class="form-check-input" checked type="radio" name="gender" value="o" id="other" required />
                             <label class="form-check-label" for="other">Other</label>
                         </div>
                     </div>
@@ -84,6 +84,7 @@
     </cfoutput>
     <script src="pages/receptionists/addReceptionist/addReceptionist.js"></script>
 </html>
+
 
 
 <cfif structKeyExists(form, "register-btn")>

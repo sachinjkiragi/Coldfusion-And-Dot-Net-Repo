@@ -1,11 +1,56 @@
-var firstNameField = document.getElementById('firstName');
-var lastNameField = document.getElementById('lastName');
-var emailField = document.getElementById('email');
-var phoneField = document.getElementById('phone');
-var firstNameError = document.getElementById('firstNameError');
-var lastNameError = document.getElementById('lastNameError');
-var emailError = document.getElementById('emailError');
-var phoneError = document.getElementById('phoneError');
+const firstNameField = document.getElementById('firstName');
+const lastNameField = document.getElementById('lastName');
+const emailField = document.getElementById('email');
+const phoneField = document.getElementById('phone');
+const firstNameError = document.getElementById('firstNameError');
+const lastNameError = document.getElementById('lastNameError');
+const emailError = document.getElementById('emailError');
+const phoneError = document.getElementById('phoneError');
+const formEle = document.querySelector('.needs-validation');
+
+formEle.addEventListener('submit', (e) => {
+    let valid = true;
+
+    if (!isFirstNameValid(firstNameField.value)) {
+        firstNameError.classList.remove('invisible');
+        firstNameError.textContent = 'Please enter a valid first name';
+        valid = false;
+    } else {
+        firstNameError.classList.add('invisible');
+    }
+
+    if (!isLastNameValid(lastNameField.value)) {
+        lastNameError.classList.remove('invisible');
+        lastNameError.textContent = 'Please enter a valid last name';
+        valid = false;
+    } else {
+        lastNameError.classList.add('invisible');
+    }
+
+    if (!isEmailValid(emailField.value)) {
+        emailError.classList.remove('invisible');
+        emailError.textContent = 'Please enter a valid email';
+        valid = false;
+    } else {
+        emailError.classList.add('invisible');
+    }
+
+    if (!isPhoneValid(phoneField.value)) {
+        phoneError.classList.remove('invisible');
+        phoneError.textContent = 'Please enter valid 10 digit phone number';
+        valid = false;
+    } else {
+        phoneError.classList.add('invisible');
+    }
+
+    if (!formEle.checkValidity()) valid = false;
+
+    if (!valid) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+});
 
 function isFirstNameValid(firstName){
     return /^[a-zA-Z]+$/.test(firstName);
@@ -20,7 +65,7 @@ function isEmailValid(email){
 }
 
 function isPhoneValid(phone){
-    return /^[0-9]{10}$/.test(phoneField.value);
+    return /^[0-9]{10}$/.test(phone);
 }
 
 firstNameField.addEventListener('input', (e)=>{

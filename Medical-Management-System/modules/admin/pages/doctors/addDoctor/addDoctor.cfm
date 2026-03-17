@@ -7,7 +7,7 @@
     <cfinclude template = "../../../../../includes/toast.cfm"/>
     <cfoutput>
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
-            <form class="py-1" method="POST">
+            <form class="py-1 needs-validation" method="POST" novalidate>
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
                         <h2 class="text-primary">Add Doctor</h2>
@@ -25,6 +25,7 @@
                                 <label class="form-label fw-semibold">First Name:</label>
                                 <input name="firstName" class="form-control" type="text" id="firstName" required placeholder="First Name*"/>
                                 <span id="firstNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
+
                             </div>
                             <div>
                                 <label class="form-label fw-semibold">Last Name:</label>
@@ -40,6 +41,7 @@
                                             <option value="#departmentList.department_id#">#department_name#</option>
                                         </cfoutput>
                                     </select>
+                                    <span id="departmentError" class="invalid-feedback d-block invisible">&nbsp;</span>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +56,6 @@
                                 <input name="phone" class="form-control" type="phone" id="phone" required placeholder="Phone*"/>
                                 <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
-                            
                         </div>
                     </div>
                     <div class="d-flex gap-3">
@@ -70,7 +71,7 @@
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" value="o" id="other" required />
+                            <input checked class="form-check-input" type="radio" name="gender" value="o" id="other" required />
                             <label class="form-check-label" for="other">Other</label>
                         </div>
                     </div>

@@ -7,9 +7,9 @@
 <html>
     <cfinclude template = "../../../../includes/header.cfm"/>
     <cfinclude template = "../../../../includes/toast.cfm"/>
-    <cfoutput>
+<cfoutput>
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
-            <form class="py-1" method="POST">
+            <form class="p-5 needs-validation" method="POST" novalidate>
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
                         <h2 class="text-primary">Update Patient</h2>
@@ -17,13 +17,13 @@
                     <div class="d-flex gap-4">
                         <div class="form-check d-flex flex-column gap-2">
                             <div>
-                                <label class="form-label fw-semibold">First Name:</label>
+                                <label class="form-label fw-semibold">Fisrt Name:</label>
                                 <input name="firstName" class="form-control" value=#patientData.first_name# type="text" id="firstName" required placeholder="First Name*"/>
                                 <span id="firstNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
-                                <label class="form-label fw-semibold">Lat Name:</label>
-                                <input name="lastName" class="form-control" value=#patientData.last_name# type="text" id="lastName" placeholder="Last Name"/>
+                                <label class="form-label fw-semibold">Last Name:</label>
+                                <input required name="lastName" class="form-control" value=#patientData.last_name# type="text" id="lastName" placeholder="Last Name"/>
                                 <span id="lastNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                         </div>
@@ -67,6 +67,8 @@
         </div>
     </cfoutput>
 </html>
+
+<script src="pages/patients/addPatient/addPatient.js"></script>
 
 <cfif structKeyExists(form, "update-btn")>
     <cfset form.patient_id = patientIdToUpdate/>

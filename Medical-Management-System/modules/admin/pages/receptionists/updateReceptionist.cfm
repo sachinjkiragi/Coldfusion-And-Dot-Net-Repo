@@ -10,7 +10,7 @@
     <cfinclude template = "../../../../includes/toast.cfm"/>
     <cfoutput>
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
-            <form class="py-1" method="POST">
+            <form class="py-1 needs-validation" method="POST" novalidate>
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
                         <h2 class="text-primary">Update Receptionist</h2>
@@ -80,6 +80,7 @@
             </form>
         </div>
     </cfoutput>
+    <script src="pages/receptionists/addReceptionist/addReceptionist.js"></script>
 </html>
 
 <cfif structKeyExists(form, "update-btn")>

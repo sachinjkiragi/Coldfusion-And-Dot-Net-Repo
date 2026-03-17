@@ -11,7 +11,7 @@
     <cfinclude template = "../../../../includes/toast.cfm"/>
     <cfoutput>
         <div class="h-100 w-100 d-flex justify-content-center align-items-center">
-            <form class="py-1" method="POST">
+            <form class="py-1 needs-validation" method="POST" novalidate>
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
                         <h2 class="text-primary">Update Doctor</h2>
@@ -41,6 +41,7 @@
                                             </cfif>
                                         </cfoutput>
                                     </select>
+                                    <span id="departmentError" class="invalid-feedback d-block invisible">&nbsp;</span>
                                 </div>
                             </div>
                         </div>
@@ -84,6 +85,8 @@
         </div>
     </cfoutput>
 </html>
+
+<script src="pages/doctors/addDoctor/addDoctor.js"></script>
 
 <cfif structKeyExists(form, "update-btn")>
     <cfset form.doctor_id = doctorIdToUpdate/>
