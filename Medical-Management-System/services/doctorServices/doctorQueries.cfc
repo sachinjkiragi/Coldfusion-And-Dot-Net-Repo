@@ -115,6 +115,16 @@
     <cffunction name="getPrescriptionData" returntype="query">
         <cfargument name="appointment_id" type="numeric"/>
 
+        <cfquery name="qryIsValidFetch">
+            SELECT * FROM Appointments 
+            WHERE appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer"/>
+            AND doctor_id = <cfqueryparam value="#session.currUser.user_id#" cfsqltype="cf_sql_integer"/>
+        </cfquery>
+
+        <cfif qryIsValidFetch.recordCount EQ 0>
+            <cfreturn qryIsValidFetch/>
+        </cfif>
+
         <cfinvoke method="checkPermission" returnvariable="hasPermission">
             <cfinvokeargument name="permissionTag" value="View_Prescriptions"/>
         </cfinvoke>
@@ -139,6 +149,20 @@
 
     <cffunction name="getPrescriptionDataByPrescriptionId" returntype="query">
         <cfargument name="prescription_id" type="numeric"/>
+
+        <cfquery name="qryIsValidFetch">
+            SELECT * FROM 
+            Appointments WHERE
+            appointment_id = (SELECT appointment_id 
+                              FROM Prescriptions
+                              WHERE prescription_id = <cfqueryparam value="#arguments.prescription_id#" cfsqltype="cf_sql_integer"/>)
+            AND doctor_id = <cfqueryparam value="#session.currUser.user_id#" cfsqltype="cf_sql_integer"/>
+        </cfquery>
+
+        <cfif qryIsValidFetch.recordCount EQ 0>
+            <cfreturn qryIsValidFetch/>
+        </cfif>
+
         <cfinvoke method="checkPermission" returnvariable="hasPermission">
             <cfinvokeargument name="permissionTag" value="View_Prescriptions"/>
         </cfinvoke>
@@ -203,6 +227,18 @@
         <cfinvoke method="checkPermission" returnvariable="hasPermission">
             <cfinvokeargument name="permissionTag" value="View_Appointments"/>
         </cfinvoke>
+
+        <cfquery name="qryIsValidFetch">
+            SELECT * FROM 
+            Appointments WHERE
+            patient_id = <cfqueryparam value="#arguments.patientId#" cfsqltype="cf_sql_integer"/>
+            AND doctor_id = <cfqueryparam value="#session.currUser.user_id#" cfsqltype="cf_sql_integer"/>
+        </cfquery>
+
+        <cfif qryIsValidFetch.recordCount EQ 0>
+            <cfreturn qryIsValidFetch/>
+        </cfif>        
+
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>
         </cfif>

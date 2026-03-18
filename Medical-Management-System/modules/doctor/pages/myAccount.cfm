@@ -10,7 +10,7 @@
     <cfoutput>
         <div class="h-100 w-100 d-flex" style="margin: 0 0 0 12rem">
             <form class="py-2" method="POST">
-                <div class="bordr-black d-flex flex-column gap-3 align-items-center">
+                <div class="bordr-black d-flex flex-column gap-1 align-items-center">
                     <div>
                         <h2 class="text-primary">Hello!</h2>
                     </div>

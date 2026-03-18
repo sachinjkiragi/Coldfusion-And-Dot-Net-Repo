@@ -1,7 +1,9 @@
 <cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="getPatientHistory" returnvariable="patientHistory">
     <cfinvokeargument name="patientId" value="#patientId#"/>
 </cfinvoke>
-
+<cfif patientHistory.recordCount EQ 0>
+    <cflocation url="home.cfm?reqPage=Appointments"/>
+</cfif>
 
 <style>
         #patientHistory {

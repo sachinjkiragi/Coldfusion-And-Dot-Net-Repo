@@ -3,7 +3,7 @@
     <cfset this.datasource = "DSMms">
     <cfset this.sessionManagement = true>
     <cfset this.sessionTimeout = createTimeSpan(0,0,30,0)/>
-
+<!---
     <cffunction name="onRequestStart">
         <cfargument name="targetPage" type="string" required="true">
         <cfsetting showdebugoutput="false">
@@ -28,7 +28,7 @@
     </cffunction>
         
         
-        <!---<cffunction name="onError" returntype="void">
+        <cffunction name="onError" returntype="void">
         <cfargument name="exception" required="true">
         <cfargument name="eventName" required="true">
         <cfset errorMessage = " Error Message: #arguments.exception.message#

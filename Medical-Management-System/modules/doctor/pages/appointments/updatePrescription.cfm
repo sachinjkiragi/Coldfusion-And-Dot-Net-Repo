@@ -2,6 +2,9 @@
 <cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="getPrescriptionDataByPrescriptionId" returnvariable="prescriptionData">
     <cfinvokeargument name="prescription_id" value="#prescription_id#"/>
 </cfinvoke>
+<cfif prescriptionData.recordCount EQ 0>
+    <cflocation url="home.cfm?reqPage=Appointments"/>
+</cfif>
 
 <cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="getMedicines" returnvariable="medicineList"/>
 
