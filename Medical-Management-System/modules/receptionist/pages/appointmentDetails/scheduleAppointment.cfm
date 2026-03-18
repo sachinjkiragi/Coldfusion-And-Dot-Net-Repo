@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <form class=" d-flex flex-column align-items-center gap-4 needs-validation" method="POST" novalidate>
+    <form class="p-3 d-flex flex-column align-items-center gap-4 needs-validation" method="POST" novalidate>
         <div>
             <h3 class="text-primary">Schedule an appointment</h3>
         </div>
