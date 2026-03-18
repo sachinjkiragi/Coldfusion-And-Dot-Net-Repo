@@ -3,7 +3,7 @@
     <cfset this.datasource = "DSMms">
     <cfset this.sessionManagement = true>
     <cfset this.sessionTimeout = createTimeSpan(0,0,30,0)/>
-<!---
+
     <cffunction name="onRequestStart">
         <cfargument name="targetPage" type="string" required="true">
         <cfsetting showdebugoutput="false">
@@ -27,8 +27,15 @@
         </cfif>
     </cffunction>
         
-        
-        <cffunction name="onError" returntype="void">
+    <cffunction name="onMissingTemplate" returntype="boolean">
+        <cfargument name="targetPage" type="string" required="true">
+        <cfset errorMessage = "404 Missing Page: #arguments.targetPage#">
+        <cflog file="medManageLogs" text="#errorMessage#" type="error">
+        <cfinclude template="notFound.cfm"/>
+        <cfreturn true>
+    </cffunction>
+
+    <cffunction name="onError" returntype="void">
         <cfargument name="exception" required="true">
         <cfargument name="eventName" required="true">
         <cfset errorMessage = " Error Message: #arguments.exception.message#
@@ -37,6 +44,6 @@
         Time: #now()#">
         <cflog file="medManageLogs" text="#errorMessage#" type="error">
         <cflocation url="/Coldfusion-And-Dot-Net-Repo/Medical-Management-System/error.cfm">
-    </cffunction>--->
+    </cffunction>
 
 </cfcomponent>
