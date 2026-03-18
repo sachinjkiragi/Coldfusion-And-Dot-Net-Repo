@@ -60,7 +60,8 @@
     </style>
     <cfinclude template="../../../../includes/header.cfm"/>
     <cfinclude template="../../../../includes/toast.cfm"/>
-    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
+    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4" id="form">
+        <input type="hidden" name="idToDelete" id="idToDelete">
         <a href="home.cfm?reqPage=addDoctor" class="btn btn-primary" style="width: 8rem;">Add Doctor</a>
         <table id="doctorList"  class="display">
             <thead>
@@ -85,7 +86,11 @@
                         <td>#doctorList.gender#</td>
                         <td>
                             <button class="btn btn-primary" name="updateDoctorId" value=#doctorList.user_id# type="submit">Update</button>
-                            <button onclick="return confirm('Are you sure you want to delete this doctor record?');" class="btn btn-danger" name="deleteDoctorId" value=#doctorList.user_id# type="submit">Delete</button>
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    onclick="openConfirm('#doctorList.user_id#')">
+                                Delete
+                            </button>
                         </td>
                     </tr>
                 </cfoutput>
@@ -97,6 +102,8 @@
             <cfoutput>#cfcatch#</cfoutput>
         </cfcatch>
 </cftry>
+
+<cfinclude template="../../../../includes/confirm.cfm"/>
 
 <script>
     $(document).ready(function(){
@@ -118,9 +125,9 @@
     <cflocation url="home.cfm?reqPage=updateDoctor&doctorId=#form.updateDoctorId#"/>
 </cfif>
 
-<cfif structKeyExists(form, "deleteDoctorId")>
+<cfif structKeyExists(form, "idToDelete")>
      <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deleteDoctor" returnvariable="success">
-        <cfinvokeargument name="doctor_id" value=#form.deleteDoctorId#/>
+        <cfinvokeargument name="doctor_id" value=#form.idToDelete#/>
     </cfinvoke> 
 
    <cfif success EQ true>

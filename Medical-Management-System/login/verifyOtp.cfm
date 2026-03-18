@@ -39,6 +39,7 @@
     </div>
 </nav>
 <cfinclude template = "../includes/header.cfm"/>
+<cfinclude template = "../includes/toast.cfm"/>
 <div class="h-100 w-100 border border-black d-flex justify-content-center align-items-center">
     <form class="card shadow-lg p-5 border-0" style="width:360px;" method="POST" action="verifyOtp.cfm">
         <cfdump var=#session.otp# label="OTP"/>
@@ -80,7 +81,7 @@
     <cfif dateDiff("s", session.otpTime, now()) GT 60>
         <cfinvoke method="clearOtp"/>
         <script>
-            alert('OTP Expired');
+            showToast('OTP Expired', 'warning');
         </script>
     </cfif>
 
@@ -96,17 +97,17 @@
                 <cfinvoke method="clearUserData"/>
                 <cfset structDelete(session, "email")/>
                 <script>
-                    alert('Password Updated successfully');
+                    showToast('Password Updated successfully', 'success')
                     window.location.href = '../login/login.cfm';
                 </script>
             <cfelse>
                 <script>
-                    alert('Failed To Updated password. Please try again.');
+                    showToast('Failed To Updated password. Please try again.', 'danger')
                 </script>
             </cfif>
         <cfelse>
             <script>
-                alert('Invalid Otp');
+                showToast('Invalid OTP', 'warning')
             </script>
         </cfif>
     </cfif>

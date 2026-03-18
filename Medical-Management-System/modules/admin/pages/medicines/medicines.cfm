@@ -59,7 +59,8 @@
     </style>
     <cfinclude template="../../../../includes/header.cfm"/>
     <cfinclude template="../../../../includes/toast.cfm"/>
-    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
+    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4" id="form">
+        <input type="hidden" name="idToDelete" id="idToDelete">
         <a href="home.cfm?reqPage=addMedicine" class="btn btn-primary" style="width: 8rem;">Add Medicine</a>
         <table id="medicineList"  class="display">
             <thead>
@@ -76,7 +77,7 @@
                         <td>#medicineList.unit_price#</td>
                         <td>
                             <button class="btn btn-primary" name="updateMedicineId" value=#medicineList.medicine_id# type="submit">Update</button>
-                            <button onclick="return confirm('Are you sure you want to delete this patient record?');" class="btn btn-danger" name="deleteMedicineId" value=#medicineList.medicine_id# type="submit">Delete</button>
+                            <button type="button" class="btn btn-danger" onclick="openConfirm('#medicineList.medicine_id#')">Delete</button>
                         </td>
                     </tr>
                 </cfoutput>
@@ -88,6 +89,9 @@
         <cfoutput>#cfcatch#</cfoutput>
     </cfcatch>
 </cftry>
+
+<cfinclude template="../../../../includes/confirm.cfm"/>
+
 
 <script>
     $(document).ready(function(){
@@ -102,13 +106,14 @@
     })
 </script>
 
+
 <cfif structKeyExists(form, "updateMedicineId")>
     <cflocation url="home.cfm?reqPage=updateMedicine&medicineId=#form.updateMedicineId#"/>
 </cfif>
 
-<cfif structKeyExists(form, "deleteMedicineId")>
+<cfif structKeyExists(form, "idToDelete")>
      <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deleteMedicine" returnvariable="success">
-        <cfinvokeargument name="medicineId" value=#form.deleteMedicineId#/>
+        <cfinvokeargument name="medicineId" value=#form.idToDelete#/>
     </cfinvoke> 
 
    <cfif success EQ true>
@@ -122,8 +127,8 @@
     </cfif>
 </cfif>
 
-<cfif structKeyExists(form, "deleteMedicineId")>
+<cfif structKeyExists(form, "idToDelete")>
      <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deleteMedicine" returnvariable="success">
-        <cfinvokeargument name="medicineId" value=#form.deleteMedicineId#/>
+        <cfinvokeargument name="medicineId" value=#form.idToDelete#/>
     </cfinvoke> 
 </cfif>

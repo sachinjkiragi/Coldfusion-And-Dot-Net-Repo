@@ -60,7 +60,8 @@
     
     <cfinclude template="../../../../includes/header.cfm"/>
     <cfinclude template="../../../../includes/toast.cfm"/>
-    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
+    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4" id="form">
+        <input type="hidden" name="idToDelete" id="idToDelete">
         <a href="home.cfm?reqPage=addTimeSlot" class="btn btn-primary" style="width: 8rem;">Add Time Slot</a>
         <table id="timeSlotList"  class="display">
             <thead>
@@ -76,7 +77,7 @@
                         <td>#timeFormat(timeSlotList.start_time, "hh:mm tt")#</td>
                         <td>#timeFormat(timeSlotList.end_time, "hh:mm tt")#</td>
                         <td>
-                            <button onclick="return confirm('Are you sure you want to delete this patient record?');" class="btn btn-danger" name="deleteTimeSlotId" value=#timeSlotList.timeslot_id# type="submit">Delete</button>
+                           <button type="button" class="btn btn-danger" onclick="openConfirm('#timeSlotList.timeslot_id#')">Delete</button>
                         </td>
                     </tr>
                 </cfoutput>
@@ -102,9 +103,12 @@
     })
 </script>
 
-<cfif structKeyExists(form, "deleteTimeSlotId")>
+<cfinclude template="../../../../includes/confirm.cfm"/>
+
+
+<cfif structKeyExists(form, "idToDelete")>
     <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deleteTimeSlot" returnvariable="success">
-        <cfinvokeargument name="timeSlotId" value="#form.deleteTimeSlotId#"/>
+        <cfinvokeargument name="timeSlotId" value="#form.idToDelete#"/>
     </cfinvoke>
 
     <cfif success EQ true>

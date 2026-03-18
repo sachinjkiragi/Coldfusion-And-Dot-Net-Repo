@@ -36,6 +36,8 @@ BEGIN
 		gender CHAR(1) NOT NULL,
 		phone VARCHAR(10),
 		department_id INT,
+		dob DATE,
+		qualification VARCHAR(30),
 		FOREIGN KEY (role_id) REFERENCES Roles(role_id) ON DELETE CASCADE ,
 		FOREIGN KEY (department_id) REFERENCES Departments(department_id) ON DELETE CASCADE
 	);
@@ -199,21 +201,21 @@ BEGIN
 	('Neha', 'Kapoor', 'neha.reception@hospital.com', 'Neha@123', 3, 'F', '9001112222', 1);
 
 	INSERT INTO Users 
-	(first_name, last_name, email, password, role_id, gender, phone, department_id)
+	(first_name, last_name, email, password, role_id, gender, phone, department_id, dob, qualification)
 	VALUES
-	('Dr. Arjun', 'Mehta', 'arjun.mehta@hospital.com', 'Arjun@123', 2, 'M', '9876500001', 2),
-	('Dr. Priya', 'Nair', 'priya.nair@hospital.com', 'Priya@123', 2, 'F', '9876500002', 3),
-	('Dr. Rohan', 'Singh', 'rohan.singh@hospital.com', 'Rohan@123', 2, 'M', '9876500003', 4),
-	('Dr. Kavya', 'Reddy', 'kavya.reddy@hospital.com', 'Kavya@123', 2, 'F', '9876500004', 5);
+	('Dr. Arjun', 'Mehta', 'arjun.mehta@hospital.com', 'Arjun@123', 2, 'M', '9876500001', 2, '1985-06-15', 'MBBS, MD'),
+	('Dr. Priya', 'Nair', 'priya.nair@hospital.com', 'Priya@123', 2, 'F', '9876500002', 3, '1988-09-22', 'MBBS, DGO'),
+	('Dr. Rohan', 'Singh', 'rohan.singh@hospital.com', 'Rohan@123', 2, 'M', '9876500003', 4, '1982-01-10', 'MBBS, MS'),
+	('Dr. Kavya', 'Reddy', 'kavya.reddy@hospital.com', 'Kavya@123', 2, 'F', '9876500004', 5, '1990-03-05', 'MBBS, MD');
 
 	INSERT INTO Users 
-	(first_name, last_name, email, password, role_id, gender, phone, department_id)
+	(first_name, last_name, email, password, role_id, gender, phone, department_id, dob, qualification)
 	VALUES
-	('Rahul', 'Sharma', 'rahul@gmail.com', 'Rahul@123', 4, 'M', '9011111111', NULL),
-	('Anita', 'Patel', 'anita@gmail.com', 'Anita@123', 4, 'F', '9022222222', NULL),
-	('Vikram', 'Joshi', 'vikram@gmail.com', 'Vikram@123', 4, 'M', '9033333333', NULL),
-	('Sneha', 'Iyer', 'sneha@gmail.com', 'Sneha@123', 4, 'F', '9044444444', NULL),
-	('Manoj', 'Kumar', 'manoj@gmail.com', 'Manoj@123', 4, 'M', '9055555555', NULL);
+	('Rahul', 'Sharma', 'rahul@gmail.com', 'Rahul@123', 4, 'M', '9011111111', NULL, '1995-07-12', NULL),
+	('Anita', 'Patel', 'anita@gmail.com', 'Anita@123', 4, 'F', '9022222222', NULL, '1992-11-30', NULL),
+	('Vikram', 'Joshi', 'vikram@gmail.com', 'Vikram@123', 4, 'M', '9033333333', NULL, '1989-04-18', NULL),
+	('Sneha', 'Iyer', 'sneha@gmail.com', 'Sneha@123', 4, 'F', '9044444444', NULL, '1998-02-25', NULL),
+	('Manoj', 'Kumar', 'manoj@gmail.com', 'Manoj@123', 4, 'M', '9055555555', NULL, '1987-12-09', NULL);
 
 	INSERT INTO Appointments
 	(doctor_id, patient_id, status, appointment_charges, timeslot_id, slot_date)

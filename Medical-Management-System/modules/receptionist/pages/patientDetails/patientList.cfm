@@ -61,7 +61,9 @@
     </style>
     <cfinclude template="../../../../includes/header.cfm"/>
     <cfinclude template="../../../../includes/toast.cfm"/>
-    <form method="POST">
+
+    <form method="POST" id="form">
+        <input type="hidden" name="idToDelete" id="idToDelete">
         <table id="patientList"  class="display">
             <thead>
                 <tr>
@@ -83,7 +85,11 @@
                         <td>#patientList.gender#</td>
                         <td>
                             <button class="btn btn-primary" name="updatePatientId" value=#patientList.user_id# type="submit">Update</button>
-                            <button onclick="return confirm('Are you sure you want to delete this patient record?');" class="btn btn-danger" name="deletePatientId" value=#patientList.user_id# type="submit">Delete</button>
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    onclick="openConfirm('#patientList.user_id#')">
+                                Delete
+                            </button>
                         </td>
                     </tr>
                 </cfoutput>
@@ -109,15 +115,17 @@
     })
 </script>
 
+<cfinclude template="../../../../includes/confirm.cfm"/>
+
 <cfif structKeyExists(form, "updatePatientId")>
     <cfdump var=#form#/>
     <cfdump var=#form.updatePatientId#/>
     <cflocation url="home.cfm?reqPage=updatePatient&patientId=#form.updatePatientId#"/>
 </cfif>
 
-<cfif structKeyExists(form, "deletePatientId")>
+<cfif structKeyExists(form, "idToDelete")>
      <cfinvoke component="../../../../services/receptionistServices/receptionistQueries.cfc" method="deletePatient" returnvariable="success">
-        <cfinvokeargument name="patient_id" value=#form.deletePatientId#/>
+        <cfinvokeargument name="patient_id" value=#form.idToDelete#/>
     </cfinvoke> 
 
    <cfif success EQ true>

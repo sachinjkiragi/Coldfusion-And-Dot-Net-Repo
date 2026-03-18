@@ -530,7 +530,8 @@
 
     <cffunction name="getMedicines" returntype="query">
         <cfquery name="qryMedicines">
-            SELECT* FROM Medicines;
+            SELECT* FROM Medicines
+            WHERE medicine_name != 'No Medicine';
         </cfquery>
         <cfreturn qryMedicines/>
     </cffunction>

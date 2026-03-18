@@ -60,7 +60,8 @@
     </style>
     <cfinclude template="../../../../includes/header.cfm"/>
     <cfinclude template="../../../../includes/toast.cfm"/>
-    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
+    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4" id="form">
+        <input type="hidden" name="idToDelete" id="idToDelete">
         <a href="home.cfm?reqPage=addReceptionist" class="btn btn-primary" style="width: 10rem;">Add Receptionist</a>
         <table id="receptionistList"  class="display">
             <thead>
@@ -85,7 +86,7 @@
                         <td>#receptionistList.gender#</td>
                         <td>
                             <button class="btn btn-primary" name="updateReceptionistId" value=#receptionistList.user_id# type="submit">Update</button>
-                            <button onclick="return confirm('Are you sure you want to delete this receptionist record?');" class="btn btn-danger" name="deleteReceptionistId" value=#receptionistList.user_id# type="submit">Delete</button>
+                            <button type="button" class="btn btn-danger" onclick="openConfirm('#receptionistList.user_id#')">Delete</button>
                         </td>
                     </tr>
                 </cfoutput>
@@ -110,7 +111,7 @@
         });
     })
 </script>
-
+<cfinclude template="../../../../includes/confirm.cfm"/>
 
 <cfif structKeyExists(form, "updateReceptionistId")>
     <cfdump var=#form#/>
@@ -118,9 +119,9 @@
     <cflocation url="home.cfm?reqPage=updateReceptionist&receptionistId=#form.updateReceptionistId#"/>
 </cfif>
 
-<cfif structKeyExists(form, "deleteReceptionistId")>
+<cfif structKeyExists(form, "idToDelete")>
      <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deleteReceptionist" returnvariable="success">
-        <cfinvokeargument name="receptionist_id" value=#form.deleteReceptionistId#/>
+        <cfinvokeargument name="receptionist_id" value=#form.idToDelete#/>
     </cfinvoke> 
 
    <cfif success EQ true>

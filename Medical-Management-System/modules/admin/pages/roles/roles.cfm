@@ -60,7 +60,8 @@
     
     <cfinclude template="../../../../includes/header.cfm"/>
     <cfinclude template="../../../../includes/toast.cfm"/>
-    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4">
+    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4" id="form">
+        <input type="hidden" name="idToDelete" id="idToDelete">
         <a href="home.cfm?reqPage=addRole" class="btn btn-primary" style="width: 10rem;">Add Role</a>
         <table id="rolesList"  class="display">
             <thead>
@@ -76,7 +77,7 @@
                             <td>#rolesList.role_name#</td>
                             <td>
                                 <button class="btn btn-primary" name="updateRoleId" value=#rolesList.role_id# type="submit">Update</button>
-                                <button onclick="return confirm('Are you sure you want to delete this patient record?');" class="btn btn-danger" name="deleteRoleId" value=#rolesList.role_id# type="submit">Delete</button>
+                                <button type="button" class="btn btn-danger" onclick="openConfirm('#rolesList.role_id#')">Delete</button>
                             </td>
                         </tr>
                     </cfif>
@@ -103,13 +104,16 @@
     })
 </script>
 
+<cfinclude template="../../../../includes/confirm.cfm"/>
+
+
 <cfif structKeyExists(form, "updateRoleId")>
     <cflocation url="home.cfm?reqPage=updateRole&roleId=#form.updateRoleId#"/>
 </cfif>
 
-<cfif structKeyExists(form, "deleteRoleId")>
+<cfif structKeyExists(form, "idToDelete")>
      <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deleteRole" returnvariable="success">
-        <cfinvokeargument name="roleId" value=#form.deleteRoleId#/>
+        <cfinvokeargument name="roleId" value=#form.idToDelete#/>
     </cfinvoke> 
 
     <cfif success EQ true>
@@ -123,8 +127,8 @@
     </cfif>
 </cfif>
 
-<cfif structKeyExists(form, "deleteRoleId")>
+<cfif structKeyExists(form, "idToDelete")>
      <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deleteRole" returnvariable="success">
-        <cfinvokeargument name="roleId" value=#form.deleteRoleId#/>
+        <cfinvokeargument name="roleId" value=#form.idToDelete#/>
     </cfinvoke> 
 </cfif>
