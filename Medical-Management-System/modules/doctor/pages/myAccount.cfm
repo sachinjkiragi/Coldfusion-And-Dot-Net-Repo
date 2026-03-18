@@ -9,7 +9,7 @@
     <cfinclude template = "../../../includes/header.cfm"/>
     <cfoutput>
         <div class="h-100 w-100 d-flex" style="margin: 0 0 0 12rem">
-            <form class="py-5" method="POST">
+            <form class="py-2" method="POST">
                 <div class="bordr-black d-flex flex-column gap-3 align-items-center">
                     <div>
                         <h2 class="text-primary">Hello!</h2>
@@ -27,14 +27,9 @@
                                 <span id="lastNameError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                             <div>
-                                <label class="form-label fw-semibold">Department:</label>
-                                <div>
-                                    <cfoutput query="#departmentList#">
-                                        <cfif departmentList.department_id EQ doctorData.department_id>
-                                            <input class="form-control" readonly value="#departmentList.department_name#"/>
-                                        </cfif>
-                                    </cfoutput>
-                                </div>
+                                <label class="form-label fw-semibold">Qualification:</label>
+                                <input readonly name="qualification" class="form-control" value=#doctorData.Qualification# type="text" id="qualification" placeholder="qualification"/>
+                                <span id="qualificationeRROR" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
                         </div>
                         <div class="form-check d-flex flex-column gap-2">
@@ -63,7 +58,16 @@
                             </div>
                         </div>
                     </div>
-
+                    <div>
+                        <label class="form-label fw-semibold">Department:</label>
+                        <div>
+                            <cfoutput query="#departmentList#">
+                                <cfif departmentList.department_id EQ doctorData.department_id>
+                                    <input class="form-control" readonly value="#departmentList.department_name#"/>
+                                </cfif>
+                            </cfoutput>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

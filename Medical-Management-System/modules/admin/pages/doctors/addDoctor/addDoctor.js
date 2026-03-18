@@ -3,12 +3,18 @@ const lastNameField = document.getElementById('lastName');
 const emailField = document.getElementById('email');
 const phoneField = document.getElementById('phone');
 const departmentField = document.getElementById('departmentList');
+const qualificationField = document.getElementById('qualification');
 const firstNameError = document.getElementById('firstNameError');
 const lastNameError = document.getElementById('lastNameError');
 const emailError = document.getElementById('emailError');
 const phoneError = document.getElementById('phoneError');
 const departmentError = document.getElementById('departmentError');
+const qualificationError = document.getElementById('qualificationError');
 const formEle = document.querySelector('.needs-validation');
+
+console.log(qualificationError);
+console.log(qualificationField);
+
 
 formEle.addEventListener('submit', (e) => {
     let valid = true;
@@ -27,6 +33,13 @@ formEle.addEventListener('submit', (e) => {
         valid = false;
     } else {
         lastNameError.classList.add('invisible');
+    }
+    if (!isQualificationValid(qualificationField.value)) {
+        qualificationError.classList.remove('invisible');
+        qualificationError.textContent = 'Please enter a valid qualification';
+        valid = false;
+    } else {
+        qualificationError.classList.add('invisible');
     }
 
     if (!isEmailValid(emailField.value)) {
@@ -62,7 +75,11 @@ formEle.addEventListener('submit', (e) => {
 });
 
 function isFirstNameValid(firstName){
-    return /^[a-zA-Z]+$/.test(firstName);
+    return /^[a-zA-Z.]+$/.test(firstName);
+}
+
+function isQualificationValid(qualification){
+    return /^[a-zA-Z,]+$/.test(qualification);
 }
 
 function isLastNameValid(lastName){
@@ -114,3 +131,15 @@ phoneField.addEventListener('input', () => {
         phoneError.classList.add('invisible');
     }
 });
+
+
+qualificationField.addEventListener('input', (e)=>{
+    console.log(qualificationField.value);
+    
+    if (qualificationField.value.length > 0 && !isQualificationValid(qualificationField.value)) {
+        qualificationError.classList.remove('invisible');
+        qualificationError.textContent = 'Only letters and (,) are allowed';
+    } else{
+        qualificationError.classList.add('invisible');
+    }
+})

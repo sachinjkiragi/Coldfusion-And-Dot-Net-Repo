@@ -56,6 +56,11 @@
                                 <input name="phone" class="form-control" type="phone" id="phone" required placeholder="Phone*"/>
                                 <span id="phoneError" class="invalid-feedback d-block invisible">&nbsp;</span>
                             </div>
+                            <div>
+                                <label class="form-label fw-semibold">Qualification:</label>
+                                <input name="qualification" class="form-control" type="text" id="qualification" placeholder="Qualification*"/>
+                                <span id="qualificationError" class="invalid-feedback d-block invisible">&nbsp;</span>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex gap-3">

@@ -3,7 +3,7 @@
         <cfargument name="role" type="string"/>
         <cfquery name="qryUserList">
             SELECT
-                Users.user_id, Users.first_name, Users.last_name, Users.email, Users.phone, Departments.department_name,
+                Users.user_id, Users.first_name, Users.last_name, Users.email, Users.phone, Users.qualification, Departments.department_name,
                 CASE 
                     WHEN Users.gender = 'M' THEN 'Male'
                     WHEN Users.gender = 'F' then 'Female'
@@ -78,7 +78,7 @@
         <cfargument name="doctorId" type="numeric"/>
         <cfquery name="qryUserList">
             SELECT
-                user_id, first_name, last_name, email, phone, department_id, gender
+                user_id, first_name, last_name, email, phone, department_id, gender, qualification
                 FROM
                 Users
                 WHERE user_id = <cfqueryparam value=#arguments.doctorId# cfsqltype="cf_sql_varchar"/>
@@ -103,6 +103,7 @@
                  SET 
                     first_name = <cfqueryparam value="#arguments.doctorData.firstName#" cfsqltype="cf_sql_varchar"/>,
                     last_name  = <cfqueryparam value="#arguments.doctorData.lastName#" cfsqltype="cf_sql_varchar"/>,
+                    qualification  = <cfqueryparam value="#arguments.doctorData.qualification#" cfsqltype="cf_sql_varchar"/>,
                     email = <cfqueryparam value="#arguments.doctorData.email#" cfsqltype="cf_sql_varchar"/>,
                     phone = <cfqueryparam value="#arguments.doctorData.phone#" cfsqltype="cf_sql_varchar"/>,
                     gender = <cfqueryparam value="#arguments.doctorData.gender#" cfsqltype="cf_sql_char"/>,
@@ -280,10 +281,11 @@
 
         <cftry>
             <cfquery name="qryInsert">
-                INSERT INTO Users (first_name, last_name, email, phone, role_id, password, gender, department_id)
+                INSERT INTO Users (first_name, last_name, qualification, email, phone, role_id, password, gender, department_id)
                 VALUES (
                     <cfqueryparam value="#arguments.doctorData.firstName#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.doctorData.lastName#" cfsqltype="cf_sql_varchar"/>,
+                    <cfqueryparam value="#arguments.doctorData.qualification#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.doctorData.email#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.doctorData.phone#" cfsqltype="cf_sql_varchar"/>,
                     <cfqueryparam value="#arguments.doctorData.role_id#" cfsqltype="cf_sql_integer"/>,

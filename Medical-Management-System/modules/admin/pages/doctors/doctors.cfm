@@ -72,6 +72,7 @@
                     <th>Phone</th>
                     <th>Department</th>
                     <th>Gender</th>
+                    <th>Qualification</th>
                     <th class="no-sort">Actions</th>
                 </tr>
             </thead>
@@ -84,8 +85,9 @@
                         <td>#doctorList.phone#</td>
                         <td>#doctorList.department_name#</td>
                         <td>#doctorList.gender#</td>
+                        <td>#doctorList.qualification#</td>
                         <td>
-                            <button class="btn btn-primary" name="updateDoctorId" value=#doctorList.user_id# type="submit">Update</button>
+                            <button class="btn btn-primary mb-1" name="updateDoctorId" value=#doctorList.user_id# type="submit">Update</button>
                             <button type="button"
                                     class="btn btn-danger"
                                     onclick="openConfirm('#doctorList.user_id#')">
