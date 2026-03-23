@@ -95,7 +95,7 @@
         <cfabort/>
     </cfif>
 
-    <cfinvoke component="../../../../services/doctorServices/doctorQueries.cfc" method="addPrescription" returnvariable="success">
+    <cfinvoke component="../../..   /../services/doctorServices/doctorQueries.cfc" method="addPrescription" returnvariable="success">
         <cfinvokeargument name="prescription_data" value="#form#"/>
     </cfinvoke>
     <cfif success EQ true>

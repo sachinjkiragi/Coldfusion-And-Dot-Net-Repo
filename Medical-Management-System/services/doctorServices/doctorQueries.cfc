@@ -23,93 +23,37 @@
                 <cflocation url="../../noPermission.cfm"/>
             </cfif>
 
-            <cfquery name="qryAppointmentList">
-                SELECT Appointments.*,
-                (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.patient_id) AS 'patient_name',
-                (SELECT start_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'start_time',
-                (SELECT end_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'end_time'
-                FROM Appointments 
-                WHERE 
-                Appointments.doctor_id = <cfqueryparam value="#doctor_id#" cfsqltype="cf_sql_integer"/>
-            </cfquery>
-            <cfreturn qryAppointmentList/>
+            <cfinvoke method="getAppointmentList" component="../commonServices/commonServices.cfc" returnvariable="appointmentList">
+                <cfinvokeargument name="doctor_id" value="#arguments.doctor_id#"/>
+            </cfinvoke>
+            <cfreturn appointmentList/>
     </cffunction>
 
     <cffunction name="getMedicines" returntype="query">
-        <cftry>
-            <cfquery name="qryMedicines">
-                SELECT* FROM Medicines
-            </cfquery>
-            <cfreturn qryMedicines>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-            </cfcatch>
-        </cftry>
+        <cfinvoke method="getMedicines" component="../commonServices/commonServices.cfc" returnvariable="medicineList"/>
+        <cfreturn medicineList/>
     </cffunction>
 
     <cffunction name="doesPrescriptionExists" returntype="boolean">
         <cfargument name="appointment_id" type="numeric"/>
-        <cftry>
-            <cfquery name="qryPrescExists">
-                SELECT 1 FROM Prescriptions 
-                WHERE appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer"/>
-            </cfquery>
-            <cfreturn qryPrescExists.recordCount GTE 1>
-            <cfcatch>
-                <cfdump var=#cfcatch#/>
-                <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
-                <cfreturn true/>
-            </cfcatch>
-        </cftry>
+        <cfinvoke method="doesPrescriptionExists" component="../commonServices/commonServices.cfc" returnvariable="doesExists">
+            <cfinvokeargument name="appointment_id" value="#arguments.appointment_id#"/>
+        </cfinvoke>
+        <cfreturn doesExists/>
     </cffunction>
 
     <cffunction name="addPrescription" returntype="any">
         <cfargument name="prescription_data" type="struct"/>
-            <cfinvoke method="checkPermission" returnvariable="hasPermission">
-                <cfinvokeargument name="permissionTag" value="Create_Prescriptions"/>
-            </cfinvoke>
-            <cfif hasPermission EQ false>
-                <cflocation url="../../noPermission.cfm"/>
-            </cfif>
-        <cftry>
-            <cfquery name="qryInsertPrescription" result="res">
-                INSERT INTO Prescriptions (appointment_id, diagnosis, diagnosis_notes, digital_signature)
-                VALUES (
-                    <cfqueryparam value="#arguments.prescription_data.appointment_id#" cfsqltype="cf_sql_integer">,
-                    <cfqueryparam value="#arguments.prescription_data.diagnosis#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.prescription_data.diagnosis_notes#" cfsqltype="cf_sql_varchar">,
-                    <cfqueryparam value="#arguments.prescription_data.digital_signature#" cfsqltype="cf_sql_varchar">
-                );
-            </cfquery>
-
-            <cfquery name="updateStatus">
-                UPDATE Appointments 
-                SET status = <cfqueryparam value="Completed" cfsqltype="cf_sql_varchar"/>
-                WHERE appointment_id =  <cfqueryparam value="#arguments.prescription_data.appointment_id#" cfsqltype="cf_sql_integer"/>
-            </cfquery>
-
-            <cfif arguments.prescription_data.medicine_id NEQ "">
-
-                <cfset newPrescriptionId = res.generatedKey>
-                
-                <cfquery name="qryInsertMedicinePrescription">
-                    INSERT INTO Medicine_Prescriptions (medicine_id, prescription_id, dosage_info, quantity
-                    )
-                    VALUES (
-                        <cfqueryparam value="#arguments.prescription_data.medicine_id#" cfsqltype="cf_sql_integer">,
-                        <cfqueryparam value="#newPrescriptionId#" cfsqltype="cf_sql_integer">,
-                        <cfqueryparam value="#arguments.prescription_data.dosage_info#" cfsqltype="cf_sql_varchar">,
-                        <cfqueryparam value="#arguments.prescription_data.medicine_qty#" cfsqltype="cf_sql_integer">
-                    );
-                </cfquery>
-            </cfif>           
-
-            <cfreturn true/>
-            <cfcatch>
-                <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
-                <cfreturn false/>
-            </cfcatch>
-        </cftry>
+        <cfinvoke method="checkPermission" returnvariable="hasPermission">
+            <cfinvokeargument name="permissionTag" value="Create_Prescriptions"/>
+        </cfinvoke>
+        <cfif hasPermission EQ false>
+            <cflocation url="../../noPermission.cfm"/>
+        </cfif>
+        <cfinvoke method="addPrescription" component="../commonServices/commonServices.cfc" returnvariable="success">
+            <cfinvokeargument name="prescription_data" value="#arguments.prescription_data#"/>
+        </cfinvoke>
+        <cfreturn success/>
     </cffunction>
 
     <cffunction name="getPrescriptionData" returntype="query">
@@ -128,23 +72,14 @@
         <cfinvoke method="checkPermission" returnvariable="hasPermission">
             <cfinvokeargument name="permissionTag" value="View_Prescriptions"/>
         </cfinvoke>
+
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
-        
-            <cfquery name="qryPrescription">
-                SELECT
-                 Prescriptions.prescription_id,
-                 Prescriptions.diagnosis, 
-                 Prescriptions.diagnosis_notes, 
-                 Medicine_Prescriptions.quantity, 
-                 Medicine_Prescriptions.medicine_id, 
-                 Medicine_Prescriptions.dosage_info
-                FROM Prescriptions JOIN Medicine_Prescriptions
-                ON Medicine_Prescriptions.prescription_id = Prescriptions.prescription_id
-                WHERE Prescriptions.appointment_id = <cfqueryparam value="#arguments.appointment_id#" cfsqltype="cf_sql_integer">
-            </cfquery>
-            <cfreturn qryPrescription/>
+        <cfinvoke method="getPrescriptionData" component="../commonServices/commonServices.cfc"  returnvariable="prescriptionData">
+            <cfinvokeargument name="appointment_id" value="#arguments.appointment_id#"/>
+        </cfinvoke>
+        <cfreturn prescriptionData/>
     </cffunction>
 
     <cffunction name="getPrescriptionDataByPrescriptionId" returntype="query">
@@ -169,20 +104,11 @@
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
-            <cfquery name="qryPrescription">
-                SELECT
-                 Prescriptions.prescription_id,
-                 Prescriptions.appointment_id,
-                 Prescriptions.diagnosis, 
-                 Prescriptions.diagnosis_notes, 
-                 Medicine_Prescriptions.quantity, 
-                 Medicine_Prescriptions.medicine_id, 
-                 Medicine_Prescriptions.dosage_info
-                FROM Prescriptions JOIN Medicine_Prescriptions
-                ON Medicine_Prescriptions.prescription_id = Prescriptions.prescription_id
-                WHERE Prescriptions.prescription_id = <cfqueryparam value="#arguments.prescription_id#" cfsqltype="cf_sql_integer">
-            </cfquery>
-            <cfreturn qryPrescription/>
+
+        <cfinvoke method="getPrescriptionDataByPrescriptionId" component="../commonServices/commonServices.cfc"  returnvariable="prescriptionData">
+            <cfinvokeargument name="prescription_id" value="#arguments.prescription_id#"/>
+        </cfinvoke>
+        <cfreturn prescriptionData/>
     </cffunction>
 
     <cffunction name="updatePrescriptionData" returntype="boolean">
@@ -195,31 +121,10 @@
             <cflocation url="../../noPermission.cfm"/>
         </cfif>
 
-        <cfset local.success = true/>
-        <cftry>
-            <cfquery name="qryUpdatePrescription">
-                UPDATE Prescriptions
-                SET 
-                diagnosis = <cfqueryparam value="#arguments.prescriptionData.diagnosis#" cfsqltype="cf_sql_varchar"/>,
-                diagnosis_notes = <cfqueryparam value="#arguments.prescriptionData.diagnosis_notes#" cfsqltype="cf_sql_varchar"/>
-                WHERE prescription_id = <cfqueryparam value="#arguments.prescriptionData.btn_update_prescriptionid#"/>
-            </cfquery>
-
-            <cfquery name="qerUpdateMedicinePrescription">
-                UPDATE Medicine_Prescriptions
-                SET 
-                medicine_id = <cfqueryparam value="#arguments.prescriptionData.medicine_id#" cfsqltype="cf_sql_integer"/>,
-                quantity = <cfqueryparam value="#arguments.prescriptionData.medicine_qty#" cfsqltype="cf_sql_integer"/>,
-                dosage_info = <cfqueryparam value="#arguments.prescriptionData.dosage_info#" cfsqltype="cf_sql_varchar"/>
-                WHERE prescription_id = <cfqueryparam value="#arguments.prescriptionData.btn_update_prescriptionid#"/>
-            </cfquery>
-
-            <cfcatch>
-                <cfset local.success = false/>
-                <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
-            </cfcatch>
-            </cftry>
-            <cfreturn local.success/>
+        <cfinvoke method="updatePrescriptionData" component="../commonServices/commonServices.cfc"  returnvariable="success">
+            <cfinvokeargument name="prescriptionData" value="#arguments.prescriptionData#"/>
+        </cfinvoke>
+        <cfreturn success/>
     </cffunction>
 
     <cffunction name="getPatientHistory">
@@ -237,7 +142,7 @@
 
         <cfif qryIsValidFetch.recordCount EQ 0>
             <cfreturn qryIsValidFetch/>
-        </cfif>        
+        </cfif>
 
         <cfif hasPermission EQ false>
             <cflocation url="../../noPermission.cfm"/>

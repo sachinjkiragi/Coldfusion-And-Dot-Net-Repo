@@ -27,7 +27,7 @@
         </cfif>
     </cffunction>
         
-    <cffunction name="onMissingTemplate" returntype="boolean">
+    <!---<cffunction name="onMissingTemplate" returntype="boolean">
         <cfargument name="targetPage" type="string" required="true">
         <cfset errorMessage = "404 Missing Page: #arguments.targetPage#">
         <cflog file="medManageLogs" text="#errorMessage#" type="error">
@@ -44,6 +44,6 @@
         Time: #now()#">
         <cflog file="medManageLogs" text="#errorMessage#" type="error">
         <cflocation url="/Coldfusion-And-Dot-Net-Repo/Medical-Management-System/error.cfm">
-    </cffunction>
+    </cffunction> --->
 
 </cfcomponent>
