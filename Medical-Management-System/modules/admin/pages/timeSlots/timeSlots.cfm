@@ -1,0 +1,124 @@
+<cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="getTimeSlots" returnvariable="timeSlotList"/>
+
+<cftry>
+    <style>
+        #timeSlotList td, #timeSlotList th {
+            white-space: normal;
+            word-break: break-word;
+            vertical-align: middle;
+            text-align: center;
+            padding: 0.75rem 0.5rem;
+        }
+
+        #timeSlotList tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        #timeSlotList tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        #timeSlotList thead {
+            background-color: #0d6efd;
+            color: white;
+            font-weight: 600;
+        }
+
+        #timeSlotList .btn {
+            min-width: 80px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        #timeSlotList {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #timeSlotList, #timeSlotList th, #timeSlotList td {
+            border: 1px solid #dee2e6;
+        }
+
+        div.dataTables_wrapper div.dataTables_length,
+        div.dataTables_wrapper div.dataTables_filter {
+            margin-bottom: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate {
+            margin-top: 1rem;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            float: right;
+        }
+
+        div.dataTables_wrapper div.dataTables_length {
+            float: left;
+        }
+    </style>
+    
+    <cfinclude template="../../../../includes/header.cfm"/>
+    <cfinclude template="../../../../includes/toast.cfm"/>
+    <form method="POST" class="py-3 px-5 d-flex flex-column gap-4" id="form">
+        <input type="hidden" name="idToDelete" id="idToDelete">
+        <a href="home.cfm?reqPage=addTimeSlot" class="btn btn-primary" style="width: 8rem;">Add Time Slot</a>
+        <table id="timeSlotList"  class="display">
+            <thead>
+                <tr>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th class="no-sort">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <cfoutput query=#timeSlotList#>
+                    <tr style="width: 10rem;">
+                        <td>#timeFormat(timeSlotList.start_time, "hh:mm tt")#</td>
+                        <td>#timeFormat(timeSlotList.end_time, "hh:mm tt")#</td>
+                        <td>
+                           <button type="button" class="btn btn-danger" onclick="openConfirm('#timeSlotList.timeslot_id#')">Delete</button>
+                        </td>
+                    </tr>
+                </cfoutput>
+            </tbody>
+        </table>
+    </form>
+        
+    <cfcatch>
+        <cfoutput>#cfcatch#</cfoutput>
+    </cfcatch>
+</cftry>
+
+<script>
+    $(document).ready(function(){
+        $('table#timeSlotList').DataTable({
+            pageLength: 5,
+            lengthMenu: [5, 10, 25],
+            autoWidth: false,
+            columnDefs: [
+                {orderable: false, targets: 'no-sort'}
+            ]
+        });
+    })
+</script>
+
+<cfinclude template="../../../../includes/confirm.cfm"/>
+
+
+<cfif structKeyExists(form, "idToDelete")>
+    <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="deleteTimeSlot" returnvariable="success">
+        <cfinvokeargument name="timeSlotId" value="#form.idToDelete#"/>
+    </cfinvoke>
+
+    <cfif success EQ true>
+        <script>
+            showToast("Time slot deleted successfully.", "success");
+        </script>
+    <cfelse>
+        <script>
+            showToast("Failed to delete time slot. Please try again.", "warning");
+        </script>
+    </cfif>
+
+</cfif>

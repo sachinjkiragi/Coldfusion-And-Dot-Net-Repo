@@ -1,0 +1,66 @@
+<html>
+    <cfinclude template = "../../../../includes/header.cfm"/>
+    <cfinclude template = "../../../../includes/toast.cfm"/>
+    <div class="h-100 w-100 d-flex justify-content-center align-items-center">
+        <form class="p-5 needs-validation" novalidate method="POST">
+            <div class="bordr-black d-flex flex-column gap-3 align-items-center">
+                <div>
+                    <h2 class="text-primary">Add Role</h2>
+                </div>
+
+                <div class="d-flex gap-4">
+                    <div class="form-check d-flex flex-column gap-4 align-items-center">
+                        <div>
+                            <label class="form-label fw-semibold">Role Name:</label>
+                            <input name="roleName" class="form-control" type="text" id="roleName" required placeholder="Role Name*"/>
+                            <div class="invalid-feedback">
+                                Please enter a role.
+                            </div>
+                        </div>
+                        <span title="Please complete all required fields">
+                            <button class="btn btn-primary" type="submit" name="addBtn"> Add </button>
+                        </span>
+                        <a href="home.cfm?reqPage=Roles" class="text-decoration-none">Go Back</a>
+                    </div>
+            </div>
+        </form>
+    </div>
+
+</html>
+
+<script>
+    const formEle = document.querySelector('.needs-validation')
+    formEle.addEventListener('submit', (e)=>{
+        if(!formEle.checkValidity()){
+            e.preventDefault();
+        }
+        formEle.classList.add('was-validated');
+    })
+</script>
+
+<cfif structKeyExists(form, "addbtn")>
+
+    <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="RoleExists" returnvariable="flag">
+        <cfinvokeargument name="roleName" value="#form.roleName#"/>
+    </cfinvoke>
+
+    <cfif flag EQ true>
+    <script>
+        showToast('Role already exists.', 'warning');
+    </script>
+    <cfelse>
+        <cfinvoke component="../../../../services/adminServices/adminQueries.cfc" method="addRole" returnvariable="success">
+            <cfinvokeargument name="RoleData" value="#form#"/>
+        </cfinvoke>
+        
+        <cfif success EQ true>
+            <script>
+                showToast('Role added successfully.', 'success');
+            </script>
+        <cfelse>
+            <script>
+                showToast('Failed to add Role. Please try again.', 'warning');
+            </script>
+        </cfif>
+    </cfif>
+</cfif>
