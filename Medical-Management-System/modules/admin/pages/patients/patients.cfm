@@ -85,7 +85,7 @@
                         <td>#patientList.phone#</td>
                         <td>#patientList.gender#</td>
                         <td>
-                            <button class="btn btn-primary" name="updatePatientId" value=#patientList.user_id# type="submit">Update</button>
+                            <button class="btn btn-primary" name="updatePatientId" value=#URLEncodedFormat(Encrypt(patientList.user_id, "abcd"))# type="submit">Update</button>
                             <button type="button"
                                     class="btn btn-danger"
                                     onclick="openConfirm('#patientList.user_id#')">

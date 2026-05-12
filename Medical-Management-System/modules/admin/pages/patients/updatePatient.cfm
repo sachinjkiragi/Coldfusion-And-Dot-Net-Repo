@@ -1,4 +1,4 @@
-<cfset patientIdToUpdate = url.patientId/>
+<cfset patientIdToUpdate = Decrypt(url.patientId, "abcd")/>
 
 <cfinvoke method="getPatientData" component="../../../../services/adminServices/adminQueries.cfc" returnvariable="patientData">
     <cfinvokeargument name="patient_id" value=#patientIdToUpdate#/>

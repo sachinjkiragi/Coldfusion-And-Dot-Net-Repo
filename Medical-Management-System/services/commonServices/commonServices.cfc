@@ -2,56 +2,39 @@
 
     <cffunction name="getUserList" returntype="query">
         <cfargument name="role" type="string"/>
-        <cfquery name="qryUserList">
-            SELECT
-                Users.user_id, Users.first_name, Users.last_name, Users.email, Users.phone, Users.qualification, Departments.department_name,
-                CASE 
-                    WHEN Users.gender = 'M' THEN 'Male'
-                    WHEN Users.gender = 'F' then 'Female'
-                    ELSE 'Other'
-                END
-                AS gender
-                FROM
-                Users JOIN Roles
-                ON Users.role_id = Roles.role_id
-                LEFT JOIN
-                Departments
-                ON Users.department_id = Departments.department_id
-                WHERE roles.role_name = <cfqueryparam value=#role# cfsqltype="cf_sql_varchar"/>
-        </cfquery>
-        <cfreturn qryUserList/>
+        <cfstoredproc procedure="spGetUsersByRole">
+            <cfprocparam cfsqltype="CF_SQL_VARCHAR" value="#arguments.role#"/>
+            <cfprocresult name="usersList"/> 
+        </cfstoredproc>
+        <cfreturn usersList/>
     </cffunction>
 
 
     <cffunction name="doesMailExists" returntype="boolean">
         <cfargument name="email" required="true" type="string"/>
-        
-        <cfquery result="query">
-            SELECT* 
-            FROM Users 
-            WHERE email = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar">
-        </cfquery>
-        <cfreturn query.recordCount GT 0/>
+        <cflog file="medManageLogs" text="#arguments.email#"/>
+        <cfstoredproc procedure="spDoesMailExists">
+            <cfprocparam cfsqltype="CF_SQL_VARCHAR" value="#arguments.email#"/>
+            <cfprocresult name="result"/>
+        </cfstoredproc>
+        <cfreturn result.recordCount GT 0/>
     </cffunction>
 
     <cffunction name="insertPatientData" returntype="boolean">
         <cfargument name="patientData" type="struct"/>
         <cfset local.success = true/>
-
+        
         <cfset local.hashedPassword = hash(arguments.patientData.password, "SHA-256")>
         <cftry>
-            <cfquery name="qryInsert">
-                INSERT INTO Users (first_name, last_name, email, phone, role_id, password, gender)
-                VALUES (
-                    <cfqueryparam value="#arguments.patientData.firstName#" cfsqltype="cf_sql_varchar"/>,
-                    <cfqueryparam value="#arguments.patientData.lastName#" cfsqltype="cf_sql_varchar"/>,
-                    <cfqueryparam value="#arguments.patientData.email#" cfsqltype="cf_sql_varchar"/>,
-                    <cfqueryparam value="#arguments.patientData.phone#" cfsqltype="cf_sql_varchar"/>,
-                    <cfqueryparam value="#arguments.patientData.role_id#" cfsqltype="cf_sql_integer"/>,
-                    <cfqueryparam value="#local.hashedPassword#" cfsqltype="cf_sql_varchar"/>,
-                    <cfqueryparam value="#arguments.patientData.gender#" cfsqltype="cf_sql_char"/>
-                )
-            </cfquery>
+            <cfstoredproc procedure="spInsertPatientData">
+                <cfprocparam cfsqltype="CF_SQL_VARCHAR" value="#arguments.patientData.firstName#"/>,
+                <cfprocparam cfsqltype="CF_SQL_VARCHAR" value="#arguments.patientData.lastName#"/>,
+                <cfprocparam cfsqltype="CF_SQL_VARCHAR" value="#arguments.patientData.email#"/>,
+                <cfprocparam cfsqltype="CF_SQL_VARCHAR" value="#arguments.patientData.phone#"/>,
+                <cfprocparam cfsqltype="CF_SQL_INTEGER" value="#arguments.patientData.role_id#"/>,
+                <cfprocparam cfsqltype="CF_SQL_VARCHAR" value="#local.hashedPassword#"/>,
+                <cfprocparam cfsqltype="CF_SQL_CHAR" value="#arguments.patientData.gender#"/>
+            </cfstoredproc>
         <cfcatch>
             <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
             <cfset local.success = false/>
@@ -123,7 +106,7 @@
             (SELECT end_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'end_time'
             FROM Appointments 
             <cfif structKeyExists(arguments, "doctor_id")>
-                WHERE 
+                WHERE
                 Appointments.doctor_id = <cfqueryparam value="#arguments.doctor_id#" cfsqltype="cf_sql_integer"/>
             </cfif>
         </cfquery>
@@ -138,7 +121,7 @@
                 (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = Appointments.patient_id) AS 'patient_name',
                 (SELECT start_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'start_time',
                 (SELECT end_time FROM Time_Slots WHERE timeslot_id = Appointments.timeslot_id) AS 'end_time'
-                FROM 
+                FROM
                 Appointments
                 WHERE appointment_id = <cfqueryparam value="#appointment_id#" cfsqltype="cf_sql_integer"/>
             </cfquery>
@@ -152,7 +135,7 @@
         <cftry>
             <cfquery name="qryUpdate">
                 UPDATE Appointments
-                 SET 
+                 SET
                     doctor_id = <cfqueryparam value="#arguments.appointmentDetails.doctor_id#" cfsqltype="cf_sql_int"/>,
                     patient_id  = <cfqueryparam value="#arguments.appointmentDetails.patient_id#" cfsqltype="cf_sql_int"/>,
                     status = <cfqueryparam value="#arguments.appointmentDetails.status#" cfsqltype="cf_sql_varchar"/>,
@@ -179,7 +162,7 @@
                 <cfdump var=#cfcatch#/>
             </cfcatch>
         </cftry>
-    </cffunction>    
+    </cffunction>
 
     <cffunction name="doesPrescriptionExists" returntype="boolean">
         <cfargument name="appointment_id" type="numeric"/>
@@ -211,7 +194,7 @@
         </cfquery>
 
         <cfquery name="updateStatus">
-            UPDATE Appointments 
+            UPDATE Appointments
             SET status = <cfqueryparam value="Completed" cfsqltype="cf_sql_varchar"/>
             WHERE appointment_id =  <cfqueryparam value="#arguments.prescription_data.appointment_id#" cfsqltype="cf_sql_integer"/>
         </cfquery>
@@ -228,7 +211,7 @@
                     <cfqueryparam value="#arguments.prescription_data.medicine_qty#" cfsqltype="cf_sql_integer">
                 );
             </cfquery>
-        </cfif>           
+        </cfif>
 
         <cfreturn true/>
         <cfcatch>
@@ -243,7 +226,7 @@
             <cfquery name="qryPrescription">
                 SELECT
                  Prescriptions.prescription_id,
-                 Prescriptions.diagnosis, 
+                 Prescriptions.diagnosis,
                  Prescriptions.diagnosis_notes, 
                  Medicine_Prescriptions.quantity, 
                  Medicine_Prescriptions.medicine_id, 
@@ -261,10 +244,10 @@
                 SELECT
                  Prescriptions.prescription_id,
                  Prescriptions.appointment_id,
-                 Prescriptions.diagnosis, 
-                 Prescriptions.diagnosis_notes, 
-                 Medicine_Prescriptions.quantity, 
-                 Medicine_Prescriptions.medicine_id, 
+                 Prescriptions.diagnosis,
+                 Prescriptions.diagnosis_notes,
+                 Medicine_Prescriptions.quantity,
+                 Medicine_Prescriptions.medicine_id,
                  Medicine_Prescriptions.dosage_info
                 FROM Prescriptions JOIN Medicine_Prescriptions
                 ON Medicine_Prescriptions.prescription_id = Prescriptions.prescription_id
@@ -279,7 +262,7 @@
         <cftry>
             <cfquery name="qryUpdatePrescription">
                 UPDATE Prescriptions
-                SET 
+                SET
                 diagnosis = <cfqueryparam value="#arguments.prescriptionData.diagnosis#" cfsqltype="cf_sql_varchar"/>,
                 diagnosis_notes = <cfqueryparam value="#arguments.prescriptionData.diagnosis_notes#" cfsqltype="cf_sql_varchar"/>
                 WHERE prescription_id = <cfqueryparam value="#arguments.prescriptionData.btn_update_prescriptionid#"/>
@@ -287,7 +270,7 @@
 
             <cfquery name="qerUpdateMedicinePrescription">
                 UPDATE Medicine_Prescriptions
-                SET 
+                SET
                 medicine_id = <cfqueryparam value="#arguments.prescriptionData.medicine_id#" cfsqltype="cf_sql_integer"/>,
                 quantity = <cfqueryparam value="#arguments.prescriptionData.medicine_qty#" cfsqltype="cf_sql_integer"/>,
                 dosage_info = <cfqueryparam value="#arguments.prescriptionData.dosage_info#" cfsqltype="cf_sql_varchar"/>
@@ -310,13 +293,13 @@
         <cfreturn qryTimeSlots/>
     </cffunction>
 
-    <cffunction name="isDoctorAvailable" returntype="boolean">    
+    <cffunction name="isDoctorAvailable" returntype="boolean">
         <cfquery name="qryDoctorAvailable">
             SELECT *
-            FROM Appointments 
+            FROM Appointments
             WHERE doctor_id = <cfqueryparam value=#arguments.appointmentDetails.doctor_id# cfsqltype="cf_sql_integer"/>
             AND slot_date = <cfqueryparam value=#arguments.appointmentDetails.slot_date# cfsqltype="cf_sql_date"/>
-            AND timeslot_id = <cfqueryparam value=#arguments.appointmentDetails.timeslot_id# cfsqltype="cf_sql_integer"/> 
+            AND timeslot_id = <cfqueryparam value=#arguments.appointmentDetails.timeslot_id# cfsqltype="cf_sql_integer"/>
             AND status = <cfqueryparam value="Booked" cfsqltype="cf_sql_varchar"/>
             <cfif structKeyExists(arguments.appointmentDetails, "appointment_id")>
                 AND appointment_id != <cfqueryparam value="#arguments.appointmentDetails.appointment_id#" cfsqltype="cf_sql_integer"/>
@@ -346,7 +329,7 @@
             </cfquery>
         <cfcatch>
             <cfset local.success = false/>
-            <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/> 
+            <cflog file="MedManageLogs" text="#cfcatch.message#" type="error"/>
         </cfcatch>
         </cftry>
         <cfreturn local.success/>

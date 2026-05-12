@@ -604,4 +604,5 @@
         </cfquery>
         <cfreturn qryReceptionistData/>
     </cffunction>
+
 </cfcomponent>
